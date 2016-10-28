@@ -49,13 +49,13 @@ class MainWindow extends React.Component {
                 <div style={styles.root}>
                     
                     <TextField
-                        hintText='Enter UserName or Email '
-                        value={this.state.userName}
+                        hintText='Enter Your UserName '
+                        value={this.state.userName||''}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
                     <TextField
-                        hintText='Enter Password'
+                        hintText='Enter Your Password'
                         type='password'
-                        value={this.state.password}
+                        value={this.state.password||''}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
 
                     <div style={styles.buttons_container}>
@@ -76,23 +76,38 @@ class MainWindow extends React.Component {
             type: 'info',
             buttons: ['Yes'],
             title: 'Login',
-            message: this.state.userName,
+            message: this.state.userName +"logging",
             defaultId: 0,
             cancelId: 0
         };
 
-        fetch('http://localhost:8080/user/test', {
-            method: 'GET'
-        });
+        let options2 = {
+            type: 'info',
+            buttons: ['OK'],
+            title: 'Login',
+            message: "Wrong username or password",
+            defaultId: 0,
+            cancelId: 0
+        };
 
 
-        dialog.showMessageBox(options, (response) => {
-            if (response == 0) {
-                console.log("test");
-                console.log('OK pressed!');
+        fetch('http://localhost:8080/user/find', {
+            method: 'POST',
+            body:
+                {
+                    username:this.state.userName,
+                    password:this.state.password
+                },
+        })
+            .then((res) =>{
+                if(res.ok){
+                    dialog.showMessageBox(options);
+                }else{
+                     dialog.showMessageBox(options2);
 
-            }
-        });
+                }
+            });
+
         
         
     }
