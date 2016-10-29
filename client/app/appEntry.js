@@ -133,34 +133,39 @@ class SignUpWindow extends React.Component {
                         hintText='First Name'
                         value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
-                    <div id='fname'>
-                    </div>
+                    <font id='fname' color='red'></font>
                     <TextField
                         hintText='Last Name'
                         value={this.state.lastName || ""}
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
+                    <font id='lname' color='red'></font>
                     <TextField
                         hintText='Username'
                         value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
+                    <font id='user' color='red'></font>
                     <TextField
                         hintText='Password'
                         type='password'
                         value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
+                    <font id='pass' color='red'></font>
                     <TextField
                         hintText='Confirm Password'
                         type='password'
                         value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
+                    <font id='cpass' color='red'></font>
                     <TextField
                         hintText='Email'
                         value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
+                    <font id='email' color='red'></font>
                     <TextField
                         hintText='Confirm Email'
                         value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
+                    <font id='cemail' color='red'></font>
 
                     <div style={styles.buttons_container}>
                         <RaisedButton
@@ -178,10 +183,70 @@ class SignUpWindow extends React.Component {
     _checkValid() {
         var namePattern = new RegExp('^[a-zA-Z]{1,}$');
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
-        var passPattern = new RegExp('^(?=.*[A-Za-z])(?=.*0-9)[A-Za-z0-9]{6,}$');
-        var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$')
-        if (!namePattern.test(this.state.firstName)) {
-            React.render()
+        var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
+        var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
+        var fname = document.getElementById('fname');
+        var lname = document.getElementById('lname');
+        var user = document.getElementById('user');
+        var pass = document.getElementById('pass');
+        var cpass = document.getElementById('cpass');
+        var email = document.getElementById('email');
+        var cemail = document.getElementById('cemail')
+
+        if (this.state.firstName == null) {
+            fname.innerHTML = "The field is empty.";
+        } else if (!namePattern.test(this.state.firstName)) {
+            fname.innerHTML = "Names can only contain alphabets.";
+        } else {
+            fname.innerHTML = "";
+        }
+
+        if (this.state.lastName == null) {
+            lname.innerHTML = "The field is empty.";
+        } else if (!namePattern.test(this.state.lastName)) {
+            lname.innerHTML = "Names can only contain alphabets.";
+        } else {
+            lname.innerHTML = "";
+        }
+
+        if (this.state.userName == null) {
+            user.innerHTML = "The field is empty.";
+        } else if (!userPattern.test(this.state.userName)) {
+            user.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
+        } else {
+            user.innerHTML = "";
+        }
+
+        if (this.state.password == null) {
+            pass.innerHTML = "The field is empty.";
+        } else if (!passPattern.test(this.state.password)) {
+            pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
+        } else {
+            pass.innerHTML = "";
+        }
+
+        if (this.state.confirmPass == null) {
+            cpass.innerHTML = "The field is empty.";
+        } else if (this.state.password != this.state.confirmPass) {
+            cpass.innerHTML = "Passwords do not match.";
+        } else {
+            cpass.innerHTML = "";
+        }
+
+        if (this.state.email == null) {
+            email.innerHTML = "The field is empty.";
+        } else if (!emailPattern.test(this.state.email)) {
+            email.innerHTML = "Invalid email."
+        } else {
+            email.innerHTML = "";
+        }
+
+        if (this.state.confirmEmail == null) {
+            cemail.innerHTML = "The field is empty.";
+        } else if (this.state.email != this.state.confirmEmail) {
+            cemail.innerHTML = "Emails do not match."
+        } else {
+            cemail.innerHTML = "";
         }
     }
 
