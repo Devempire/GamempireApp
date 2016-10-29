@@ -91,21 +91,16 @@ class MainWindow extends React.Component {
         };
 
 
-        fetch('http://localhost:8080/user/find', {
-            method: 'POST',
-            body:
-                {
-                    username:this.state.userName,
-                    password:this.state.password
-                },
+        $.post('http://localhost:8080/user/find',
+        {
+            username:this.state.userName,
+            password:this.state.password
         })
-            .then((res) =>{
-                if(res.ok){
-                    dialog.showMessageBox(options);
-                }else{
-                     dialog.showMessageBox(options2);
-
-                }
+            .done((res) =>{
+                dialog.showMessageBox(options);
+            })
+            .fail((res)=>{
+                dialog.showMessageBox(options2);
             });
 
         
@@ -263,6 +258,46 @@ class SignUpWindow extends React.Component {
         } else {
             cemail.innerHTML = "";
         }
+    }
+
+     _register(){
+        let options = {
+            type: 'info',
+            buttons: ['Yes'],
+            title: 'Signup',
+            message: this.state.userName +"has registed",
+            defaultId: 0,
+            cancelId: 0
+        };
+
+        let options2 = {
+            type: 'info',
+            buttons: ['OK'],
+            title: 'Signup',
+            message: "Username or email already exist",
+            defaultId: 0,
+            cancelId: 0
+        };
+
+
+        $.post('http://localhost:8080/user/add', 
+                {
+                
+                    username:this.state.userName,
+                    password:this.state.password,
+                    email:this.state.email,
+                    firstname:this.state.firstName,
+                    lastname:this.state.lastName
+
+                }
+        )
+            .done((res) =>{
+                dialog.showMessageBox(options);
+            })
+            .fail((res)=>{
+                dialog.showMessageBox(options2);
+            });
+
     }
 
     _backToLogin() {
