@@ -203,61 +203,88 @@ class SignUpWindow extends React.Component {
         var email = document.getElementById('email');
         var cemail = document.getElementById('cemail')
 
+        var error =true;
         if (this.state.firstName == null) {
             fname.innerHTML = "The field is empty.";
+            error = false;
         } else if (!namePattern.test(this.state.firstName)) {
             fname.innerHTML = "Names can only contain alphabets.";
+            error = false;
         } else {
             fname.innerHTML = "";
+            error = true;
         }
 
         if (this.state.lastName == null) {
             lname.innerHTML = "The field is empty.";
+            error = false;
         } else if (!namePattern.test(this.state.lastName)) {
             lname.innerHTML = "Names can only contain alphabets.";
+            error = false;
         } else {
             lname.innerHTML = "";
+            error = true;
         }
 
         if (this.state.userName == null) {
             user.innerHTML = "The field is empty.";
+            error = false;
         } else if (!userPattern.test(this.state.userName)) {
             user.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
+            error = false;
         } else {
             user.innerHTML = "";
+            error = true;
         }
 
         if (this.state.password == null) {
             pass.innerHTML = "The field is empty.";
+            error = false;
         } else if (!passPattern.test(this.state.password)) {
             pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
+            error = false;
         } else {
             pass.innerHTML = "";
+            error = true;
         }
 
         if (this.state.confirmPass == null) {
             cpass.innerHTML = "The field is empty.";
+            error = false;
         } else if (this.state.password != this.state.confirmPass) {
             cpass.innerHTML = "Passwords do not match.";
+            error = false;
         } else {
             cpass.innerHTML = "";
+            error = true;
         }
 
         if (this.state.email == null) {
             email.innerHTML = "The field is empty.";
+            error = false;
         } else if (!emailPattern.test(this.state.email)) {
-            email.innerHTML = "Invalid email."
+            email.innerHTML = "Invalid email.";
+            error = false;
         } else {
             email.innerHTML = "";
+            error = true;
         }
 
         if (this.state.confirmEmail == null) {
             cemail.innerHTML = "The field is empty.";
+            error = false;
         } else if (this.state.email != this.state.confirmEmail) {
             cemail.innerHTML = "Emails do not match."
+            error = false;
         } else {
             cemail.innerHTML = "";
+            error = true;
         }
+        console.log(error);
+        if (error){
+            this._register();
+        }
+
     }
 
      _register(){
