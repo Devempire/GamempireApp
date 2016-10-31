@@ -98,6 +98,7 @@ class MainWindow extends React.Component {
         })
             .done((res) =>{
                 dialog.showMessageBox(options);
+                window.location.href= "./view/main.html"
             })
             .fail((res)=>{
                 dialog.showMessageBox(options2);
@@ -280,9 +281,9 @@ class SignUpWindow extends React.Component {
             cemail.innerHTML = "";
             error = true;
         }
-        
-        if (error){
 
+        if (error){
+            
             this._register();
         }
 
