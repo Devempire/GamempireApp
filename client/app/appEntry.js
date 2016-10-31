@@ -280,8 +280,9 @@ class SignUpWindow extends React.Component {
             cemail.innerHTML = "";
             error = true;
         }
-        console.log(error);
+        
         if (error){
+
             this._register();
         }
 
@@ -292,7 +293,7 @@ class SignUpWindow extends React.Component {
             type: 'info',
             buttons: ['Yes'],
             title: 'Signup',
-            message: this.state.userName +"has registed",
+            message: this.state.userName +" has registed",
             defaultId: 0,
             cancelId: 0
         };
@@ -320,6 +321,7 @@ class SignUpWindow extends React.Component {
         )
             .done((res) =>{
                 dialog.showMessageBox(options);
+                this._backToLogin();
             })
             .fail((res)=>{
                 dialog.showMessageBox(options2);
