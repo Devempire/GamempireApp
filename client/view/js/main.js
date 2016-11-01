@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-//window.$ = window.jQuery = require('jquery');
+
 
 const events = window.require('events');
 const path = window.require('path');
@@ -49,7 +49,7 @@ class EditProfileWnd extends React.Component {
 	render() {
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.root}>
+                <div >
                 	<TextField
                         hintText='First Name'
                         value={this.state.firstName || ""}
