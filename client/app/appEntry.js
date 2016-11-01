@@ -98,7 +98,7 @@ class MainWindow extends React.Component {
         })
             .done((res) =>{
                 dialog.showMessageBox(options);
-                window.location.href= "./view/main.html"
+                window.location.href= "./view/main.html";
             })
             .fail((res)=>{
                 dialog.showMessageBox(options2);
