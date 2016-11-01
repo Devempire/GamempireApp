@@ -60,9 +60,10 @@
               <span class="visuallyhidden">Accounts</span>
             </button>
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item">hello@example.com</li>
-              <li class="mdl-menu__item">info@example.com</li>
-              <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
+              <li class="mdl-menu__item">View Profile</li>
+              <li class="mdl-menu__item" ><a class="mdl-navigation__link" id="edit">Edit Profile</a></li>
+              <li class="mdl-menu__item">Log Out</li>
+              <!--<li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>-->
             </ul>
           </div>
         </header>
@@ -81,7 +82,10 @@
         </nav>
       </div>
 
-      <main id ="content">
+
+      <div id ="main_content"></div>
+
+      <script src="js/bundle.js"></script>
      
     </div>
     <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
