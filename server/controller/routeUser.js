@@ -65,6 +65,51 @@ router.post('/find', function (req, res, next) {
     });
 });
 
+//load user with valid token 
+router.post('/load', function(req,res,next){
+
+    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+    // decode token
+    if (token) {
+
+        // verifies secret and checks exp
+        jwt.verify(token, 'SecretKey', function(err, decoded) {          
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });      
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;  
+                res.send(
+                {
+                    _id :decoded._doc._id
+                });
+            }
+        });
+
+    } else {
+
+        // if there is no token
+        // return an error
+        return res.status(403).send({ 
+            success: false, 
+            message: 'No token provided.'
+        });
+        
+    }
+    
+});
+
+//get certerain user info
+router.get('/profile/:id/info',function(req,res,next){
+    User.findById(req.params.id, function(err, user){
+    if (err) return next(err);
+ 
+    res.send({username : user.username});
+    });
+});
+
+
 
 
 

@@ -1,7 +1,7 @@
 'use strict';
 
 const electron = require('electron');
-const {app, BrowserWindow, Menu, ipcMain, ipcRenderer,protocol} = electron;
+const {app, BrowserWindow, Menu, ipcMain, ipcRenderer} = electron;
 var path = require('path');
 var url = require('url');
 
@@ -14,6 +14,9 @@ if (isDevelopment) {
     });
 }
 
+global.sharedObject = {
+  token: 'empty'
+}
 
 var mainWnd = null;
 
@@ -23,6 +26,7 @@ function openMainWnd(uri) {
         height: 600,
 
     });
+
 
     if (isDevelopment) {
         mainWnd.webContents.openDevTools();

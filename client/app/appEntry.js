@@ -12,6 +12,8 @@ const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 
+
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -98,7 +100,9 @@ class MainWindow extends React.Component {
         })
             .done((res) =>{
                 dialog.showMessageBox(options);
-                window.location.href= "./view/main.html";
+                electron.remote.getGlobal('sharedObject').token = res;
+                window.location.href="./view/main.html";
+               
             })
             .fail((res)=>{
                 dialog.showMessageBox(options2);
