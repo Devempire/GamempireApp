@@ -13,6 +13,7 @@ const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -23,6 +24,21 @@ let muiTheme = getMuiTheme({
 });
 
 injectTapEventPlugin();
+
+const styles = {
+        root: {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
+    };
 
 class EditProfileWnd extends React.Component {
 
@@ -92,6 +108,9 @@ class EditProfileWnd extends React.Component {
             </MuiThemeProvider>
         );
 	}
+
+
+    
 }
 
 const styles = {
@@ -131,3 +150,5 @@ $("#edit").click(function() {
 		<EditProfileWnd />,
 		document.getElementById('main_content'));
 });
+
+
