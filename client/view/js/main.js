@@ -12,6 +12,7 @@ const fs = window.require('fs');
 const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
+var session = electron.remote;
 
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -25,20 +26,6 @@ let muiTheme = getMuiTheme({
 
 injectTapEventPlugin();
 
-const styles = {
-        root: {
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
-    };
 
 class EditProfileWnd extends React.Component {
 
@@ -109,6 +96,9 @@ class EditProfileWnd extends React.Component {
         );
 	}
 
+    
+
+
 
     
 }
@@ -151,4 +141,85 @@ $("#edit").click(function() {
 		document.getElementById('main_content'));
 });
 
+$("#view").click(function() {
+    console.log('yo');
+    let viewProfileWndComponent = ReactDOM.render(
+        <ViewProfileWnd />,
+        document.getElementById('main_content'));
+});
+
+
+
+class ViewProfileWnd extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            firstName: null,
+            lastName: null,
+            userName: null,
+            password: null,
+            confirmPass: null,
+            email: null,
+            confirmEmail: null,
+            dateOfBirth: null,
+            games: null,
+            gamerType: null,
+            friends: null,
+            mic: null
+        };
+        this.list=[];
+        this.list = this.loadProfile(this.list);
+    }
+
+    loadProfile(list){
+        
+        var token = session.getGlobal('sharedObject').token;
+        $.post( "http://localhost:8080/user/load",
+                {'token' :token
+
+                }
+        )
+        .done(function(data) {
+            //get user profile by user id
+            console.log(data);
+          $.get("http://localhost:8080/user/profile/"+data._id +"/info").done(function(d){
+             list.push(d.firstname);
+             list.push(d.lastname);
+             list.push(d.email);
+             list.push(d.dateOfbirth);
+             console.log(list);
+             
+
+             });
+
+        });
+    }
+
+    render() {
+        return (
+
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <div style={styles.root}>
+                    <h3>My Profile</h3>
+                    <hr />
+                   <ul>
+                    <li>{this.list[0]}</li>
+                    <li>{this.list[1]}</li>
+                    <li>{this.list[2]}</li>
+                    <li>{this.list[3]}</li>
+                    </ul>
+                    
+
+                    
+                    </div>
+                </MuiThemeProvider>
+        );
+    }
+
+
+    
+
+}
 

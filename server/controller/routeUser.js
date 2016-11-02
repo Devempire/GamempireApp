@@ -105,10 +105,30 @@ router.get('/profile/:id/info',function(req,res,next){
     User.findById(req.params.id, function(err, user){
     if (err) return next(err);
  
-    res.send({username : user.username});
+    res.send({
+            username : user.username,
+            firstname: user.firstname,
+            lastname :user.lastname,
+            email:user.email,
+            dateofbirth: user.dateofbirth
+        });
     });
 });
 
+// update user profile
+router.put('/profile/update',function(req,res,next){
+    User.update( { _id:req.body._id},
+      {name:req.body.name,
+        email:req.body.email,
+        dateofbirth:req.body.dateofbirth,       
+       
+      }, function (err, user) {
+        if (err) return next(err);
+        //res.json(host);
+        console.log(user);
+        res.json(user);
+    });
+});
 
 
 
