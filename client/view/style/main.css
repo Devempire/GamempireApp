@@ -157,3 +157,16 @@ _:-ms-input-placeholder, :root .demo-graph {
   box-sizing: border-box;
   align-items: center;
 }
+
+/*.edit_profile_menu {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center'
+}*/

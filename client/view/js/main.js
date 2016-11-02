@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import Dropdown from 'react-dropdown'
 
 const events = window.require('events');
 const path = window.require('path');
@@ -17,7 +17,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
 
 let muiTheme = getMuiTheme({
     fontFamily: 'Microsoft YaHei'
@@ -49,7 +48,7 @@ class EditProfileWnd extends React.Component {
 	render() {
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
-                <div >
+                <div style={styles.root}>
                 	<TextField
                         hintText='First Name'
                         value={this.state.firstName || ""}
@@ -61,12 +60,7 @@ class EditProfileWnd extends React.Component {
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     <font id='lname' color='red'></font>
                     <TextField
-                        hintText='Username'
-                        value={this.state.userName || ""}
-                        onChange={(event) => {this.setState({userName: event.target.value})}}/>
-                    <font id='user' color='red'></font>
-                    <TextField
-                        hintText='Password'
+                        hintText='New Password'
                         type='password'
                         value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
@@ -78,7 +72,7 @@ class EditProfileWnd extends React.Component {
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                     <font id='cpass' color='red'></font>
                     <TextField
-                        hintText='Email'
+                        hintText='New Email'
                         value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                     <font id='email' color='red'></font>
@@ -87,14 +81,52 @@ class EditProfileWnd extends React.Component {
                         value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
                     <font id='cemail' color='red'></font>
+                    <font size="4">Birthday</font>
+                    <div style={styles.dropdown}>
+                        <Dropdown options={month_options} onChange={this._onSelect} value={'Month'} />
+                        <Dropdown options={day_options} onChange={this._onSelect} value={'Day'} />
+                        <Dropdown options={year_options} onChange={this._onSelect} value={'Year'} />
+                    </div>
+                    
                 </div>
             </MuiThemeProvider>
         );
 	}
 }
 
+const styles = {
+    root: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dropdown: {
+        display: 'block',
+        color: 'black'
+    }
+};
+
+const month_options = [
+    'January', 'February', 'March'
+];
+
+const day_options = [
+    '01', '02', '03'
+];
+
+const year_options = [
+    '1994', '1995', '1996'
+];
+
 $("#edit").click(function() {
-	console.log('hey');
+    console.log('hi');
 	let editProfileWndComponent = ReactDOM.render(
 		<EditProfileWnd />,
 		document.getElementById('main_content'));
