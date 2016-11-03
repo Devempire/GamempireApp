@@ -14,7 +14,6 @@ const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var session = electron.remote;
 
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -24,8 +23,38 @@ let muiTheme = getMuiTheme({
     fontFamily: 'Microsoft YaHei'
 });
 
-injectTapEventPlugin();
+const styles = {
+    root: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dropdown: {
+        display: 'block',
+        color: 'black'
+    }
+};
 
+const month_options = [
+    'January', 'February', 'March'
+];
+
+const day_options = [
+    '01', '02', '03'
+];
+
+const year_options = [
+    '1994', '1995', '1996'
+];
+
+injectTapEventPlugin();
 
 class EditProfileWnd extends React.Component {
 
@@ -62,93 +91,17 @@ class EditProfileWnd extends React.Component {
                         value={this.state.lastName || ""}
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     <font id='lname' color='red'></font>
-                    <TextField
-                        hintText='New Password'
-                        type='password'
-                        value={this.state.password || ""}
-                        onChange={(event) => {this.setState({password: event.target.value})}}/>
-                    <font id='pass' color='red'></font>
-                    <TextField
-                        hintText='Confirm Password'
-                        type='password'
-                        value={this.state.confirmPass || ""}
-                        onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
-                    <font id='cpass' color='red'></font>
-                    <TextField
-                        hintText='New Email'
-                        value={this.state.email || ""}
-                        onChange={(event) => {this.setState({email: event.target.value})}}/>
-                    <font id='email' color='red'></font>
-                    <TextField
-                        hintText='Confirm Email'
-                        value={this.state.confirmEmail || ""}
-                        onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
-                    <font id='cemail' color='red'></font>
                     <font size="4">Birthday</font>
                     <div style={styles.dropdown}>
                         <Dropdown options={month_options} onChange={this._onSelect} value={'Month'} />
                         <Dropdown options={day_options} onChange={this._onSelect} value={'Day'} />
                         <Dropdown options={year_options} onChange={this._onSelect} value={'Year'} />
                     </div>
-                    
                 </div>
             </MuiThemeProvider>
         );
 	}
-
-    
-
-
-
-    
 }
-
-const styles = {
-    root: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    dropdown: {
-        display: 'block',
-        color: 'black'
-    }
-};
-
-const month_options = [
-    'January', 'February', 'March'
-];
-
-const day_options = [
-    '01', '02', '03'
-];
-
-const year_options = [
-    '1994', '1995', '1996'
-];
-
-$("#edit").click(function() {
-    console.log('hi');
-	let editProfileWndComponent = ReactDOM.render(
-		<EditProfileWnd />,
-		document.getElementById('main_content'));
-});
-
-$("#view").click(function() {
-    console.log('yo');
-    let viewProfileWndComponent = ReactDOM.render(
-        <ViewProfileWnd />,
-        document.getElementById('main_content'));
-});
-
-
 
 class ViewProfileWnd extends React.Component {
 
@@ -197,9 +150,91 @@ class ViewProfileWnd extends React.Component {
                 </MuiThemeProvider>
         );
     }
-
-
-    
-
 }
 
+class ChangeEmailWnd extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: null,
+            confirmEmail: null
+        };
+    }
+
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <div style={styles.root}>
+                    <TextField
+                        hintText='New Email'
+                        value={this.state.email || ""}
+                        onChange={(event) => {this.setState({email: event.target.value})}}/>
+                    <TextField
+                        hintText='Confirm Email'
+                        value={this.state.confirmEmail || ""}
+                        onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
+                </div>
+            </MuiThemeProvider>
+        )
+    }
+}
+
+class ChangePasswordWnd extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            password: null,
+            confirmPass: null
+        };
+    }
+
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <div style={styles.root}>
+                    <TextField
+                        hintText='New Password'
+                        value={this.state.password || ""}
+                        onChange={(event) => {this.setState({password: event.target.value})}}/>
+                    <TextField
+                        hintText='Confirm Password'
+                        value={this.state.confirmPass || ""}
+                        onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
+                </div>
+            </MuiThemeProvider>
+        )
+    }
+}
+
+$("#edit").click(function() {
+    let editProfileWndComponent = ReactDOM.render(
+        <EditProfileWnd />,
+        document.getElementById('main_content'));
+});
+
+$("#view").click(function() {
+    console.log('yo');
+    let viewProfileWndComponent = ReactDOM.render(
+        <ViewProfileWnd />,
+        document.getElementById('main_content'));
+});
+
+$("#emailchange").click(function() {
+    let changeEmailWndComponent = ReactDOM.render(
+        <ChangeEmailWnd />,
+        document.getElementById('main_content'));
+});
+
+$("#passchange").click(function() {
+    let changePasswordWndComponent = ReactDOM.render(
+        <ChangePasswordWnd />,
+        document.getElementById('main_content'));
+});
+
+$("#logout").click(function() {
+    window.location.pathname = '../../index.html';
+});
