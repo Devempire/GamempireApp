@@ -78,7 +78,7 @@ class MainWindow extends React.Component {
             type: 'info',
             buttons: ['Yes'],
             title: 'Login',
-            message: this.state.userName +"logging",
+            message: this.state.userName +" logging",
             defaultId: 0,
             cancelId: 0
         };

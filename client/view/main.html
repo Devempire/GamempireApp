@@ -27,7 +27,7 @@
         )
         .done(function(data) {
             //get user profile by user id
-            console.log(data);
+            
           $.get("http://localhost:8080/user/profile/"+data._id +"/info").done(function(d){
             $("#Username").text("Welcome  "+d.username);
              });
@@ -71,7 +71,7 @@
               <span class="visuallyhidden">Accounts</span>
             </button>
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item">View Profile</li>
+              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="view">View Profile</a></li>
               <li class="mdl-menu__item" ><a class="mdl-navigation__link" id="edit">Edit Profile</a></li>
               <li class="mdl-menu__item">Log Out</li>
               <!--<li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>-->
