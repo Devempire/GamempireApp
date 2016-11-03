@@ -156,7 +156,7 @@ class ViewProfileWnd extends React.Component {
         super(props);
 
         this.state = {
-            firstName: null,
+            firstName: "hi",
             lastName: null,
             userName: null,
             password: null,
@@ -169,46 +169,26 @@ class ViewProfileWnd extends React.Component {
             friends: null,
             mic: null
         };
-        this.list=[];
-        this.list = this.loadProfile(this.list);
+
+        this.loadProfile.bind(this);
     }
 
-    loadProfile(list){
-        
-        var token = session.getGlobal('sharedObject').token;
-        $.post( "http://localhost:8080/user/load",
-                {'token' :token
 
-                }
-        )
-        .done(function(data) {
-            //get user profile by user id
-            console.log(data);
-          $.get("http://localhost:8080/user/profile/"+data._id +"/info").done(function(d){
-             list.push(d.firstname);
-             list.push(d.lastname);
-             list.push(d.email);
-             list.push(d.dateOfbirth);
-             console.log(list);
-             
-
-             });
-
-        });
+    loadProfile(){
+     console.log("hi");
     }
 
     render() {
         return (
 
+
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.root}>
+                <div style={styles.root} >
                     <h3>My Profile</h3>
                     <hr />
                    <ul>
-                    <li>{this.list[0]}</li>
-                    <li>{this.list[1]}</li>
-                    <li>{this.list[2]}</li>
-                    <li>{this.list[3]}</li>
+                    <li>{this.state.firstName}</li>
+                    
                     </ul>
                     
 
