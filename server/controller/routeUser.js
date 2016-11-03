@@ -130,7 +130,15 @@ router.put('/profile/update',function(req,res,next){
     });
 });
 
+router.patch('/profile/update/email', function(req, res, next) {
+    User.update(
+        { _id:req.body._id},
+        {email:req.body.email},
 
-
+        function (err, user) {
+            if (err) return next(err);
+            res.json(user);
+    });
+});
 
 module.exports = router;
