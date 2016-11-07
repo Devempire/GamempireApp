@@ -171,13 +171,75 @@ class ChangeEmailWnd extends React.Component {
                         hintText='New Email'
                         value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
+                        <font id='emailMsg' color='red'></font>
                     <TextField
                         hintText='Confirm Email'
                         value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
+                        <font id='cemail' color='red'></font>
+                    <div style={styles.buttons_container}>
+                        <RaisedButton
+                            label="Confirm" primary={true}
+                            onClick={this._checkValid.bind(this)}/>
+                    </div>
                 </div>
             </MuiThemeProvider>
         )
+    }
+
+    _checkValid() {
+        var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
+        var email = document.getElementById('emailMsg');
+        var cemail = document.getElementById('cemail');
+
+        if (this.state.email == null) {
+            email.innerHTML = 'This field is empty.';
+        } else if (!emailPattern.test(this.state.email)) {
+            email.innerHTML = 'Invalid email.';
+        } else {
+            email.innerHTML = '';
+        }
+
+        if (this.state.confirmEmail == null) {
+            cemail.innerHTML = 'This field is empty.';
+        } else if (this.state.email != this.state.confirmEmail) {
+            cemail.innerHTML = 'Emails do not match.';
+        } else {
+            cemail.innerHTML = '';
+        }
+
+        if (email.innerHTML == '' && cemail.innerHTML == '') {
+            this._updateEmail();
+        }
+    }
+
+    _updateEmail() {
+        let option1 = {
+            type: 'info',
+            buttons: ['Yes'],
+            title: 'Email',
+            message: "The new email " + this.state.email + " is updated.",
+            defaultId: 0,
+            cancelId: 0
+        };
+
+        let option2 = {
+            type: 'info',
+            buttons: ['OK'],
+            title: 'Email',
+            message: "Email already exists.",
+            defaultId: 0,
+            cancelId: 0
+        }
+
+        $.ajax({
+            url: 'http://localhost:8080/user/profile/update/email',
+            type: 'PATCH',
+            email:this.state.email,
+            success: function(result) {
+                dialog.showMessageBox(option1);
+            }
+        });
     }
 }
 

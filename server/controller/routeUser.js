@@ -116,23 +116,22 @@ router.get('/profile/:id/info',function(req,res,next){
 });
 
 // update user profile
-router.put('/profile/update',function(req,res,next){
-    User.update( { _id:req.body._id},
-      {name:req.body.name,
-        email:req.body.email,
-        dateofbirth:req.body.dateofbirth,       
+// router.put('/profile/update',function(req,res,next){
+//     User.update( { _id:req.body._id},
+//       {name:req.body.name,
+//         email:req.body.email,
+//         dateofbirth:req.body.dateofbirth       
        
-      }, function (err, user) {
-        if (err) return next(err);
-        //res.json(host);
-        console.log(user);
-        res.json(user);
-    });
-});
+//       }, function (err, user) {
+//         if (err) return next(err);
+//         //res.json(host);
+//         console.log(user);
+//         res.json(user);
+//     });
+// });
 
 router.patch('/profile/update/email', function(req, res, next) {
-    User.update(
-        { _id:req.body._id},
+    User.update({ _id:req.body._id},
         {email:req.body.email},
 
         function (err, user) {
