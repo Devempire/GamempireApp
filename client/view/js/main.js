@@ -115,7 +115,7 @@ class ViewProfileWnd extends React.Component {
         super(props);
 
         this.state = {
-            firstName: null,
+            firstName: "hi",
             lastName: null,
             userName: null,
             password: null,
@@ -128,46 +128,26 @@ class ViewProfileWnd extends React.Component {
             friends: null,
             mic: null
         };
-        this.list=[];
-        this.list = this.loadProfile(this.list);
+
+        this.loadProfile.bind(this);
     }
 
-    loadProfile(list){
-        
-        var token = session.getGlobal('sharedObject').token;
-        $.post( "http://localhost:8080/user/load",
-                {'token' :token
 
-                }
-        )
-        .done(function(data) {
-            //get user profile by user id
-            console.log(data);
-          $.get("http://localhost:8080/user/profile/"+data._id +"/info").done(function(d){
-             list.push(d.firstname);
-             list.push(d.lastname);
-             list.push(d.email);
-             list.push(d.dateOfbirth);
-             console.log(list);
-             
-
-             });
-
-        });
+    loadProfile(){
+     console.log("hi");
     }
 
     render() {
         return (
 
+
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.root}>
+                <div style={styles.root} >
                     <h3>My Profile</h3>
                     <hr />
                    <ul>
-                    <li>{this.list[0]}</li>
-                    <li>{this.list[1]}</li>
-                    <li>{this.list[2]}</li>
-                    <li>{this.list[3]}</li>
+                    <li>{this.state.firstName}</li>
+                    
                     </ul>
                     
 
@@ -340,12 +320,10 @@ var AddRemoveLayout = React.createClass({
   },
 
   onLayoutChange(layout) {
-    //this.props.onLayoutChange(layout);
     this.setState({layout: layout});
   },
 
   onRemoveItem() {
-    // this.setState(_.reject(this.state.items, {i: i}));
     $(document).ready(function(){
         $("#second_r").click(function(){
             $("#second_w").remove();
@@ -363,10 +341,19 @@ var AddRemoveLayout = React.createClass({
     return (
       <div>
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
-          <div key="1" data-grid={{x: 2, y: 0, w: 2, h: 2}}><span className="text">1</span></div>
-          <div id="second_w" key="2" data-grid={{x: 4, y: 0, w: 2, h: 2}}><span id="second_r" className="remove" style={removeStyle} onClick={this.onRemoveItem()}>x</span>2</div>
-          <div key="3" data-grid={{x: 6, y: 0, w: 2, h: 2}}><span className="text">3</span></div>
-          <div key="4" data-grid={{x: 8, y: 0, w: 2, h: 2}}><span className="text">4</span></div>
+            <div key="1" data-grid={{x: 2, y: 0, w: 2, h: 2}} >
+            <form>  Games:
+            <select>
+            <option value="1">Hearthstone</option>
+            <option value="2">Overwatch</option>
+            <option selected value="3">League of legend</option>
+            <option value="4">Dota2</option>
+            </select>
+            <input type="submit" value="Submit" />
+            </form>
+            </div>
+            <div id="second_w" key="2" data-grid={{x: 4, y: 0, w: 2, h: 2}}><span id="second_r" className="remove" style={removeStyle} onClick={this.onRemoveItem()}>x</span>2</div>
+            <div key="3" data-grid={{x: 6, y: 0, w: 2, h: 2}}><span className="text">3</span></div>
         </ResponsiveReactGridLayout>
       </div>
     );
