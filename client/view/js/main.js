@@ -285,7 +285,8 @@ var AddRemoveLayout = React.createClass({
     return {
       className: "layout",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: 100
+      rowHeight: 100,
+      verticalCompact: false
     };
   },
 
@@ -323,10 +324,10 @@ var AddRemoveLayout = React.createClass({
     this.setState({layout: layout});
   },
 
-  onRemoveItem() {
+  onRemoveItem(i) {
     $(document).ready(function(){
-        $("#second_r").click(function(){
-            $("#second_w").remove();
+        $("#remove" + i).click(function(){
+            $("#widget" + i).remove();
         });
     });
   },
@@ -348,19 +349,20 @@ var AddRemoveLayout = React.createClass({
     return (
       <div>
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
-            <div key="1" data-grid={{x: 2, y: 0, w: 2, h: 2}} >
-        
+            <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 2}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <form>Games:
+
             <select>
             <option value="1">Hearthstone</option>
             <option value="2">Overwatch</option>
-            <option selected value="3">League of legend</option>
+            <option selected value="3">League of Legends</option>
             <option value="4">Dota2</option>
             </select>
-            <button value="Submit" />
-            
+            <input type="submit" value="Submit"/>
+            </form>
             </div>
-            <div id="second_w" key="2" data-grid={{x: 4, y: 0, w: 2, h: 2}}><span id="second_r" className="remove" style={removeStyle} onClick={this.onRemoveItem()}>x</span>2</div>
-            <div key="3" data-grid={{x: 6, y: 0, w: 2, h: 2}}><span className="text">3</span></div>
+            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 2}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>2</div>
+            <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
         </ResponsiveReactGridLayout>
       </div>
     );
