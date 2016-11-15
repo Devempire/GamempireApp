@@ -291,26 +291,19 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    return {item:"hi"};
+    var layout = this.generateLayout();
+    return {
+      layout: layout
+    };
   },
 
-  // createElement(el) {
-  //   var removeStyle = {
-  //     position: 'absolute',
-  //     right: '2px',
-  //     top: 0,
-  //     cursor: 'pointer'
-  //   };
-  //   var i = el.add ? '+' : el.i;
-  //   return (
-  //     <div key={i} data-grid={el}>
-  //       {el.add ?
-  //         <span className="add text" onClick={this.onAddItem} title="You can add an item by clicking here, too.">Add +</span>
-  //       : <span className="text">{i}</span>}
-  //       <span className="remove" style={removeStyle} onClick={this.onRemoveItem.bind(this, i)}>x</span>
-  //     </div>
-  //   );
-  // },
+  generateLayout() {
+    var p = this.props;
+    return _.map(new Array(p.items), function(item, i) {
+      var y = _.result(p, 'y') || Math.ceil(Math.random() * 4) + 1;
+      return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
+    });
+  },
 
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
@@ -348,7 +341,8 @@ var AddRemoveLayout = React.createClass({
     };
     return (
       <div>
-        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
+        <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
+            onBreakpointChange={this.onBreakpointChange} {...this.props}>
             <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 2}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <form>Games:
 
