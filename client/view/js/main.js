@@ -291,8 +291,24 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    return {item:"hi"};
+    var t=this.getAPI();
+    console.log(t);
+    return {item:"hi",
+            value:"",
+            text:t
+      }
   },
+
+  getAPI() {
+        var a=231231;
+        $.get("https://api.lootbox.eu/pc/us/M3ng2er-1667/profile", function(res){
+            console.log(res.data);
+            a=res.data.username;
+            console.log(a); 
+            return a;
+         });
+       
+     },
 
   // createElement(el) {
   //   var removeStyle = {
@@ -332,12 +348,19 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-  getAPI() {
-        fetch('https://api.lootbox.eu/patch_notes', {
-            method: 'GET', }).then(
-            (response) => { ;}
-            );
+
+   handleChange(event) {
+    this.setState({value: event.target.value});
   },
+
+  handleSubmit(event) {
+    alert('Your favorite Game is: ' + this.state.value);
+    event.preventDefault();
+  },
+
+
+  
+
 
   render() {
     var removeStyle = {
@@ -350,19 +373,22 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
             <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 2}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
-            <form>Games:
+            <form onSubmit={this.handleSubmit}>Games:
 
-            <select>
-            <option value="1">Hearthstone</option>
-            <option value="2">Overwatch</option>
-            <option selected value="3">League of Legends</option>
-            <option value="4">Dota2</option>
+            <select value={this.state.value} onChange={this.handleChange}>
+            <option value="Hearthstone">Hearthstone</option>
+            <option value="Overwatch">Overwatch</option>
+            <option value="League of Legends">League of Legends</option>
+            <option value="Dota2">Dota2</option>
             </select>
             <input type="submit" value="Submit"/>
             </form>
             </div>
-            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 2}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>2</div>
+            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 2}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+            <p>{this.state.text}</p>
+            </div>
             <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
+
         </ResponsiveReactGridLayout>
       </div>
     );
