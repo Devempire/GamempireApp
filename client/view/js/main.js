@@ -310,31 +310,26 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    return {
-      items: [0, 1, 2, 3, 4].map(function(i, key, list) {
-        return {i: i.toString(), x: i * 2, y: 0, w: 2, h: 2, add: i === (list.length - 1).toString()};
-      }),
-      newCounter: 0
-    };
+    return {};
   },
 
-  createElement(el) {
-    var removeStyle = {
-      position: 'absolute',
-      right: '2px',
-      top: 0,
-      cursor: 'pointer'
-    };
-    var i = el.add ? '+' : el.i;
-    return (
-      <div key={i} data-grid={el}>
-        {el.add ?
-          <span className="add text" onClick={this.onAddItem} title="You can add an item by clicking here, too.">Add +</span>
-        : <span className="text">{i}</span>}
-        <span className="remove" style={removeStyle} onClick={this.onRemoveItem.bind(this, i)}>x</span>
-      </div>
-    );
-  },
+  // createElement(el) {
+  //   var removeStyle = {
+  //     position: 'absolute',
+  //     right: '2px',
+  //     top: 0,
+  //     cursor: 'pointer'
+  //   };
+  //   var i = el.add ? '+' : el.i;
+  //   return (
+  //     <div key={i} data-grid={el}>
+  //       {el.add ?
+  //         <span className="add text" onClick={this.onAddItem} title="You can add an item by clicking here, too.">Add +</span>
+  //       : <span className="text">{i}</span>}
+  //       <span className="remove" style={removeStyle} onClick={this.onRemoveItem.bind(this, i)}>x</span>
+  //     </div>
+  //   );
+  // },
 
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
@@ -349,17 +344,29 @@ var AddRemoveLayout = React.createClass({
     this.setState({layout: layout});
   },
 
-  onRemoveItem(i) {
-    console.log('removing', i);
-    this.setState({items: _.reject(this.state.items, {i: i})});
+  onRemoveItem() {
+    // this.setState(_.reject(this.state.items, {i: i}));
+    $(document).ready(function(){
+        $("#second_r").click(function(){
+            $("#second_w").remove();
+        });
+    });
   },
 
   render() {
+    var removeStyle = {
+      position: 'absolute',
+      right: '2px',
+      top: 0,
+      cursor: 'pointer'
+    };
     return (
       <div>
-        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
-            {...this.props}>
-          {_.map(this.state.items, this.createElement)}
+        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
+          <div key="1" data-grid={{x: 2, y: 0, w: 2, h: 2}}><span className="text">1</span></div>
+          <div id="second_w" key="2" data-grid={{x: 4, y: 0, w: 2, h: 2}}><span id="second_r" className="remove" style={removeStyle} onClick={this.onRemoveItem()}>x</span>2</div>
+          <div key="3" data-grid={{x: 6, y: 0, w: 2, h: 2}}><span className="text">3</span></div>
+          <div key="4" data-grid={{x: 8, y: 0, w: 2, h: 2}}><span className="text">4</span></div>
         </ResponsiveReactGridLayout>
       </div>
     );
