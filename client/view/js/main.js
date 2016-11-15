@@ -293,7 +293,9 @@ var AddRemoveLayout = React.createClass({
   getInitialState() {
     var layout = this.generateLayout();
     var t = this.getAPI();
+    console.log(t);
     return {
+      item: "hi",
       layout: layout,
       value: "",
       text: t
@@ -309,13 +311,17 @@ var AddRemoveLayout = React.createClass({
   },
 
   getAPI() {
-    var a=231231;
-    $.get("https://api.lootbox.eu/pc/us/M3ng2er-1667/profile", function(res){
-        console.log(res.data);
-        a=res.data.username;
-        console.log(a); 
-        return a;
+    var result = null;
+    $.ajax({
+        url: "https://api.lootbox.eu/pc/us/M3ng2er-1667/profile",
+        type: "GET",
+        dataType: "html",
+        async: false,
+        success: function(data) {
+            result = data;
+        }
     });
+    return result;
   },
 
   // We're using the cols coming back from this to calculate where to add new items.
@@ -374,7 +380,6 @@ var AddRemoveLayout = React.createClass({
             <p>{this.state.text}</p>
             </div>
             <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
-
         </ResponsiveReactGridLayout>
       </div>
     );
