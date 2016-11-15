@@ -290,7 +290,7 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    return {};
+    return {item:"hi"};
   },
 
   // createElement(el) {
@@ -331,6 +331,13 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
+  getAPI() {
+        fetch('https://api.lootbox.eu/patch_notes', {
+            method: 'GET', }).then(
+            (response) => { ;}
+            );
+  },
+
   render() {
     var removeStyle = {
       position: 'absolute',
@@ -342,15 +349,15 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
             <div key="1" data-grid={{x: 2, y: 0, w: 2, h: 2}} >
-            <form>  Games:
+        
             <select>
             <option value="1">Hearthstone</option>
             <option value="2">Overwatch</option>
             <option selected value="3">League of legend</option>
             <option value="4">Dota2</option>
             </select>
-            <input type="submit" value="Submit" />
-            </form>
+            <button value="Submit" />
+            
             </div>
             <div id="second_w" key="2" data-grid={{x: 4, y: 0, w: 2, h: 2}}><span id="second_r" className="remove" style={removeStyle} onClick={this.onRemoveItem()}>x</span>2</div>
             <div key="3" data-grid={{x: 6, y: 0, w: 2, h: 2}}><span className="text">3</span></div>
