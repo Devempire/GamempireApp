@@ -291,33 +291,38 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    var t=getAPI();
+    var layout = this.generateLayout();
+    var t = this.getAPI();
     console.log(t);
-    return {item:"hi",
-            value:"",
-            text:t
-      }
+    return {
+      item: "hi",
+      layout: layout,
+      value: "",
+      text: t
+    };
   },
 
-  
+  generateLayout() {
+    var p = this.props;
+    return _.map(new Array(p.items), function(item, i) {
+      var y = _.result(p, 'y') || Math.ceil(Math.random() * 4) + 1;
+      return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
+    });
+  },
 
-  // createElement(el) {
-  //   var removeStyle = {
-  //     position: 'absolute',
-  //     right: '2px',
-  //     top: 0,
-  //     cursor: 'pointer'
-  //   };
-  //   var i = el.add ? '+' : el.i;
-  //   return (
-  //     <div key={i} data-grid={el}>
-  //       {el.add ?
-  //         <span className="add text" onClick={this.onAddItem} title="You can add an item by clicking here, too.">Add +</span>
-  //       : <span className="text">{i}</span>}
-  //       <span className="remove" style={removeStyle} onClick={this.onRemoveItem.bind(this, i)}>x</span>
-  //     </div>
-  //   );
-  // },
+  getAPI() {
+    var result = null;
+    $.ajax({
+        url: "https://api.lootbox.eu/pc/us/M3ng2er-1667/profile",
+        type: "GET",
+        dataType: "html",
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+  },
 
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
@@ -339,8 +344,7 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-
-   handleChange(event) {
+  handleChange(event) {
     this.setState({value: event.target.value});
   },
 
@@ -348,10 +352,6 @@ var AddRemoveLayout = React.createClass({
     alert('Your favorite Game is: ' + this.state.value);
     event.preventDefault();
   },
-
-
-  
-
 
   render() {
     var removeStyle = {
@@ -362,7 +362,8 @@ var AddRemoveLayout = React.createClass({
     };
     return (
       <div>
-        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}>
+        <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
+            onBreakpointChange={this.onBreakpointChange} {...this.props}>
             <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 2}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <form onSubmit={this.handleSubmit}>Games:
 
@@ -379,7 +380,6 @@ var AddRemoveLayout = React.createClass({
             <p>{this.state.text}</p>
             </div>
             <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
-
         </ResponsiveReactGridLayout>
       </div>
     );
