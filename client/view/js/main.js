@@ -291,7 +291,7 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    var t=this.getAPI();
+    var t=getAPI();
     console.log(t);
     return {item:"hi",
             value:"",
@@ -299,16 +299,7 @@ var AddRemoveLayout = React.createClass({
       }
   },
 
-  getAPI() {
-        var a=231231;
-        $.get("https://api.lootbox.eu/pc/us/M3ng2er-1667/profile", function(res){
-            console.log(res.data);
-            a=res.data.username;
-            console.log(a); 
-            return a;
-         });
-       
-     },
+  
 
   // createElement(el) {
   //   var removeStyle = {
@@ -429,3 +420,15 @@ $("#passchange").click(function() {
 $("#logout").click(function() {
     window.location.pathname = '../../index.html';
 });
+
+
+function getAPI() {
+        var a=123423
+        $.get("https://api.lootbox.eu/pc/us/M3ng2er-1667/profile").done(function(res){
+            a=res.data.username;
+            console.log(a); 
+            return a;
+        });
+         
+       
+     };
