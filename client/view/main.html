@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Gamempire</title>
 
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.cyan-light_blue.min.css" />
@@ -15,26 +14,7 @@
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
-    <script >
-      var session = require('electron').remote;
-      window.onload =function(){
-        var token = session.getGlobal('sharedObject').token;
-
-        $.post( "http://localhost:8080/user/load",
-                {'token' :token
-
-                }
-        )
-        .done(function(data) {
-            //get user profile by user id
-            
-          $.get("http://localhost:8080/user/profile/"+data._id +"/info").done(function(d){
-            $("#Username").text("Welcome  "+d.username);
-             });
-
-        });
-      };
-    </script>
+    
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -60,39 +40,7 @@
           </ul>
         </div>
       </header>
-      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="demo-drawer-header">
-          <img src="img/user.jpg" class="demo-avatar">
-          <div class="demo-avatar-dropdown">
-            <span id="Username"></span>
-            <div class="mdl-layout-spacer"></div>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-              <i class="material-icons" role="presentation">arrow_drop_down</i>
-              <span class="visuallyhidden">Accounts</span>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="view">View Profile</a></li>
-              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="edit">Edit Profile</a></li>
-              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="emailchange">Change Email</a></li>
-              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="passchange">Change Password</a></li>
-              <li class="mdl-menu__item"><a class="mdl-navigation__link" id="logout">Log Out</a></li>
-              <!--<li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>-->
-            </ul>
-          </div>
-        </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">chat</i>Chats</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">explore</i>Games</a>
-          <!--
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
-          -->
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Friends</a>
-          <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span>Help</a>
-        </nav>
-      </div>
+      
 
       <div id ="main_content"></div>
       
