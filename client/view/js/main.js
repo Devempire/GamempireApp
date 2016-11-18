@@ -32,19 +32,18 @@ var AddRemoveLayout = React.createClass({
     return {
       className: "layout",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: 100,
+      rowHeight: 20,
       verticalCompact: false
     };
   },
 
   getInitialState() {
     var layout = this.generateLayout();
-    var t = this.getAPI();
-    console.log(t);
+    //var t = this.getAPI();
+    //console.log(t);
     return {
       layout: layout,
-      value: "",
-      text: t
+      value: ""
     };
   },
 
@@ -110,7 +109,7 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 2}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <form onSubmit={this.handleSubmit}>Games:
 
             <select value={this.state.value} onChange={this.handleChange}>
@@ -122,10 +121,10 @@ var AddRemoveLayout = React.createClass({
             <input type="submit" value="Submit"/>
             </form>
             </div>
-            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 2}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 8}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
             <p>{this.state.text}</p>
             </div>
-            <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
+            <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 8}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
         </ResponsiveReactGridLayout>
       </div>
     );
