@@ -43,7 +43,8 @@ var AddRemoveLayout = React.createClass({
     //console.log(t);
     return {
       layout: layout,
-      value: ""
+      //value: "",
+      //text: t
     };
   },
 
@@ -55,19 +56,6 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-  /**getAPI() {
-    var result = null;
-    $.ajax({
-        url: "https://api.lootbox.eu/pc/us/M3ng2er-1667/profile",
-        type: "GET",
-        dataType: "html",
-        async: false,
-        success: function(data) {
-            result = data;
-        }
-    });
-    return result;
-  }, **/
 
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
@@ -81,6 +69,7 @@ var AddRemoveLayout = React.createClass({
     this.setState({layout: layout});
   },
 
+
   onRemoveItem(i) {
     $(document).ready(function(){
         $("#remove" + i).click(function(){
@@ -89,14 +78,7 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  },
-
-  handleSubmit(event) {
-    alert('Your favorite Game is: ' + this.state.value);
-    event.preventDefault();
-  },
+ 
 
   render() {
     var removeStyle = {
@@ -109,42 +91,139 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 3, y: 0, w: 2, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
-            <form onSubmit={this.handleSubmit}>Games:
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 16}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <h3> Profile </h3>
+            <hr/>
+            <img src={'./img/user.jpg'}/>
 
-            <select value={this.state.value} onChange={this.handleChange}>
-            <option value="Hearthstone">Hearthstone</option>
-            <option value="Overwatch">Overwatch</option>
-            <option value="League of Legends">League of Legends</option>
-            <option value="Dota2">Dota2</option>
-            </select>
-            <input type="submit" value="Submit"/>
-            </form>
+            <button id="edit"> Edit Profile</button>  
+
             </div>
-            <div id="widget2" key="2" data-grid={{x: 5, y: 0, w: 2, h: 8}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
-            <p>{this.state.text}</p>
+            <div id="widget2" key="2" data-grid={{x: 0, y: 4, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+            <h4> Game 1</h4>
+            <p> detail</p>
+            <hr/>
+            <h4> interest</h4>
+
+            
             </div>
-            <div id="widget3" key="3" data-grid={{x: 7, y: 0, w: 2, h: 8}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>3</div>
+            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <h4> Game 2</h4>
+            <p> detail</p>
+            <hr/>
+            <h4> interest</h4>
+            </div>
+
+            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <h4> Game 3</h4>
+            <p> detail</p>
+            <hr/>
+            <h4> interest</h4>
+            </div>
+
         </ResponsiveReactGridLayout>
       </div>
     );
   }
 });
 
-module.exports = AddRemoveLayout;
+var Edit= React.createClass({
+  mixins: [PureRenderMixin],
 
-let MyFirstGridComponent = ReactDOM.render(
+  getDefaultProps() {
+    return {
+      className: "layout",
+      cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+      rowHeight: 20,
+      verticalCompact: false
+    };
+  },
+
+  getInitialState() {
+    var layout = this.generateLayout();
+
+    return {
+      layout: layout,
+    };
+  },
+
+  generateLayout() {
+    var p = this.props;
+    return _.map(new Array(p.items), function(item, i) {
+      var y = _.result(p, 'y') || Math.ceil(Math.random() * 4) + 1;
+      return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
+    });
+  },
+
+
+  // We're using the cols coming back from this to calculate where to add new items.
+  onBreakpointChange(breakpoint, cols) {
+    this.setState({
+      breakpoint: breakpoint,
+      cols: cols
+    });
+  },
+
+  onLayoutChange(layout) {
+    this.setState({layout: layout});
+  },
+
+
+  onRemoveItem(i) {
+    $(document).ready(function(){
+        $("#remove" + i).click(function(){
+            $("#widget" + i).remove();
+        });
+    });
+  },
+
+
+ 
+
+  render() {
+    var removeStyle = {
+      position: 'absolute',
+      right: '2px',
+      top: 0,
+      cursor: 'pointer'
+    };
+
+
+    
+    return (
+      <div>
+        <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
+            onBreakpointChange={this.onBreakpointChange} {...this.props}>
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <h3> Edit Your personal Info</h3>
+            <hr/>
+            <img src={'./img/user.jpg'}/>
+            <form>Name:
+            <input type="text" name="name" />
+            <input type="submit" value="Submit" />
+            <button> show change password </button>
+            </form>
+            </div>
+            
+            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+    
+            </div>
+            
+            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+
+            </div>
+        </ResponsiveReactGridLayout>
+      </div>
+    );
+  }
+});
+
+let profilewidget = ReactDOM.render(
         <AddRemoveLayout />,
         document.getElementById('main_content'));
 
-
-function getAPI() {
-        var a=123423
-        $.get("https://api.lootbox.eu/pc/us/M3ng2er-1667/profile").done(function(res){
-            a=res.data.username;
-            console.log(a); 
-            return a;
-        });
-         
-       
-     };
+$("#edit").click(function() {
+    let edit = ReactDOM.render(
+        <Edit />,
+        document.getElementById('main_content'));
+});
