@@ -32,7 +32,7 @@ var AddRemoveLayout = React.createClass({
     return {
       className: "layout",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: 100,
+      rowHeight: 20,
       verticalCompact: false
     };
   },
@@ -91,7 +91,7 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 4}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 16}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <h3> Profile </h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
@@ -99,7 +99,7 @@ var AddRemoveLayout = React.createClass({
             <button id="edit"> Edit Profile</button>  
 
             </div>
-            <div id="widget2" key="2" data-grid={{x: 0, y: 4, w: 2, h: 2}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+            <div id="widget2" key="2" data-grid={{x: 0, y: 4, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
             <h4> Game 1</h4>
             <p> detail</p>
             <hr/>
@@ -107,14 +107,14 @@ var AddRemoveLayout = React.createClass({
 
             
             </div>
-            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
             <h4> Game 2</h4>
             <p> detail</p>
             <hr/>
             <h4> interest</h4>
             </div>
 
-            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
             <h4> Game 3</h4>
             <p> detail</p>
             <hr/>
@@ -134,7 +134,7 @@ var Edit= React.createClass({
     return {
       className: "layout",
       cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-      rowHeight: 100,
+      rowHeight: 20,
       verticalCompact: false
     };
   },
@@ -203,30 +203,28 @@ var Edit= React.createClass({
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 4}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <h3> Edit Your personal Info</h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
             <button >change password</button>
             </div>
             
-            {this.state.show && <div id="widget3" key="2" data-grid={{x: 0, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span></div>}
-            
-            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+
+
+            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
     
             </div>
-                
+            
+            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
 
-            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
 
             </div>
-
         </ResponsiveReactGridLayout>
       </div>
     );
   }
 });
-
 
 let profilewidget = ReactDOM.render(
         <AddRemoveLayout />,
@@ -237,5 +235,3 @@ $("#edit").click(function() {
         <Edit />,
         document.getElementById('main_content'));
 });
-
-
