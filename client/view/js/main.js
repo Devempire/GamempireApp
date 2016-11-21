@@ -143,7 +143,10 @@ var Edit= React.createClass({
     var layout = this.generateLayout();
 
     return {
+        show:false,
       layout: layout,
+
+
     };
   },
 
@@ -177,6 +180,12 @@ var Edit= React.createClass({
     });
   },
 
+  handleClick() {
+    this.setState({show: true});
+  },
+
+  
+
 
  
 
@@ -198,17 +207,15 @@ var Edit= React.createClass({
             <h3> Edit Your personal Info</h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
-            <form>Name:
-            <input type="text" name="name" />
-            <input type="submit" value="Submit" />
-            <button> show change password </button>
-            </form>
+            <button >change password</button>
             </div>
+            
+            {this.state.show && <div id="widget3" key="2" data-grid={{x: 0, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span></div>}
             
             <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
     
             </div>
-            
+                
 
             <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 2}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
 
