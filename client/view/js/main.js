@@ -233,16 +233,16 @@ var Edit = React.createClass({
         <form>
         <label>
         Old password:
-        <input type="password" name="oldpw" />
+        <input type="password" id="oldpw" />
         </label>
         <br/>
         <label>
         New password:
-        <input type="password" name="newpw" />
+        <input type="password" id="newpw" />
         </label>
         <br/>
-        <input type="submit" value="Submit" />
         </form>
+        <button onClick={this.checkPw}> Submit </button>
       </div>
     );
   },
@@ -291,9 +291,9 @@ var Edit = React.createClass({
       };
 
       var namePattern = new RegExp('^[a-zA-Z]{1,}$');
-      var fname = document.getElementById('firstName');
+      var fname = $('#firstName').val();
       var errorfname = document.getElementById('fname');
-      var lname = document.getElementById('lastName');
+      var lname = $('#lastName').val();
       var errorlname = document.getElementById('lname');
 
       if (fname.value == "") {
@@ -313,17 +313,31 @@ var Edit = React.createClass({
       }
 
       if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
+            var token = electron.remote.getGlobal('sharedObject').token;
+             $.post( "http://localhost:8080/user/load",
+                {
+                    'token' :token
+                }).done(function(d) {
+                    console.log(lname);
+                    $.ajax({
+                            url:"http://localhost:8080/user/profile/update",   
+                            type:"PUT",
+                            data:{    
+                                _id:d._id,
+                                "firstname":fname,
+                                "lastname":lname
+                            }
+                        }).done(
+                                function(res){
+                                    dialog.showMessageBox(option1);
+                                });
+                            });
+        }
+    },
 
-          $.ajax({
-              url: 'http://localhost:8080/user/profile/:id/info',
-              type: 'PUT',
-              firstname:fname.value,
-              lastname:lname.value,
-              success: function(result) {
-                  dialog.showMessageBox(option1);
-              }
-          });
-      }
+    checkPw(){
+        var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
+        var newpw = $('#newpw').val();
     }
 });
 

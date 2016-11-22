@@ -7,9 +7,7 @@ var User = require('../model/user.js');
 var crypto = require('crypto');
 
 
-router.get('/test',function(req,res,next){
-    console.log("test done");
-});
+
 /* show all users (for testing only), delete if running server in real application*/
 router.get('/show', function (req, res, next) {
     User.find(function (err, users) {
@@ -55,7 +53,7 @@ router.post('/find', function (req, res, next) {
             var token = jwt.sign(users[0], 'SecretKey', {
                 expiresIn: 1440*60 // expires in 24 hours
             });
-            //console.log(token);
+
             res.send(token);
             res.end("Information found");
         }else{
@@ -115,39 +113,57 @@ router.get('/profile/:id/info',function(req,res,next){
     });
 });
 
-// update user profile
-// router.put('/profile/update',function(req,res,next){
-//     User.update( { _id:req.body._id},
-//       {name:req.body.name,
-//         email:req.body.email,
-//         dateofbirth:req.body.dateofbirth       
+ //update user profile
+ router.put('/profile/update',function(req,res,next){
+     User.update( { _id:req.body._id},
+       {firstname:req.body.firstname,
+        lastname:req.body.lastname       
        
-//       }, function (err, user) {
-//         if (err) return next(err);
-//         //res.json(host);
-//         console.log(user);
-//         res.json(user);
-//     });
-// });
+       }, function (err, user) {
+         if (err) return next(err);
 
-router.patch('/profile/update/email', function(req, res, next) {
-    User.update({ _id:req.body._id},
-        {email:req.body.email},
+         console.log(user +"profile updated!");
+         res.json(user);
+     });
+ });
+ // update user Email
+ router.put('/profile/updateEmail',function(req,res,next){
+     User.update( { _id:req.body._id},
+       {
+        email:req.body.email       
+       
+       }, function (err, user) {
+         if (err) return next(err);
+         console.log(user +"email updated!");
+         res.json(user);
+     });
+ });
 
-        function (err, user) {
-            if (err) return next(err);
-            res.json(user);
-    });
-});
+ //update user password
+ router.put('/profile/updatePW',function(req,res,next){
+    var key = crypto.pbkdf2Sync(req.body.password, 'salt', 10000, 512);
+     User.update( { _id:req.body._id},
+       {
+        password:key       
+       
+       }, function (err, user) {
+         if (err) return next(err);
+         console.log(user +"password updated!");
+         res.json(user);
+     });
+ });
 
-router.put('/profile/info', function(req, res, next) {
-    User.update({username:req.body.username},
-        {firstname:req.body.firstname},
-        {lastname:req.body.lastname},
-
-        function (err, user) {
-            if (err) return next(err);
-            res.json(user);
+ /*check old password*/
+router.post('/checkold', function (req, res, next) {
+    var key = crypto.pbkdf2Sync(req.body.password, 'salt', 10000, 512);
+    User.find({_id:req.body._id, 'password':key}, function (err, users) {
+        if (err) return next(err);
+        if (!(users[0] == null)){
+            res.end("Information found");
+        }else{
+          res.status(400);
+            return next(new Error("Incorrect information"));
+        }
     });
 });
 
