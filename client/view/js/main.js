@@ -78,8 +78,6 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
- 
-
   render() {
     var removeStyle = {
       position: 'absolute',
@@ -127,7 +125,7 @@ var AddRemoveLayout = React.createClass({
   }
 });
 
-var Edit= React.createClass({
+var Edit = React.createClass({
   mixins: [PureRenderMixin],
 
   getDefaultProps() {
@@ -145,7 +143,7 @@ var Edit= React.createClass({
     return {
 
       layout: layout,
-      items:[{i:"0",x:0,y:0,w:4,h:13}],
+      items:[{i:"0",x:0,y:0,w:4,h:16}],
       pw:[],
       email:[],
 
@@ -159,7 +157,6 @@ var Edit= React.createClass({
       return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
     });
   },
-
 
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
@@ -181,8 +178,22 @@ var Edit= React.createClass({
         <h3> Edit Your personal Info</h3>
         <hr/>
         <img src={'./img/user.jpg'}/>
-        <button onClick={this.onAddchangepw}>change password</button>
-        <button onClick={this.onAddchangeEmail}>change email</button>
+        
+
+        <form>
+            First Name: <br></br>
+            <input type="text" id="firstName" />
+            <font id='fname' color='red'></font>
+            <br></br>
+            Last Name: <br></br>
+            <input type="text" id="lastName" />
+            <font id='lname' color='red'></font>
+            <br></br>
+        </form>
+            <button onClick={this.checkValid}> Submit </button>
+            <button onClick={this.onAddchangepw}>change password</button>
+            <button onClick={this.onAddchangeEmail}>change email</button>
+            
       </div>
     );
   },
@@ -193,7 +204,7 @@ var Edit= React.createClass({
       pw: this.state.pw.concat({
         i: "change password",
         x: 0,
-        y: 13,
+        y: 16,
         w: 4,
         h: 10
       })
@@ -206,7 +217,7 @@ var Edit= React.createClass({
       email: this.state.email.concat({
         i: "change email",
         x: 4,
-        y: 13,
+        y: 16,
         w: 4,
         h: 10
       })
@@ -266,7 +277,55 @@ var Edit= React.createClass({
         </ResponsiveReactGridLayout>
       </div>
     );
-  }
+  },
+
+  checkValid() {
+
+      let option1 = {
+          type: 'info',
+          buttons: ['Yes'],
+          title: 'Update',
+          message: "Successfully updated.",
+          defaultId: 0,
+          cancelId: 0
+      };
+
+      var namePattern = new RegExp('^[a-zA-Z]{1,}$');
+      var fname = document.getElementById('firstName');
+      var errorfname = document.getElementById('fname');
+      var lname = document.getElementById('lastName');
+      var errorlname = document.getElementById('lname');
+
+      if (fname.value == "") {
+          errorfname.innerHTML = "The field is empty.";
+      } else if (!namePattern.test(fname.value)) {
+          errorfname.innerHTML = "Names can only contain alphabets.";
+      } else {
+          errorfname.innerHTML = "";
+      }
+
+      if (lname.value == "") {
+          errorlname.innerHTML = "The field is empty.";
+      } else if (!namePattern.test(lname.value)) {
+          errorlname.innerHTML = "Names can only contain alphabets.";
+      } else {
+          errorlname.innerHTML = "";
+      }
+
+      if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
+
+          $.ajax({
+              url: 'http://localhost:8080/user/profile/info',
+              type: 'PATCH',
+              username: 'Opa',
+              firstname:fname.value,
+              lastname:lname.value,
+              success: function(result) {
+                  dialog.showMessageBox(option1);
+              }
+          });
+      }
+    }
 });
 
 let profilewidget = ReactDOM.render(
