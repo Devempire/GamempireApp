@@ -141,7 +141,10 @@ var Edit = React.createClass({
     var layout = this.generateLayout();
 
     return {
+        show:false,
       layout: layout,
+
+
     };
   },
 
@@ -174,21 +177,6 @@ var Edit = React.createClass({
     });
   },
 
-  // show() {
-  //   var removeStyle = {
-  //     position: 'absolute',
-  //     right: '2px',
-  //     top: 0,
-  //     cursor: 'pointer'
-  //   };
-
-  //   <div>
-  //     <div id="widget2" key="2" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
-  //     </div>
-  //   </div>
-  // },
- 
-
   render() {
     var removeStyle = {
       position: 'absolute',
@@ -205,6 +193,7 @@ var Edit = React.createClass({
             <h3> Edit Your personal Info</h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
+
             <form>
             First Name: <br></br>
             <input type="text" id="firstName" />
@@ -216,14 +205,17 @@ var Edit = React.createClass({
             <br></br>
             </form>
             <button onClick={this.checkValid}> Submit </button>
-            <button> show change password </button>
+            <button >change password</button>
             </div>
             
+
+
             <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
     
             </div>
             
             <div id="widget4" key="4" data-grid={{x: 6, y: 4, w: 2, h: 6}}><span id="remove4" style={removeStyle} onClick={this.onRemoveItem('4')}>x</span>
+
 
             </div>
         </ResponsiveReactGridLayout>
