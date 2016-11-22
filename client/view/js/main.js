@@ -99,7 +99,7 @@ var AddRemoveLayout = React.createClass({
             <button id="edit"> Edit Profile</button>  
 
             </div>
-            <div id="widget2" key="2" data-grid={{x: 0, y: 4, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+            <div id="widget2" key="2" data-grid={{x: 0, y: 16, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
             <h4> Game 1</h4>
             <p> detail</p>
             <hr/>
@@ -107,14 +107,14 @@ var AddRemoveLayout = React.createClass({
 
             
             </div>
-            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <div id="widget3" key="3" data-grid={{x: 2, y: 16, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
             <h4> Game 2</h4>
             <p> detail</p>
             <hr/>
             <h4> interest</h4>
             </div>
 
-            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <div id="widget4" key="4" data-grid={{x: 4, y: 16, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
             <h4> Game 3</h4>
             <p> detail</p>
             <hr/>
@@ -143,9 +143,11 @@ var Edit= React.createClass({
     var layout = this.generateLayout();
 
     return {
-        show:false,
-      layout: layout,
 
+      layout: layout,
+      items:[{i:"0",x:0,y:0,w:4,h:13}],
+      pw:[],
+      email:[],
 
     };
   },
@@ -172,54 +174,95 @@ var Edit= React.createClass({
   },
 
 
-  onRemoveItem(i) {
-    $(document).ready(function(){
-        $("#remove" + i).click(function(){
-            $("#widget" + i).remove();
-        });
+ createProfile(el) {
+    var i = el.i;
+    return (
+      <div key={i} data-grid={el}>
+        <h3> Edit Your personal Info</h3>
+        <hr/>
+        <img src={'./img/user.jpg'}/>
+        <button onClick={this.onAddchangepw}>change password</button>
+        <button onClick={this.onAddchangeEmail}>change email</button>
+      </div>
+    );
+  },
+
+  onAddchangepw() {
+
+    this.setState({
+      pw: this.state.pw.concat({
+        i: "change password",
+        x: 0,
+        y: 13,
+        w: 4,
+        h: 10
+      })
     });
   },
 
-  handleClick() {
-    this.setState({show: true});
+  onAddchangeEmail() {
+
+    this.setState({
+      email: this.state.email.concat({
+        i: "change email",
+        x: 4,
+        y: 13,
+        w: 4,
+        h: 10
+      })
+    });
   },
 
-  
+  changePW(el) {
+    var i = el.i;
+    return (
+      <div key={i} data-grid={el}>
+        <h3> Edit Your password</h3>
+        <hr/>
+        <form>
+        <label>
+        Old password:
+        <input type="password" name="oldpw" />
+        </label>
+        <br/>
+        <label>
+        New password:
+        <input type="password" name="newpw" />
+        </label>
+        <br/>
+        <input type="submit" value="Submit" />
+        </form>
+      </div>
+    );
+  },
 
-
- 
+  changeEmail(el) {
+    var i = el.i;
+    return (
+      <div key={i} data-grid={el}>
+        <h3> Edit Your Email</h3>
+        <hr/>
+        <form>
+        <label>
+        New email
+        <input type="text" name="email" />
+        </label>
+        <br/>
+        <input type="submit" value="Submit" />
+        </form>
+      </div>
+    );
+  },
 
   render() {
-    var removeStyle = {
-      position: 'absolute',
-      right: '2px',
-      top: 0,
-      cursor: 'pointer'
-    };
-
-
-    
     return (
       <div>
-        <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
-            onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
-            <h3> Edit Your personal Info</h3>
-            <hr/>
-            <img src={'./img/user.jpg'}/>
-            <button >change password</button>
-            </div>
-            
-
-
-            <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
-    
-            </div>
-            
-            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
-
-
-            </div>
+        
+        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
+            {...this.props}>
+          {_.map(this.state.items, this.createProfile)}
+          {_.map(this.state.pw, this.changePW)}
+          {_.map(this.state.email, this.changeEmail)}
         </ResponsiveReactGridLayout>
       </div>
     );
