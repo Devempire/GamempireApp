@@ -78,8 +78,6 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
- 
-
   render() {
     var removeStyle = {
       position: 'absolute',
@@ -127,7 +125,7 @@ var AddRemoveLayout = React.createClass({
   }
 });
 
-var Edit= React.createClass({
+var Edit = React.createClass({
   mixins: [PureRenderMixin],
 
   getDefaultProps() {
@@ -155,7 +153,6 @@ var Edit= React.createClass({
     });
   },
 
-
   // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
     this.setState({
@@ -177,7 +174,19 @@ var Edit= React.createClass({
     });
   },
 
+  // show() {
+  //   var removeStyle = {
+  //     position: 'absolute',
+  //     right: '2px',
+  //     top: 0,
+  //     cursor: 'pointer'
+  //   };
 
+  //   <div>
+  //     <div id="widget2" key="2" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
+  //     </div>
+  //   </div>
+  // },
  
 
   render() {
@@ -188,34 +197,87 @@ var Edit= React.createClass({
       cursor: 'pointer'
     };
 
-
-    
     return (
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 8}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 8, static: true}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
             <h3> Edit Your personal Info</h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
-            <form>Name:
-            <input type="text" name="name" />
-            <input type="submit" value="Submit" />
-            <button> show change password </button>
+            <form>
+            First Name: <br></br>
+            <input type="text" id="firstName" />
+            <font id='fname' color='red'></font>
+            <br></br>
+            Last Name: <br></br>
+            <input type="text" id="lastName" />
+            <font id='lname' color='red'></font>
+            <br></br>
             </form>
+            <button onClick={this.checkValid}> Submit </button>
+            <button> show change password </button>
             </div>
             
             <div id="widget3" key="3" data-grid={{x: 2, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
     
             </div>
             
-            <div id="widget4" key="4" data-grid={{x: 4, y: 4, w: 2, h: 6}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
+            <div id="widget4" key="4" data-grid={{x: 6, y: 4, w: 2, h: 6}}><span id="remove4" style={removeStyle} onClick={this.onRemoveItem('4')}>x</span>
 
             </div>
         </ResponsiveReactGridLayout>
       </div>
     );
-  }
+  },
+
+  checkValid() {
+
+      let option1 = {
+          type: 'info',
+          buttons: ['Yes'],
+          title: 'Update',
+          message: "Successfully updated.",
+          defaultId: 0,
+          cancelId: 0
+      };
+
+      var namePattern = new RegExp('^[a-zA-Z]{1,}$');
+      var fname = document.getElementById('firstName');
+      var errorfname = document.getElementById('fname');
+      var lname = document.getElementById('lastName');
+      var errorlname = document.getElementById('lname');
+
+      if (fname.value == "") {
+          errorfname.innerHTML = "The field is empty.";
+      } else if (!namePattern.test(fname.value)) {
+          errorfname.innerHTML = "Names can only contain alphabets.";
+      } else {
+          errorfname.innerHTML = "";
+      }
+
+      if (lname.value == "") {
+          errorlname.innerHTML = "The field is empty.";
+      } else if (!namePattern.test(lname.value)) {
+          errorlname.innerHTML = "Names can only contain alphabets.";
+      } else {
+          errorlname.innerHTML = "";
+      }
+
+      if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
+
+          $.ajax({
+              url: 'http://localhost:8080/user/profile/info',
+              type: 'PATCH',
+              username: 'Opa',
+              firstname:fname.value,
+              lastname:lname.value,
+              success: function(result) {
+                  dialog.showMessageBox(option1);
+              }
+          });
+      }
+    }
 });
 
 let profilewidget = ReactDOM.render(
