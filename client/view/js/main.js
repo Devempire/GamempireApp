@@ -315,9 +315,8 @@ var Edit = React.createClass({
       if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
 
           $.ajax({
-              url: 'http://localhost:8080/user/profile/info',
-              type: 'PATCH',
-              username: 'Opa',
+              url: 'http://localhost:8080/user/profile/:id/info',
+              type: 'PUT',
               firstname:fname.value,
               lastname:lname.value,
               success: function(result) {
