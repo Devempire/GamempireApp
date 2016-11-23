@@ -146,6 +146,7 @@ var Edit = React.createClass({
       items:[{i:"0",x:0,y:0,w:4,h:20}],
       pw:[],
       email:[],
+      response:undefined
 
     };
   },
@@ -170,22 +171,28 @@ var Edit = React.createClass({
     this.setState({layout: layout});
   },
 
-
-  createProfile(el) {
-    var i = el.i;
-
+  loadProfile(){
     var token = electron.remote.getGlobal('sharedObject').token;
 
-    $.post( "http://localhost:8080/user/load",
-    {
+    $.post( "http://localhost:8080/user/load",{
         'token': token
-    }).done(function(d) {
-        $.get('http://localhost:8080/user/profile/:id/info',
-        {
-
+        }).done((d)=> {
+            $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
+                
+                this.setState({response: res});
+                console.log(this.state.response.username);
         });
     });
+  },
 
+  componentWillMount: function(){
+    this.loadProfile();
+  },
+
+
+  createProfile(el) {
+    
+    var i = el.i;
     return (
       <div key={i} data-grid={el}>
         <h3> Edit Your personal Info</h3>
@@ -195,7 +202,7 @@ var Edit = React.createClass({
 
         <form>
             Username: <br></br>
-            <input type="text" id="userName" />
+            <input type="text" id="userName" value={this.state.response.username}/>
             <font id='uname' color='red'></font>
             <br></br>
             First Name: <br></br>
@@ -297,17 +304,21 @@ var Edit = React.createClass({
   },
 
   render() {
+     if(this.state.response){
     return (
       <div>
         
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
             {...this.props}>
-          {_.map(this.state.items, this.createProfile)}
-          {_.map(this.state.pw, this.changePW)}
-          {_.map(this.state.email, this.changeEmail)}
+            {_.map(this.state.items, this.createProfile)}
+            {_.map(this.state.pw, this.changePW)}
+            {_.map(this.state.email, this.changeEmail)}
         </ResponsiveReactGridLayout>
       </div>
     );
+    }else{
+        return (<div> Loading</div>);
+    }
   },
 
   checkValid() {
