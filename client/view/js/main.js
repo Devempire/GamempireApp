@@ -89,7 +89,7 @@ var AddRemoveLayout = React.createClass({
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 16}}><span id="remove1" style={removeStyle} onClick={this.onRemoveItem('1')}>x</span>
+            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 16}}>
             <h3> Profile </h3>
             <hr/>
             <img src={'./img/user.jpg'}/>
@@ -198,6 +198,14 @@ var Edit = React.createClass({
     );
   },
 
+  onRemoveItem() {
+    this.setState({pw: _.reject(this.state.pw, {i: "change password"})});
+  },
+
+  onRemoveItem1() {
+    this.setState({email: _.reject(this.state.email, {i: "change email"})});
+  },
+
   onAddchangepw() {
 
     this.setState({
@@ -234,11 +242,13 @@ var Edit = React.createClass({
         <label>
         Old password:
         <input type="password" id="oldpw" />
+        <font id='oldpass' color='red'></font>
         </label>
         <br/>
         <label>
         New password:
         <input type="password" id="newpw" />
+        <font id='newpass' color='red'></font>
         </label>
         <br/>
         </form>
@@ -256,11 +266,11 @@ var Edit = React.createClass({
         <form>
         <label>
         New email
-        <input type="text" name="email" />
+        <input type="text" id="email" />
+        <font id='newemail' color='red'></font>
         </label>
-        <br/>
-        <input type="submit" value="Submit" />
         </form>
+        <button onClick={this.checkEmail}> Submit </button>
       </div>
     );
   },
@@ -284,7 +294,7 @@ var Edit = React.createClass({
       let option1 = {
           type: 'info',
           buttons: ['Yes'],
-          title: 'Update',
+          title: 'Update personal info',
           message: "Successfully updated.",
           defaultId: 0,
           cancelId: 0
@@ -296,17 +306,17 @@ var Edit = React.createClass({
       var lname = $('#lastName').val();
       var errorlname = document.getElementById('lname');
 
-      if (fname.value == "") {
+      if (fname == "") {
           errorfname.innerHTML = "The field is empty.";
-      } else if (!namePattern.test(fname.value)) {
+      } else if (!namePattern.test(fname)) {
           errorfname.innerHTML = "Names can only contain alphabets.";
       } else {
           errorfname.innerHTML = "";
       }
 
-      if (lname.value == "") {
+      if (lname == "") {
           errorlname.innerHTML = "The field is empty.";
-      } else if (!namePattern.test(lname.value)) {
+      } else if (!namePattern.test(lname)) {
           errorlname.innerHTML = "Names can only contain alphabets.";
       } else {
           errorlname.innerHTML = "";
@@ -317,8 +327,7 @@ var Edit = React.createClass({
              $.post( "http://localhost:8080/user/load",
                 {
                     'token' :token
-                }).done(function(d) {
-                    console.log(lname);
+                }).done((d)=> {
                     $.ajax({
                             url:"http://localhost:8080/user/profile/update",   
                             type:"PUT",
@@ -327,8 +336,7 @@ var Edit = React.createClass({
                                 "firstname":fname,
                                 "lastname":lname
                             }
-                        }).done(
-                                function(res){
+                        }).done((res)=>{
                                     dialog.showMessageBox(option1);
                                 });
                             });
@@ -336,8 +344,113 @@ var Edit = React.createClass({
     },
 
     checkPw(){
+
+        let option1 = {
+          type: 'info',
+          buttons: ['Yes'],
+          title: 'Update Password',
+          message: "Successfully updated!",
+          defaultId: 0,
+          cancelId: 0
+        };
         var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var newpw = $('#newpw').val();
+        var oldpw =$('#oldpw').val();
+        console.log(newpw);
+        console.log(oldpw);
+        var errornewpass = document.getElementById('newpass');
+        var erroroldpass = document.getElementById('oldpass');
+        if (newpw == "") {
+            errornewpass.innerHTML = "The field is empty.";
+        } else if (!passPattern.test(newpw)) {
+            errornewpass.innerHTML = "At least 6 length (1 Upper & 1 Lower letter & 1 digits)";
+        } else if (newpw == oldpw) {
+            errornewpass.innerHTML = "Do not use your old password";
+        } else {
+            errornewpass.innerHTML = "";
+        }
+
+        if(errornewpass.innerHTML == ""){
+             var token = electron.remote.getGlobal('sharedObject').token;
+            $.post( "http://localhost:8080/user/load",
+                {
+                    'token' :token
+                }).done((d) => {
+                    $.post("http://localhost:8080/user/profile/checkold", {
+                        _id:d._id,
+                        "password":oldpw
+                    }).done( (res) =>{
+                        erroroldpass.innerHTML ="";
+                        $.ajax({
+                            url:"http://localhost:8080/user/profile/updatePW",   
+                            type:"PUT",
+                            data:{    
+                                _id:d._id,
+                                "password":newpw
+                            }
+                        }).done((res2)=>{
+                            dialog.showMessageBox(option1);
+                            this.onRemoveItem();
+
+                        });
+                    }).fail((err)=>{
+                        erroroldpass.innerHTML = "The old password not match.";
+                    });
+                });
+
+        }
+
+
+    },
+
+    checkEmail(){
+
+        let option1 = {
+          type: 'info',
+          buttons: ['Yes'],
+          title: 'Update Email',
+          message: "Successfully updated!",
+          defaultId: 0,
+          cancelId: 0
+        };
+        var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
+        var email = $('#email').val();
+        var errornewemail = document.getElementById('newemail');
+
+        if (email == "") {
+            errornewemail.innerHTML = "The field is empty.";
+        } else if (!emailPattern.test(email)) {
+            errornewemail.innerHTML = "Not correct email format";
+        } else {
+            errornewemail.innerHTML = "";
+        }
+
+        if(errornewemail.innerHTML == ""){
+             var token = electron.remote.getGlobal('sharedObject').token;
+            $.post( "http://localhost:8080/user/load",
+                {
+                    'token' :token
+                }).done((d) => {
+                    $.ajax({
+                        url:"http://localhost:8080/user/profile/updateEmail",   
+                        type:"PUT",
+                        data:{    
+                            _id:d._id,
+                            "email":email
+                            }
+                        }).done((res)=>{
+                            errornewemail.innerHTML = "";
+                            dialog.showMessageBox(option1);
+                            this.onRemoveItem1();
+
+                        }).fail((res)=>{
+                            errornewemail.innerHTML = "The Email already exist!";
+                        });
+
+                });
+
+        }
+
 
     }
 });

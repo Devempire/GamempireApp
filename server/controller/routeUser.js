@@ -122,7 +122,7 @@ router.get('/profile/:id/info',function(req,res,next){
        }, function (err, user) {
          if (err) return next(err);
 
-         console.log(user +"profile updated!");
+         console.log("profile updated!");
          res.json(user);
      });
  });
@@ -135,7 +135,7 @@ router.get('/profile/:id/info',function(req,res,next){
        }, function (err, user) {
          if (err) return next(err);
 
-         console.log(user +"email updated!");
+         console.log("email updated!");
          res.json(user);
      });
  });
@@ -149,15 +149,15 @@ router.get('/profile/:id/info',function(req,res,next){
        
        }, function (err, user) {
          if (err) return next(err);
-         console.log(user +"password updated!");
+         console.log("password updated!");
          res.json(user);
      });
  });
 
  /*check old password*/
-router.post('/checkold', function (req, res, next) {
+router.post('/profile/checkold', function (req, res, next) {
     var key = crypto.pbkdf2Sync(req.body.password, 'salt', 10000, 512);
-    User.find({_id:req.body._id, 'password':key}, function (err, users) {
+    User.find({_id:req.body._id, "password":key}, function (err, users) {
         if (err) return next(err);
         if (!(users[0] == null)){
             res.end("Information found");
