@@ -143,7 +143,7 @@ var Edit = React.createClass({
     return {
 
       layout: layout,
-      items:[{i:"0",x:0,y:0,w:4,h:16}],
+      items:[{i:"0",x:0,y:0,w:4,h:20}],
       pw:[],
       email:[],
 
@@ -171,8 +171,21 @@ var Edit = React.createClass({
   },
 
 
- createProfile(el) {
+  createProfile(el) {
     var i = el.i;
+
+    var token = electron.remote.getGlobal('sharedObject').token;
+
+    $.post( "http://localhost:8080/user/load",
+    {
+        'token': token
+    }).done(function(d) {
+        $.get('http://localhost:8080/user/profile/:id/info',
+        {
+
+        });
+    });
+
     return (
       <div key={i} data-grid={el}>
         <h3> Edit Your personal Info</h3>
@@ -181,6 +194,10 @@ var Edit = React.createClass({
         
 
         <form>
+            Username: <br></br>
+            <input type="text" id="userName" />
+            <font id='uname' color='red'></font>
+            <br></br>
             First Name: <br></br>
             <input type="text" id="firstName" />
             <font id='fname' color='red'></font>
@@ -188,6 +205,10 @@ var Edit = React.createClass({
             Last Name: <br></br>
             <input type="text" id="lastName" />
             <font id='lname' color='red'></font>
+            <br></br>
+            Birthday: <br></br>
+            <input type="date" id="birthday" />
+            <font id='bday' color='red'></font>
             <br></br>
         </form>
             <button onClick={this.checkValid}> Submit </button>
@@ -296,43 +317,43 @@ var Edit = React.createClass({
       var lname = $('#lastName').val();
       var errorlname = document.getElementById('lname');
 
-      if (fname.value == "") {
+      if (fname == "") {
           errorfname.innerHTML = "The field is empty.";
-      } else if (!namePattern.test(fname.value)) {
+      } else if (!namePattern.test(fname)) {
           errorfname.innerHTML = "Names can only contain alphabets.";
       } else {
           errorfname.innerHTML = "";
       }
 
-      if (lname.value == "") {
+      if (lname == "") {
           errorlname.innerHTML = "The field is empty.";
-      } else if (!namePattern.test(lname.value)) {
+      } else if (!namePattern.test(lname)) {
           errorlname.innerHTML = "Names can only contain alphabets.";
       } else {
           errorlname.innerHTML = "";
       }
 
       if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
-            var token = electron.remote.getGlobal('sharedObject').token;
-             $.post( "http://localhost:8080/user/load",
-                {
-                    'token' :token
-                }).done(function(d) {
-                    console.log(lname);
-                    $.ajax({
-                            url:"http://localhost:8080/user/profile/update",   
-                            type:"PUT",
-                            data:{    
-                                _id:d._id,
-                                "firstname":fname,
-                                "lastname":lname
-                            }
-                        }).done(
-                                function(res){
-                                    dialog.showMessageBox(option1);
-                                });
-                            });
-        }
+          var token = electron.remote.getGlobal('sharedObject').token;
+           $.post( "http://localhost:8080/user/load",
+              {
+                  'token' :token
+              }).done(function(d) {
+                  console.log(lname);
+                  $.ajax({
+                          url:"http://localhost:8080/user/profile/update",   
+                          type:"PUT",
+                          data:{    
+                              _id:d._id,
+                              "firstname":fname,
+                              "lastname":lname
+                          }
+                      }).done(
+                              function(res){
+                                  dialog.showMessageBox(option1);
+                              });
+                          });
+      }
     },
 
     checkPw(){
