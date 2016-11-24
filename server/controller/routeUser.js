@@ -30,7 +30,8 @@ router.post('/add', function (req, res, next) {
                 email: req.body.email,
                 password: key,
                 firstname: req.body.firstname,
-                lastname:req.body.lastname
+                lastname:req.body.lastname,
+                dateofbirth:req.body.birthday
             }).save(function ( err, user, count ){
                 if( err ) return next( err );
                 res.end("Submission completed");
@@ -117,7 +118,9 @@ router.get('/profile/:id/info',function(req,res,next){
  router.put('/profile/update',function(req,res,next){
      User.update( { _id:req.body._id},
        {firstname:req.body.firstname,
-        lastname:req.body.lastname       
+        lastname:req.body.lastname,
+        username:req.body.username,
+        dateofbirth:req.body.birthday   
        
        }, function (err, user) {
          if (err) return next(err);

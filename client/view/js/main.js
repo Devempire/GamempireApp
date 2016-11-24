@@ -19,6 +19,7 @@ const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var session = electron.remote;
+var moment = require('moment');
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -146,7 +147,11 @@ var Edit = React.createClass({
       items:[{i:"0",x:0,y:0,w:4,h:20}],
       pw:[],
       email:[],
-      response:undefined
+      response:undefined,
+      username:null,
+      lastname:null,
+      firstname:null,
+      birthday:null,
 
     };
   },
@@ -179,8 +184,13 @@ var Edit = React.createClass({
         }).done((d)=> {
             $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
                 
-                this.setState({response: res});
-                console.log(this.state.response.username);
+                this.setState({response: res,
+                                username:res.username,
+                                firstname:res.firstname,
+                                lastname:res.lastname,
+                                birthday:res.dateofbirth
+                });
+                console.log(this.state.response);
         });
     });
   },
@@ -202,20 +212,19 @@ var Edit = React.createClass({
 
         <form>
             Username: <br></br>
-            <input type="text" id="userName" value={this.state.response.username}/>
+            <input type="text" id="userName" value={this.state.username} onChange={(event) => {this.setState({username: event.target.value})}}/>
             <font id='uname' color='red'></font>
             <br></br>
             First Name: <br></br>
-            <input type="text" id="firstName" />
+            <input type="text" id="firstName" value={this.state.firstname} onChange={(event) => {this.setState({firstname: event.target.value})}} />
             <font id='fname' color='red'></font>
             <br></br>
             Last Name: <br></br>
-            <input type="text" id="lastName" />
+            <input type="text" id="lastName" value={this.state.lastname} onChange={(event) => {this.setState({lastname: event.target.value})}}/>
             <font id='lname' color='red'></font>
             <br></br>
             Birthday: <br></br>
-            <input type="date" id="birthday" />
-            <font id='bday' color='red'></font>
+            <input type="date" id="birthday" value={this.state.birthday} onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
             <br></br>
         </form>
             <button onClick={this.checkValid}> Submit </button>
@@ -333,10 +342,13 @@ var Edit = React.createClass({
       };
 
       var namePattern = new RegExp('^[a-zA-Z]{1,}$');
+      var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
       var fname = $('#firstName').val();
       var errorfname = document.getElementById('fname');
       var lname = $('#lastName').val();
       var errorlname = document.getElementById('lname');
+      var uname = $('#userName').val();
+      var erroruname = document.getElementById('uname');
 
       if (fname == "") {
           errorfname.innerHTML = "The field is empty.";
@@ -354,7 +366,15 @@ var Edit = React.createClass({
           errorlname.innerHTML = "";
       }
 
-      if (errorfname.innerHTML == "" && errorlname.innerHTML == "") {
+      if (uname == "") {
+          erroruname.innerHTML = "The field is empty.";
+      } else if (!userPattern.test(uname)) {
+          erroruname.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
+      } else {
+          erroruname.innerHTML = "";
+      }
+
+      if (errorfname.innerHTML == "" && errorlname.innerHTML == "" && erroruname.innerHTML == "") {
           var token = electron.remote.getGlobal('sharedObject').token;
            $.post( "http://localhost:8080/user/load",
               {
@@ -366,10 +386,15 @@ var Edit = React.createClass({
                           data:{    
                               _id:d._id,
                               "firstname":fname,
-                              "lastname":lname
+                              "lastname":lname,
+                              "username":uname,
+                              "birthday":this.state.birthday
                           }
                       }).done((res)=>{
+                                  erroruname.innerHTML = "";
                                   dialog.showMessageBox(option1);
+                              }).fail((err)=>{
+                                  erroruname.innerHTML = "Username already exist!";
                               });
                           });
       }
