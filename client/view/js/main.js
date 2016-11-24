@@ -173,6 +173,7 @@ var Edit = React.createClass({
 
   createProfile(el) {
     var i = el.i;
+    var user;
 
     var token = electron.remote.getGlobal('sharedObject').token;
 
@@ -182,7 +183,7 @@ var Edit = React.createClass({
     }).done(function(d) {
         $.get('http://localhost:8080/user/profile/:id/info',
         {
-
+            
         });
     });
 
