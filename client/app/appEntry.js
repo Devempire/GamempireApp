@@ -11,6 +11,7 @@ const fs = window.require('fs');
 const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
+var moment = require('moment');
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -128,7 +129,8 @@ class SignUpWindow extends React.Component {
             password: null,
             confirmPass: null,
             email: null,
-            confirmEmail: null
+            confirmEmail: null,
+            birthday: moment().format('YYYY-M-D'),
         };
     }
 
@@ -142,42 +144,48 @@ class SignUpWindow extends React.Component {
                 <div style={styles.root}>
                     
                     <TextField
-                        hintText='First Name'
+                        floatingLabelText='First name'
                         value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
                     <font id='fname' color='red'></font>
                     <TextField
-                        hintText='Last Name'
+                        floatingLabelText='Last name'
                         value={this.state.lastName || ""}
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     <font id='lname' color='red'></font>
                     <TextField
-                        hintText='Username'
+                        floatingLabelText='Username'
                         value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
                     <font id='user' color='red'></font>
                     <TextField
-                        hintText='Password'
                         type='password'
+                        floatingLabelText='Password'
                         value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
                     <font id='pass' color='red'></font>
                     <TextField
-                        hintText='Confirm Password'
+                       floatingLabelText='Confirm Password'
                         type='password'
                         value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                     <font id='cpass' color='red'></font>
                     <TextField
-                        hintText='Email'
+                        floatingLabelText='Email'
                         value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                     <font id='email' color='red'></font>
                     <TextField
-                        hintText='Confirm Email'
+                        floatingLabelText='Confirm Email'
                         value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
                     <font id='cemail' color='red'></font>
+                    <TextField
+                        type='date'
+                        floatingLabelText='Birthday'
+                        value={this.state.birthday||''}
+                        onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
+                    
 
                     <div style={styles.buttons_container}>
                         <RaisedButton
@@ -289,7 +297,7 @@ class SignUpWindow extends React.Component {
             cancelId: 0
         };
 
-
+        console.log(this.state.birthday);
         $.post('http://localhost:8080/user/add', 
                 {
                 
@@ -297,7 +305,8 @@ class SignUpWindow extends React.Component {
                     password:this.state.password,
                     email:this.state.email,
                     firstname:this.state.firstName,
-                    lastname:this.state.lastName
+                    lastname:this.state.lastName,
+                    birthday:this.state.birthday
 
                 }
         )
