@@ -44,6 +44,7 @@ var AddRemoveLayout = React.createClass({
     //console.log(t);
     return {
       layout: layout,
+      widget: []
       //value: "",
       //text: t
     };
@@ -79,6 +80,30 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
+  // onAddGameWidget(name) {
+  //   return (
+  //     <div key={name}>
+  //       <h3> Edit Your password</h3>
+  //       <hr/>
+  //       <form>
+  //       <label>
+  //       Old password:
+  //       <input type="password" id="oldpw" />
+  //       <font id='oldpass' color='red'></font>
+  //       </label>
+  //       <br/>
+  //       <label>
+  //       New password:
+  //       <input type="password" id="newpw" />
+  //       <font id='newpass' color='red'></font>
+  //       </label>
+  //       <br/>
+  //       </form>
+  //       <button> Submit </button>
+  //     </div>
+  //   );
+  // },
+
   render() {
     var removeStyle = {
       position: 'absolute',
@@ -95,7 +120,16 @@ var AddRemoveLayout = React.createClass({
             <hr/>
             <img src={'./img/user.jpg'}/>
 
-            <button id="edit"> Edit Profile</button>  
+            <br></br>
+            <button id="edit"> Edit Profile</button>
+            <br></br>
+            Add Game Widget
+            <select>
+              <option>Hearthstone</option>
+              <option>Overwatch</option>
+              <option>League of Legends</option>
+              <option>Dota2</option>
+            </select>
 
             </div>
             <div id="widget2" key="2" data-grid={{x: 0, y: 16, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
