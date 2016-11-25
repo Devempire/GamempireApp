@@ -8,7 +8,6 @@ var UserSchema = mongoose.Schema({
     email: {type: String, unique:true},
     dateofbirth: {type: String, default:''},
     gameinventory: {type: Array, default: ''},
-    gamertype: {type: String, default: ''},
     friends: {type: Array, default: ''},
     mic: {type: Boolean, default: ''}
 });

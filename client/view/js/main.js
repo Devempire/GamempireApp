@@ -40,13 +40,12 @@ var AddRemoveLayout = React.createClass({
 
   getInitialState() {
     var layout = this.generateLayout();
-    //var t = this.getAPI();
-    //console.log(t);
+    
     return {
       layout: layout,
-      widget: []
-      //value: "",
-      //text: t
+      profile:{i:"profile",x: 0, y: 0, w: 4, h: 16},
+      game1:[],
+      game2:[],
     };
   },
 
@@ -59,7 +58,7 @@ var AddRemoveLayout = React.createClass({
   },
 
 
-  // We're using the cols coming back from this to calculate where to add new items.
+  
   onBreakpointChange(breakpoint, cols) {
     this.setState({
       breakpoint: breakpoint,
@@ -70,89 +69,41 @@ var AddRemoveLayout = React.createClass({
   onLayoutChange(layout) {
     this.setState({layout: layout});
   },
+  
+  onProfile(el){
+    var i = el.i;
+    return (
+    <div key={i} data-grid={el}>
+    <h3> Profile </h3>
+    <hr/>
+    <img src={'./img/user.jpg'}/>
 
-
-  onRemoveItem(i) {
-    $(document).ready(function(){
-        $("#remove" + i).click(function(){
-            $("#widget" + i).remove();
-        });
-    });
+    <button id="edit"> Edit Profile</button>  
+    <form><h5>Add Games:</h5>
+    <select>
+    <option value="Hearthstone">Hearthstone</option>
+    <option value="Overwatch">Overwatch</option>
+    <option value="Dota2">Dota2</option>
+    <option value="League of lengend">League of lengend</option>
+    </select>
+    <div id="gamedetail">
+    Username in game: <br></br>
+    <input type="text"/>
+    </div>
+    <select>
+    </form>
+    </div>
+    );
   },
 
-  // onAddGameWidget(name) {
-  //   return (
-  //     <div key={name}>
-  //       <h3> Edit Your password</h3>
-  //       <hr/>
-  //       <form>
-  //       <label>
-  //       Old password:
-  //       <input type="password" id="oldpw" />
-  //       <font id='oldpass' color='red'></font>
-  //       </label>
-  //       <br/>
-  //       <label>
-  //       New password:
-  //       <input type="password" id="newpw" />
-  //       <font id='newpass' color='red'></font>
-  //       </label>
-  //       <br/>
-  //       </form>
-  //       <button> Submit </button>
-  //     </div>
-  //   );
-  // },
-
   render() {
-    var removeStyle = {
-      position: 'absolute',
-      right: '2px',
-      top: 0,
-      cursor: 'pointer'
-    };
+  
     return (
       <div>
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            <div id="widget1" key="1" data-grid={{x: 0, y: 0, w: 4, h: 16}}>
-            <h3> Profile </h3>
-            <hr/>
-            <img src={'./img/user.jpg'}/>
-
-            <br></br>
-            <button id="edit"> Edit Profile</button>
-            <br></br>
-            Add Game Widget
-            <select>
-              <option>Hearthstone</option>
-              <option>Overwatch</option>
-              <option>League of Legends</option>
-              <option>Dota2</option>
-            </select>
-
-            </div>
-            <div id="widget2" key="2" data-grid={{x: 0, y: 16, w: 2, h: 10}}><span id="remove2" style={removeStyle} onClick={this.onRemoveItem('2')}>x</span>
-            <h4> Game 1</h4>
-            <p> detail</p>
-            <hr/>
-            <h4> interest</h4>
-
+            {this.onProfile(this.state.profile)}
             
-            </div>
-            <div id="widget3" key="3" data-grid={{x: 2, y: 16, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
-            <h4> Game 2</h4>
-            <p> detail</p>
-            <hr/>
-            <h4> interest</h4>
-            </div>
-
-            <div id="widget4" key="4" data-grid={{x: 4, y: 16, w: 2, h: 10}}><span id="remove3" style={removeStyle} onClick={this.onRemoveItem('3')}>x</span>
-            <h4> Game 3</h4>
-            <p> detail</p>
-            <hr/>
-            <h4> interest</h4>
-            </div>
 
         </ResponsiveReactGridLayout>
       </div>
@@ -178,7 +129,7 @@ var Edit = React.createClass({
     return {
 
       layout: layout,
-      items:[{i:"0",x:0,y:0,w:4,h:20}],
+      items:{i:"edit",x:0,y:0,w:4,h:19},
       pw:[],
       email:[],
       response:undefined,
@@ -278,7 +229,7 @@ var Edit = React.createClass({
   },
 
   onAddchangepw() {
-
+    if(this.state.pw.length==0){
     this.setState({
       pw: this.state.pw.concat({
         i: "change password",
@@ -288,10 +239,11 @@ var Edit = React.createClass({
         h: 10
       })
     });
+    }
   },
 
   onAddchangeEmail() {
-
+  if(this.state.email.length==0){
     this.setState({
       email: this.state.email.concat({
         i: "change email",
@@ -301,6 +253,7 @@ var Edit = React.createClass({
         h: 10
       })
     });
+  }
   },
 
   changePW(el) {
@@ -353,7 +306,7 @@ var Edit = React.createClass({
         
         <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
             {...this.props}>
-            {_.map(this.state.items, this.createProfile)}
+            { this.createProfile(this.state.items)}
             {_.map(this.state.pw, this.changePW)}
             {_.map(this.state.email, this.changeEmail)}
         </ResponsiveReactGridLayout>
