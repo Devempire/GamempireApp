@@ -7,7 +7,7 @@ var UserSchema = mongoose.Schema({
     password: String,
     email: {type: String, unique:true},
     dateofbirth: {type: String, default:''},
-    gameinventory: {type: Array, default: ''},
+    gameinventory:[{ game: String, interest: Array}],
     friends: {type: Array, default: ''},
     mic: {type: Boolean, default: ''}
 });
