@@ -43,10 +43,36 @@ var AddRemoveLayout = React.createClass({
     
     return {
       layout: layout,
-      profile:{i:"profile",x: 0, y: 0, w: 4, h: 16},
+      profile:{i:"profile",x: 0, y: 0, w: 4, h: 19},
       game1:[],
       game2:[],
+      response:undefined,
+      username:null,
+      lastname:null,
+      firstname:null
     };
+  },
+
+  loadProfile(){
+    var token = electron.remote.getGlobal('sharedObject').token;
+
+    $.post( "http://localhost:8080/user/load",{
+        'token': token
+        }).done((d)=> {
+            $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
+                
+                this.setState({response: res,
+                                username:res.username,
+                                firstname:res.firstname,
+                                lastname:res.lastname
+                });
+                console.log(this.state.response);
+        });
+    });
+  },
+
+  componentWillMount: function(){
+    this.loadProfile();
   },
 
   generateLayout() {
@@ -57,8 +83,6 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-
-  
   onBreakpointChange(breakpoint, cols) {
     this.setState({
       breakpoint: breakpoint,
@@ -75,10 +99,13 @@ var AddRemoveLayout = React.createClass({
     return (
     <div key={i} data-grid={el}>
     <h3> Profile </h3>
+    Username: {this.state.username}
+    <br></br>
+    Name: {this.state.firstname + ' ' + this.state.lastname}
     <hr/>
-    <img src={'./img/user.jpg'}/>
-
-    <button id="edit"> Edit Profile</button>  
+    <img id='profilepic' src={'./img/user.jpg'}/>
+    <br></br>
+    <button onClick={this.goToEdit}>Edit Profile</button>
     <form><h5>Add Games:</h5>
     <select>
     <option value="Hearthstone">Hearthstone</option>
@@ -90,10 +117,15 @@ var AddRemoveLayout = React.createClass({
     Username in game: <br></br>
     <input type="text"/>
     </div>
-    <select>
     </form>
     </div>
     );
+  },
+
+  goToEdit() {
+    let edit = ReactDOM.render(
+        <Edit />,
+        document.getElementById('main_content'));
   },
 
   render() {
@@ -103,8 +135,6 @@ var AddRemoveLayout = React.createClass({
         <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
             {this.onProfile(this.state.profile)}
-            
-
         </ResponsiveReactGridLayout>
       </div>
     );
@@ -129,14 +159,14 @@ var Edit = React.createClass({
     return {
 
       layout: layout,
-      items:{i:"edit",x:0,y:0,w:4,h:19},
+      items:{i:"edit",x:0,y:0,w:4,h:21},
       pw:[],
       email:[],
       response:undefined,
       username:null,
       lastname:null,
       firstname:null,
-      birthday:null,
+      birthday:null
 
     };
   },
@@ -184,7 +214,6 @@ var Edit = React.createClass({
     this.loadProfile();
   },
 
-
   createProfile(el) {
     
     var i = el.i;
@@ -192,8 +221,11 @@ var Edit = React.createClass({
       <div key={i} data-grid={el}>
         <h3> Edit Your personal Info</h3>
         <hr/>
-        <img src={'./img/user.jpg'}/>
-        
+        <img id='profilepic' src={'./img/user.jpg'}/>
+        <input id='uploadedpic' type='file' accept="image/*"/>
+        <br></br>
+        <button onClick={this.uploadPicture}>Upload</button>
+        <font id='uploadmsg' color='red'></font>
 
         <form>
             Username: <br></br>
@@ -212,12 +244,25 @@ var Edit = React.createClass({
             <input type="date" id="birthday" value={this.state.birthday} onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
             <br></br>
         </form>
-            <button onClick={this.checkValid}> Submit </button>
-            <button onClick={this.onAddchangepw}>change password</button>
-            <button onClick={this.onAddchangeEmail}>change email</button>
-            
+
+        <button onClick={this.checkValid}> Submit </button>
+        <button onClick={this.onAddchangepw}>Change Password</button>
+        <button onClick={this.onAddchangeEmail}>Change Email</button>
+        <button onClick={this.backToProfile}>Back</button>
+
       </div>
     );
+  },
+
+  uploadPicture() {
+    var uploadmsg = document.getElementById('uploadmsg');
+
+    if(document.getElementById("uploadedpic").files.length == 0){
+      uploadmsg.innerHTML = "Please select a picture.";
+    } else {
+      uploadmsg.innerHTML = "";
+    }
+
   },
 
   onRemoveItem() {
@@ -254,6 +299,12 @@ var Edit = React.createClass({
       })
     });
   }
+  },
+
+  backToProfile() {
+    let profilewidget = ReactDOM.render(
+        <AddRemoveLayout />,
+        document.getElementById('main_content'));
   },
 
   changePW(el) {
@@ -503,9 +554,3 @@ var Edit = React.createClass({
 let profilewidget = ReactDOM.render(
         <AddRemoveLayout />,
         document.getElementById('main_content'));
-
-$("#edit").click(function() {
-    let edit = ReactDOM.render(
-        <Edit />,
-        document.getElementById('main_content'));
-});
