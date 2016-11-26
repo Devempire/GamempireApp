@@ -171,4 +171,15 @@ router.post('/profile/checkold', function (req, res, next) {
     });
 });
 
+ // update user games with interest
+ router.put('/profile/updategames',function(req,res,next){
+     User.update( { _id:req.body._id},
+       {$push:{ gameinventory : {game:req.body.game, interest:req.body.interest}}}, function (err, user) {
+         if (err) return next(err);
+
+         console.log("game updated!");
+         res.json(user);
+     });
+ });
+
 module.exports = router;

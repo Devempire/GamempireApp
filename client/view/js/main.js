@@ -21,10 +21,6 @@ const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 
 var AddRemoveLayout = React.createClass({
   mixins: [PureRenderMixin],
@@ -43,9 +39,11 @@ var AddRemoveLayout = React.createClass({
     
     return {
       layout: layout,
-      profile:{i:"profile",x: 0, y: 0, w: 4, h: 16},
+      profile:{i:"profile",x: 0, y: 0, w: 4, h: 18},
       game1:[],
       game2:[],
+      selectgame:'',
+      selectinterest:null,
     };
   },
 
@@ -56,6 +54,47 @@ var AddRemoveLayout = React.createClass({
       return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
     });
   },
+
+  handleChange(event) {
+     this.setState({selectgame: event.target.value});
+   },
+
+   handleChange2(event) {
+    var options = event.target.options;
+    var values = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        values.push(options[i].value);
+      }
+    };
+    
+    this.setState({selectinterest:values});
+    
+  },
+ 
+   handleSubmit(event) {
+     alert('Your favorite Game is: ' + this.state.selectgame);
+     event.preventDefault();
+     var token = electron.remote.getGlobal('sharedObject').token;
+     $.post( "http://localhost:8080/user/load",
+              {
+                  'token' :token
+              }).done((d)=> {
+                  $.ajax({
+                          url:"http://localhost:8080/user/profile/updategames",   
+                          type:"PUT",
+                          contentType: 'application/json; charset=utf-8',
+                          data:JSON.stringify({    
+                              _id:d._id,
+                              game:this.state.selectgame,
+                              interest:this.state.selectinterest
+                          })
+                      }).fail((err)=>{
+                                  alert("opps!");
+                              });
+                          });
+
+    },
 
 
   
@@ -79,18 +118,27 @@ var AddRemoveLayout = React.createClass({
     <img src={'./img/user.jpg'}/>
 
     <button id="edit"> Edit Profile</button>  
-    <form><h5>Add Games:</h5>
-    <select>
+    <form onSubmit={this.handleSubmit}><h5>Add Games:</h5>
+    <select value={this.state.selectgame} onChange={this.handleChange}>
+    <option value="" disabled>Select your option</option>
     <option value="Hearthstone">Hearthstone</option>
     <option value="Overwatch">Overwatch</option>
     <option value="Dota2">Dota2</option>
-    <option value="League of lengend">League of lengend</option>
+    <option value="League of lengends">League of lengends</option>
     </select>
-    <div id="gamedetail">
+    <br/>
     Username in game: <br></br>
-    <input type="text"/>
-    </div>
-    <select>
+    <input id="gameusername" type="text"/>
+
+    <h5>Interest of Games: </h5>
+    <select multiple  onChange={this.handleChange2}>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option> 
+    </select> 
+    
+    <input type="submit" value="Submit"/>
     </form>
     </div>
     );
@@ -500,6 +548,9 @@ var Edit = React.createClass({
     }
 });
 
+
+
+
 let profilewidget = ReactDOM.render(
         <AddRemoveLayout />,
         document.getElementById('main_content'));
@@ -509,3 +560,5 @@ $("#edit").click(function() {
         <Edit />,
         document.getElementById('main_content'));
 });
+
+
