@@ -21,7 +21,7 @@ const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
 
-
+const originalLayouts = getFromLS('layouts') || {};
 var AddRemoveLayout = React.createClass({
   mixins: [PureRenderMixin],
 
@@ -35,18 +35,18 @@ var AddRemoveLayout = React.createClass({
   },
 
   getInitialState() {
-    var layout = this.generateLayout();
+    //var layout = this.generateLayout();
     
     return {
-      layout: layout,
+      layouts: JSON.parse(JSON.stringify(originalLayouts)),
       profile:{i:"profile",x: 0, y: 0, w: 4, h: 24},
-      game1:[],
-      game2:[],
+      games:[],
       response:undefined,
       username:null,
       lastname:null,
       firstname:null,
       selectgame:'',
+      newCounter: 0,
       selectinterest:null
     };
   },
@@ -58,13 +58,27 @@ var AddRemoveLayout = React.createClass({
         'token': token
         }).done((d)=> {
             $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
-                
+                var g=res.gameinventory.length;
+
                 this.setState({response: res,
                                 username:res.username,
                                 firstname:res.firstname,
-                                lastname:res.lastname
+                                lastname:res.lastname});
+                for (var i = 0; i < g; i++) {
+                      this.setState({
+                                games: this.state.games.concat({
+                                  i: res.gameinventory[i].game,
+                                  x: this.state.games.length * 2 % (this.state.cols || 12),
+                                  y: 24,
+                                  w: 2,
+                                  h: 6,
+                                  int:res.gameinventory[i].interest,
+                                  useringame:res.gameinventory[i].useringame,  
+                                })
                 });
-                console.log(this.state.response);
+                
+                }
+                
         });
     });
   },
@@ -73,13 +87,17 @@ var AddRemoveLayout = React.createClass({
     this.loadProfile();
   },
 
-  generateLayout() {
+   resetLayout() {
+    this.setState({layouts: {}});
+  },
+
+  /**generateLayout() {
     var p = this.props;
     return _.map(new Array(p.items), function(item, i) {
       var y = _.result(p, 'y') || Math.ceil(Math.random() * 4) + 1;
       return {x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString()};
     });
-  },
+  },**/
 
   handleChange(event) {
      this.setState({selectgame: event.target.value});
@@ -113,7 +131,9 @@ var AddRemoveLayout = React.createClass({
                           data:JSON.stringify({    
                               _id:d._id,
                               game:this.state.selectgame,
-                              interest:this.state.selectinterest
+                              interest:this.state.selectinterest,
+                              useringame:$("#gameusername").val()
+
                           })
                       }).fail((err)=>{
                                   alert("opps!");
@@ -128,9 +148,12 @@ var AddRemoveLayout = React.createClass({
     });
   },
 
-  onLayoutChange(layout) {
-    this.setState({layout: layout});
+  onLayoutChange(layout, layouts) {
+    saveToLS('layouts', layouts);
+    this.setState({layouts});
+    
   },
+
   
   onProfile(el){
     var i = el.i;
@@ -168,19 +191,32 @@ var AddRemoveLayout = React.createClass({
     );
   },
 
+  onGame(el){
+    var i = el.i;
+    return (
+    <div key={i} data-grid={el}>
+    <h5>{el.i} </h5>
+    <h6>interest:</h6>
+    <p>{el.int}</p>
+    <h7>username in game : {el.useringame} </h7>
+    </div>
+    );
+  },
+
   goToEdit() {
     let edit = ReactDOM.render(
         <Edit />,
         document.getElementById('main_content'));
   },
-
   render() {
   
     return (
       <div>
-        <ResponsiveReactGridLayout layout={this.state.layout} onLayoutChange={this.onLayoutChange} 
+      <button onClick={this.resetLayout}>Reset Layout</button>
+        <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
             onBreakpointChange={this.onBreakpointChange} {...this.props}>
             {this.onProfile(this.state.profile)}
+            {_.map(this.state.games, this.onGame)}
         </ResponsiveReactGridLayout>
       </div>
     );
@@ -603,3 +639,21 @@ var Edit = React.createClass({
 let profilewidget = ReactDOM.render(
         <AddRemoveLayout />,
         document.getElementById('main_content'));
+
+function getFromLS(key) {
+  let ls = {};
+  if (global.localStorage) {
+    try {
+      ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
+    } catch(e) {/*Ignore*/}
+  }
+  return ls[key];
+}
+
+function saveToLS(key, value) {
+  if (global.localStorage) {
+    global.localStorage.setItem('rgl-8', JSON.stringify({
+      [key]: value
+    }));
+  }
+}
