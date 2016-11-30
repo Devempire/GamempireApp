@@ -144,7 +144,6 @@ class SignUpWindow extends React.Component {
                 <div style={styles.root}>
                     
                     <TextField
-                        errorm
                         floatingLabelText='First name'
                         value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
