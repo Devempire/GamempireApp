@@ -267,10 +267,9 @@ var Edit = React.createClass({
       <div key={i} data-grid={el}>
         <h3> Edit Your personal Info</h3>
         <hr/>
-        <img id='profilepic' src={'./img/user.jpg'}/>
-        <input id='uploadedpic' type='file' accept="image/*"/>
+        <input className='profilepic' id='profilepic' type='image' onClick={this.openFileExp} src={'./img/user.jpg'} draggable="false"/>
+        <input className='uploadedpic' onChange={this.uploadPic} id='uploadedpic' type='file' accept="image/*"/>
         <br></br>
-        <button onClick={this.uploadPicture}>Upload</button>
         <font id='uploadmsg' color='red'></font>
 
         <form>
@@ -300,15 +299,16 @@ var Edit = React.createClass({
     );
   },
 
-  uploadPicture() {
-    var uploadmsg = document.getElementById('uploadmsg');
+  openFileExp() {
+    $("input[id='uploadedpic']").click();
+  },
 
-    if(document.getElementById("uploadedpic").files.length == 0){
-      uploadmsg.innerHTML = "Please select a picture.";
-    } else {
-      uploadmsg.innerHTML = "";
+  uploadPic() {
+    var pic = document.getElementById("uploadedpic").files;
+    console.log(pic);
+    if (pic.length != 0) {
+      document.getElementById("profilepic").src = pic[0].path;
     }
-
   },
 
   onRemoveItem() {

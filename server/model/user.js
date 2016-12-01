@@ -9,9 +9,9 @@ var UserSchema = mongoose.Schema({
     dateofbirth: {type: String, default:''},
     gameinventory:[{ game: String, interest: Array}],
     friends: {type: Array, default: ''},
-    mic: {type: Boolean, default: ''}
+    mic: {type: Boolean, default: ''},
+    img: {type: Buffer, contentType: String, default: ''}
 });
-
 
 var User = mongoose.model('User', UserSchema);
 

@@ -67,6 +67,15 @@ html, body {
   max-width: 1080px;
 }
 
+.profilepic {
+  height: 250px;
+  width: 250px;
+}
+
+.uploadedpic {
+  display: none;
+}
+
 /*React Grid Layout CSS*/
 
 .react-grid-layout {
