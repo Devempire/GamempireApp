@@ -22,7 +22,7 @@ var session = electron.remote;
 var moment = require('moment');
 
 const originalLayouts = getFromLS('layouts') || {};
-var AddRemoveLayout = React.createClass({
+var Profile = React.createClass({
   mixins: [PureRenderMixin],
 
   getDefaultProps() {
@@ -68,8 +68,8 @@ var AddRemoveLayout = React.createClass({
                       this.setState({
                                 games: this.state.games.concat({
                                   i: res.gameinventory[i].game,
-                                  x: this.state.games.length * 2 % (this.state.cols || 12),
-                                  y: 24,
+                                  x: 4,
+                                  y: 0+i*6,
                                   w: 2,
                                   h: 6,
                                   int:res.gameinventory[i].interest,
@@ -385,7 +385,7 @@ var Edit = React.createClass({
 
   backToProfile() {
     let profilewidget = ReactDOM.render(
-        <AddRemoveLayout />,
+        <Profile />,
         document.getElementById('main_content'));
   },
 
@@ -637,7 +637,7 @@ var Edit = React.createClass({
 
 
 let profilewidget = ReactDOM.render(
-        <AddRemoveLayout />,
+        <Profile />,
         document.getElementById('main_content'));
 
 function getFromLS(key) {
