@@ -6,10 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Gamempire</title>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.cyan-light_blue.min.css" />
     <link rel="stylesheet" href="./style/main.css">
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -20,10 +16,11 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
      <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <a href="#" id="1">About</a>
+      <a href="#" id="2">Services</a>
+      <a href="#" id="3">Clients</a>
+      <a id="4" onclick="addtab()">+</a>
+
     </div>
     <span onclick="openNav()">open</span>
       
@@ -33,7 +30,7 @@
       <script src="js/bundle2.js"></script>
       
     </div>
-    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    
   </body>
 
   <script type="text/javascript">
@@ -43,10 +40,30 @@
 
     }
 
-    /* Set the width of the side navigation to 0 */
+    
     function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("main_content").style.marginLeft = "0";
     } 
+
+    function addtab(){
+
+        var div = document.createElement("div");
+        div.setAttribute("id", "add");
+        div.innerHTML='<input id="hi"></input> <button onclick="create()">Ok</button>'; 
+        document.getElementById("mySidenav").appendChild(div);
+    }
+
+    function create(){
+
+        var v =$("#hi").val();
+        var as =document.createElement("a");
+        as.setAttribute("id",v);
+        as.innerHTML=v;
+        var child= document.getElementById("4");
+        var p =document.getElementById("mySidenav");
+        p.insertBefore(as,child);
+        document.getElementById("add").remove();
+    }
   </script>
 </html>
