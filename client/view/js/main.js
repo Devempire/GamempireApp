@@ -408,6 +408,12 @@ var Edit = React.createClass({
         <font id='newpass' color='red'></font>
         </label>
         <br/>
+        <label>
+        Confirm password:
+        <input type="password" id="cnewpw" />
+        <font id='cnewpass' color='red'></font>
+        </label>
+        <br/>
         </form>
         <button onClick={this.checkPw}> Submit </button>
       </div>
@@ -533,10 +539,11 @@ var Edit = React.createClass({
         var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var newpw = $('#newpw').val();
         var oldpw =$('#oldpw').val();
-        console.log(newpw);
-        console.log(oldpw);
+        var cnewpw=$('#cnewpw').val();
+        console.log(newpw,oldpw,cnewpw);
         var errornewpass = document.getElementById('newpass');
         var erroroldpass = document.getElementById('oldpass');
+        var errorcnewpass = document.getElementById('cnewpass');
         if (newpw == "") {
             errornewpass.innerHTML = "The field is empty.";
         } else if (!passPattern.test(newpw)) {
@@ -546,8 +553,16 @@ var Edit = React.createClass({
         } else {
             errornewpass.innerHTML = "";
         }
+        if (cnewpw == "") {
+            errorcnewpass.innerHTML = "The field is empty.";
+        }  else if (cnewpw != newpw) {
+            errorcnewpass.innerHTML = "The new password does not match";
+        } else {
+            errorcnewpass.innerHTML = "";
+        }
 
-        if(errornewpass.innerHTML == ""){
+
+        if(errornewpass.innerHTML == "" && errorcnewpass.innerHTML == ""){
              var token = electron.remote.getGlobal('sharedObject').token;
             $.post( "http://localhost:8080/user/load",
                 {
