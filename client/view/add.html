@@ -10,10 +10,11 @@
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
-    
+
   </head>
+
   <body>
-    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
      <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="main.html" id="1">Profile</a>
@@ -23,14 +24,29 @@
 
     </div>
     <span onclick="openNav()">open</span>
-      
+   	<div id="main_content">
+    <form ><h5>Add Games:</h5>
+    <select id = "game">
+    <option value="" disabled selected>Select your option</option>
+    <option value="Hearthstone">Hearthstone</option>
+    <option value="Overwatch">Overwatch</option>
+    <option value="Dota2">Dota2</option>
+    <option value="League of lengends">League of lengends</option>
+    </select>
+    <br/>
+    <h5>Username in game:</h5> 
+    <input id="gameusername" type="text"/>
+    <h5>Interest of Games: </h5>
+    <select multiple id="interest">
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option> 
+    </select> 
+    <input id="submit" type="submit" value="Submit"/>
 
-      <div id ="main_content"></div>
-      
-      <script src="js/bundle2.js"></script>
-      
-    </div>
-    
+	</form>
+  	</div>
   </body>
 
   <script type="text/javascript">
@@ -65,5 +81,30 @@
         p.insertBefore(as,child);
         document.getElementById("add").remove();
     }
+
+    $("#submit").click(function(event){
+    event.preventDefault();
+    var remote = require('electron').remote; 
+    var token = remote.getGlobal('sharedObject').token;
+    $.post( "http://localhost:8080/user/load",
+              {
+                  'token' :token
+              }).done((d)=> {
+                  $.ajax({
+                          url:"http://localhost:8080/user/profile/updategames",   
+                          type:"PUT",
+                          contentType: 'application/json; charset=utf-8',
+                          data:JSON.stringify({    
+                              _id:d._id,
+                              game: $("#game").val(),
+                              interest: $("#interest").val(),
+                              useringame:$("#gameusername").val()
+
+                          })
+                      }).fail((err)=>{
+                                  alert("opps!");
+                              });
+                          });
+          })
   </script>
-</html>
+ </html>

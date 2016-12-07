@@ -99,14 +99,13 @@ class MainWindow extends React.Component {
             .done((res) =>{
                 dialog.showMessageBox(options);
                 electron.remote.getGlobal('sharedObject').token = res;
-                window.location.href="./view/main.html";
+                window.location.href="./view/add.html";
                
             })
             .fail((res)=>{
                 dialog.showMessageBox(options2);
             });
-
-        
+            
         
     }
 
@@ -130,8 +129,9 @@ class SignUpWindow extends React.Component {
             confirmPass: null,
             email: null,
             confirmEmail: null,
-            birthday: moment().format('YYYY-M-D'),
+            birthday: moment().format('YYYY-MM-DD'),
         };
+
     }
 
     dismiss() {
@@ -148,6 +148,7 @@ class SignUpWindow extends React.Component {
                         value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
                     <font id='fname' color='red'></font>
+                    
                     <TextField
                         floatingLabelText='Last name'
                         value={this.state.lastName || ""}
