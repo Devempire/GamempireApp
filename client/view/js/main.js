@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Dropdown from 'react-dropdown';
 //var ReactGridLayout = require('react-grid-layout');
 var PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin');
 var _ = require('lodash');
