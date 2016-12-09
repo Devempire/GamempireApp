@@ -20,6 +20,7 @@ const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
 
+
 const originalLayouts = getFromLS('layouts') || {};
 var Profile = React.createClass({
   mixins: [PureRenderMixin],
