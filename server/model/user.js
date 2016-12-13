@@ -10,7 +10,7 @@ var UserSchema = mongoose.Schema({
     gameinventory:[{ game: String, useringame:String, interest: Array}],
     friends: {type: Array, default: ''},
     mic: {type: Boolean, default: ''},
-    img: {type: Buffer, contentType: String, default: ''}
+    img: {data: Buffer, contentType: String}
 });
 
 var User = mongoose.model('User', UserSchema);

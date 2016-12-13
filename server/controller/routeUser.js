@@ -5,8 +5,7 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var User = require('../model/user.js');
 var crypto = require('crypto');
-
-
+var fs = require('fs');
 
 /* show all users (for testing only), delete if running server in real application*/
 router.get('/show', function (req, res, next) {
@@ -16,7 +15,6 @@ router.get('/show', function (req, res, next) {
     res.json(users);
     });
 });
-
 
 /* add a user */
 router.post('/add', function (req, res, next) {
@@ -31,7 +29,7 @@ router.post('/add', function (req, res, next) {
                 password: key,
                 firstname: req.body.firstname,
                 lastname:req.body.lastname,
-                dateofbirth:req.body.birthday
+                dateofbirth:req.body.birthday,
             }).save(function ( err, user, count ){
                 if( err ) return next( err );
                 res.end("Submission completed");
@@ -110,7 +108,8 @@ router.get('/profile/:id/info',function(req,res,next){
             lastname :user.lastname,
             email:user.email,
             dateofbirth: user.dateofbirth,
-            gameinventory:user.gameinventory
+            gameinventory:user.gameinventory,
+            img: user.img
         });
     });
 });
@@ -130,6 +129,19 @@ router.get('/profile/:id/info',function(req,res,next){
          res.json(user);
      });
  });
+
+//update user profile picture
+// router.put('/profile/updatePic', function(req, res, next) {
+//     User.update( { _id:req.body._id},
+//        {
+//         img:req.body.img
+//        }, function (err, user) {
+//          if (err) return next(err);
+
+//          res.json(user);
+//      });
+// })
+
  // update user Email
  router.put('/profile/updateEmail',function(req,res,next){
      User.update( { _id:req.body._id},

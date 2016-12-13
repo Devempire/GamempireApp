@@ -22,13 +22,15 @@ var session = electron.remote;
 var moment = require('moment');
 
 const originalLayouts = getFromLS('layouts') || {};
+
+//Profile page
 var Profile = React.createClass({
   mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+      cols: {lg: 28, md: 26, sm: 24, xs: 22, xxs: 20},
       rowHeight: 20,
       verticalCompact: false
     };
@@ -39,7 +41,7 @@ var Profile = React.createClass({
     
     return {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
-      profile:{i:"profile",x: 0, y: 0, w: 4, h: 24},
+      profile:{i:"profile",x: 0, y: 0, w: 10, h: 24, static: true},
       games:[],
       response:undefined,
       username:null,
@@ -47,7 +49,8 @@ var Profile = React.createClass({
       firstname:null,
       selectgame:'',
       newCounter: 0,
-      selectinterest:null
+      selectinterest:null,
+      img:null
     };
   },
 
@@ -209,27 +212,33 @@ var Profile = React.createClass({
         document.getElementById('main_content'));
   },
   render() {
-  
-    return (
-      <div>
-      <button onClick={this.resetLayout}>Reset Layout</button>
-        <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
-            onBreakpointChange={this.onBreakpointChange} {...this.props}>
-            {this.onProfile(this.state.profile)}
-            {_.map(this.state.games, this.onGame)}
-        </ResponsiveReactGridLayout>
-      </div>
-    );
+    if (this.state.response) {
+      return (
+        <div>
+        <button onClick={this.resetLayout}>Reset Layout</button>
+          <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
+              onBreakpointChange={this.onBreakpointChange} {...this.props}>
+              {this.onProfile(this.state.profile)}
+              {_.map(this.state.games, this.onGame)}
+          </ResponsiveReactGridLayout>
+        </div>
+      );
+    } else {
+      return (
+        <div>Loading</div>
+        );
+    }
   }
 });
 
+//Edit page
 var Edit = React.createClass({
   mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+      cols: {lg: 28, md: 26, sm: 24, xs: 22, xxs: 20},
       rowHeight: 20,
       verticalCompact: false
     };
@@ -241,7 +250,7 @@ var Edit = React.createClass({
     return {
 
       layout: layout,
-      items:{i:"edit",x:0,y:0,w:4,h:21},
+      items:{i:"edit",x:0,y:0,w:10,h:21,static: true},
       pw:[],
       email:[],
       response:undefined,
@@ -340,11 +349,54 @@ var Edit = React.createClass({
   },
 
   uploadPic() {
+
+    let option1 = {
+      type: 'info',
+      buttons: ['Yes'],
+      title: 'Update profile picture',
+      message: "Successfully updated.",
+      defaultId: 0,
+      cancelId: 0
+    };
+
+    let option2 = {
+      type: 'info',
+      buttons: ['Yes'],
+      title: 'Update profile picture',
+      message: "Upload failed.",
+      defaultId: 0,
+      cancelId: 0
+    };
+
     var pic = document.getElementById("uploadedpic").files;
-    console.log(pic);
     if (pic.length != 0) {
       document.getElementById("profilepic").src = pic[0].path;
     }
+
+    // var pic = document.getElementById("uploadedpic").files;
+    // console.log(pic);
+    // if (pic.length != 0) {
+    //   document.getElementById("profilepic").src = pic[0].path;
+    //   var image = fs.readFileSync(pic[0].path);
+    //   var token = electron.remote.getGlobal('sharedObject').token;
+    //        $.post( "http://localhost:8080/user/load",
+    //           {
+    //               'token' :token
+    //           }).done((d)=> {
+    //               $.ajax({
+    //                       url:"http://localhost:8080/user/profile/updatePic",   
+    //                       type:"PUT",
+    //                       data:{    
+    //                           _id:d._id,
+    //                           "img":pic[0].path
+    //                       }
+    //                   }).done((res)=>{
+    //                       dialog.showMessageBox(option1);
+    //                   }).fail((err)=>{
+    //                       dialog.showMessageBox(option2);
+    //                   });
+    //               });
+    // }
   },
 
   onRemoveItem() {

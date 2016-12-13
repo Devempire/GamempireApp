@@ -130,7 +130,7 @@ class SignUpWindow extends React.Component {
             confirmPass: null,
             email: null,
             confirmEmail: null,
-            birthday: moment().format('YYYY-M-D'),
+            birthday: moment().format('YYYY-MM-DD'),
         };
     }
 
@@ -142,7 +142,6 @@ class SignUpWindow extends React.Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div style={styles.root}>
-                    
                     <TextField
                         floatingLabelText='First name'
                         value={this.state.firstName || ""}
@@ -306,7 +305,8 @@ class SignUpWindow extends React.Component {
                     email:this.state.email,
                     firstname:this.state.firstName,
                     lastname:this.state.lastName,
-                    birthday:this.state.birthday
+                    birthday:this.state.birthday,
+                    img:'../client/view/img/user.jpg'
 
                 }
         )
