@@ -1,0 +1,82 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Gamempire</title>
+    <link rel="stylesheet" href="./style/main.css">
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+
+  </head>
+
+  <body>
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+     <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="main.html" id="1">Profile</a>
+      <a href="add.html" id="2">Add Game</a>
+      <a href="youtube.html" id="3">Youtube</a>
+      <a href="twitch.html" id="4">Twitch</a>
+      <a id="4" onclick="addtab()">+</a>
+
+    </div>
+    <span onclick="openNav()">open</span>
+   	<div id="main_content">
+      <div id="player"></div>
+  	</div>
+  </body>
+
+  <script type="text/javascript">
+    function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main_content").style.marginLeft = "250px";
+
+    }
+
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main_content").style.marginLeft = "0";
+    } 
+
+    function addtab(){
+
+        var div = document.createElement("div");
+        div.setAttribute("id", "add");
+        div.innerHTML='<input id="hi"></input> <button onclick="create()">Ok</button>'; 
+        document.getElementById("mySidenav").appendChild(div);
+    }
+
+    function create(){
+
+        var v =$("#hi").val();
+        var as =document.createElement("a");
+        as.setAttribute("id",v);
+        as.innerHTML=v;
+        var child= document.getElementById("4");
+        var p =document.getElementById("mySidenav");
+        p.insertBefore(as,child);
+        document.getElementById("add").remove();
+    }
+
+    
+  </script>
+
+  <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+  <div id="{PLAYER_DIV_ID}"></div>
+  <script type="text/javascript">
+    var options = {
+      width: 854,
+      height: 480,
+      channel: "{reynad27}",
+      //video: "{VIDEO_ID}"
+    };
+    var player = new Twitch.Player("{PLAYER_DIV_ID}", options);
+    player.setVolume(0.5);
+  </script>
+
+ </html>
