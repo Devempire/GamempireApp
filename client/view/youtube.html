@@ -19,33 +19,13 @@
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="main.html" id="1">Profile</a>
       <a href="add.html" id="2">Add Game</a>
-      <a href="youtube.html" id="3">Youtube</a>
+      <a href="youtube.html" id="3">youtube</a>
       <a id="4" onclick="addtab()">+</a>
 
     </div>
     <span onclick="openNav()">open</span>
    	<div id="main_content">
-    <form ><h5>Add Games:</h5>
-    <select id = "game">
-    <option value="" disabled selected>Select your option</option>
-    <option value="Hearthstone">Hearthstone</option>
-    <option value="Overwatch">Overwatch</option>
-    <option value="Dota2">Dota2</option>
-    <option value="League of lengends">League of lengends</option>
-    </select>
-    <br/>
-    <h5>Username in game:</h5> 
-    <input id="gameusername" type="text"/>
-    <h5>Interest of Games: </h5>
-    <select multiple id="interest">
-    <option value="A">A</option>
-    <option value="B">B</option>
-    <option value="C">C</option>
-    <option value="D">D</option> 
-    </select> 
-    <input id="submit" type="submit" value="Submit"/>
-
-	</form>
+      <div id="player"></div>
   	</div>
   </body>
 
@@ -82,29 +62,50 @@
         document.getElementById("add").remove();
     }
 
-    $("#submit").click(function(event){
-    event.preventDefault();
-    var remote = require('electron').remote; 
-    var token = remote.getGlobal('sharedObject').token;
-    $.post( "http://localhost:8080/user/load",
-              {
-                  'token' :token
-              }).done((d)=> {
-                  $.ajax({
-                          url:"http://localhost:8080/user/profile/updategames",   
-                          type:"PUT",
-                          contentType: 'application/json; charset=utf-8',
-                          data:JSON.stringify({    
-                              _id:d._id,
-                              game: $("#game").val(),
-                              interest: $("#interest").val(),
-                              useringame:$("#gameusername").val()
-
-                          })
-                      }).fail((err)=>{
-                                  alert("opps!");
-                              });
-                          });
-          })
+    
   </script>
+
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'c6pKABSOv7w',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
  </html>

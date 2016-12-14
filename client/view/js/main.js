@@ -134,8 +134,13 @@ var Profile = React.createClass({
     <h6>interest:</h6>
     <p>{el.int}</p>
     <h7>username in game : {el.useringame} </h7>
+    <button  onClick={this.editgame(el)}>Edit</button>
     </div>
     );
+  },
+
+  editgame(el){
+    //
   },
 
   goToEdit() {
@@ -143,6 +148,7 @@ var Profile = React.createClass({
         <Edit />,
         document.getElementById('main_content'));
   },
+
   render() {
     if (this.state.response) {
       return (
