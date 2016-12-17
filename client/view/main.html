@@ -20,7 +20,8 @@
       <a href="add.html" id="2">Add Game</a>
       <a href="youtube.html" id="3">Youtube</a>
       <a href="twitch.html" id="4">Twitch</a>
-      <a id="4" onclick="addtab()">+</a>
+      <a href="discord.html" id="5">Discord</a>
+      <a id="6" onclick="addtab()">+</a>
 
     </div>
     <span onclick="openNav()">open</span>
@@ -61,7 +62,7 @@
         var as =document.createElement("a");
         as.setAttribute("id",v);
         as.innerHTML=v;
-        var child= document.getElementById("4");
+        var child= document.getElementById("6");
         var p =document.getElementById("mySidenav");
         p.insertBefore(as,child);
         document.getElementById("add").remove();

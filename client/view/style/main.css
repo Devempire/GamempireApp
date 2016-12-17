@@ -193,3 +193,8 @@ html, body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+.discord_widget {
+  position: absolute;
+  left: 300px;
+}
