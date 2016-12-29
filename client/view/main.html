@@ -1,71 +1,76 @@
 <!doctype html>
-
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Gamempire</title>
     <link rel="stylesheet" href="./style/main.css">
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <link rel="stylesheet" href="./style/gamempire.css">
+    <script>
+    if (typeof module === 'object') {
+        window.module = module;
+        module = undefined;
+    }
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>if (window.module) module = window.module;</script>
-    
-  </head>
-  <body>
+    <script>
+    if (window.module) module = window.module;
+    </script>
+</head>
+
+<body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="main.html" id="1">Profile</a>
-      <a href="add.html" id="2">Add Game</a>
-      <a href="youtube.html" id="3">Youtube</a>
-      <a href="twitch.html" id="4">Twitch</a>
-      <a href="discord.html" id="5">Discord</a>
-      <a id="6" onclick="addtab()">+</a>
-
+        <div id="mySidenav" class="sidenav">
+            <a class="active" href="main.html" id="1">Profile</a>
+            <a href="add.html" id="2">Add Game</a>
+            <a href="youtube.html" id="3">Youtube</a>
+            <a href="twitch.html" id="4">Twitch</a>
+            <a href="discord.html" id="5">Discord</a>
+            <a id="6" onclick="addtab()">+</a>
+            <div class="toggleNav" onclick="toggleNav()"></div>
+        </div>
+        <div id="main_content"></div>
+        <script src="js/bundle2.js"></script>
     </div>
-    <span onclick="openNav()">open</span>
-      
+</body>
+<script type="text/javascript">
+function toggleNav() {
+    $("#mySidenav").toggleClass("navOpen");
+}
 
-      <div id ="main_content"></div>
-      
-      <script src="js/bundle2.js"></script>
-      
-    </div>
-    
-  </body>
-
-  <script type="text/javascript">
-    function openNav() {
+function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main_content").style.marginLeft = "250px";
 
-    }
-    
-    
-    function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      document.getElementById("main_content").style.marginLeft = "0";
-    } 
+}
 
-    function addtab(){
 
-        var div = document.createElement("div");
-        div.setAttribute("id", "add");
-        div.innerHTML='<input id="hi"></input> <button onclick="create()">Ok</button>'; 
-        document.getElementById("mySidenav").appendChild(div);
-    }
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main_content").style.marginLeft = "0";
+}
 
-    function create(){
+function addtab() {
 
-        var v =$("#hi").val();
-        var as =document.createElement("a");
-        as.setAttribute("id",v);
-        as.innerHTML=v;
-        var child= document.getElementById("6");
-        var p =document.getElementById("mySidenav");
-        p.insertBefore(as,child);
-        document.getElementById("add").remove();
-    }
-  </script>
+    var div = document.createElement("div");
+    div.setAttribute("id", "add");
+    div.innerHTML = '<div class="dropFade"><input type="text" maxlength="15" id="hi"></input> <button class="button" onclick="create()">Ok</button></div>';
+    document.getElementById("mySidenav").appendChild(div);
+}
+
+function create() {
+
+    var v = $("#hi").val();
+    var as = document.createElement("a");
+    as.setAttribute("id", v + "-" + Date.now());
+    as.innerHTML = v;
+    var child = document.getElementById("6");
+    var p = document.getElementById("mySidenav");
+    p.insertBefore(as, child);
+    document.getElementById("add").remove();
+}
+</script>
+
 </html>
