@@ -1,4 +1,11 @@
-
+.profilepic {
+   height: 250px;
+   width: 250px;
+ }
+ 
+ .uploadedpic {
+   display: none;
+ }
 
 /*React Grid Layout CSS*/
 
