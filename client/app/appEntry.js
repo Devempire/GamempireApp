@@ -13,14 +13,7 @@ const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var moment = require('moment');
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 
-let muiTheme = getMuiTheme({
-    fontFamily: 'Microsoft YaHei'
-});
 
 injectTapEventPlugin();
 
@@ -45,29 +38,23 @@ class MainWindow extends React.Component {
     render() {
         {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.root}>
-                    
-                    <TextField
-                        hintText='Enter Your UserName '
-                        value={this.state.userName||''}
-                        onChange={(event) => {this.setState({userName: event.target.value})}}/>
-                    <TextField
-                        hintText='Enter Your Password'
-                        type='password'
-                        value={this.state.password||''}
-                        onChange={(event) => {this.setState({password: event.target.value})}}/>
-
-                    <div style={styles.buttons_container}>
-                        <RaisedButton
-                            label="Log In" primary={true}
-                            onClick={this._handleLogin.bind(this)}/>
-                        <RaisedButton
-                            label="Sign Up" primary={false} style={{marginLeft: 60}}
-                            onClick={this._handleRegistry.bind(this)}/>
-                    </div>
+            
+        <div id="loginContainer" className="row align-center align-middle">
+            <div className="medium-6 large-6 column">
+            <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
+                <div className="required">
+                    <input type="text" id="username" placeholder="Enter your username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
                 </div>
-            </MuiThemeProvider>
+                <div className="required">
+                    <input type="password" id="passsword" placeholder="Enter your password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                </div>
+                <hr/>
+                <button className="button" onClick={this._handleLogin.bind(this)}>Login</button>
+                <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
+            </div>
+        </div>
+
+           
         );
     }
 
@@ -140,63 +127,42 @@ class SignUpWindow extends React.Component {
 
     render() {
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
-                <div style={styles.root}>
-                    <TextField
-                        floatingLabelText='First name'
-                        value={this.state.firstName || ""}
-                        onChange={(event) => {this.setState({firstName: event.target.value})}}/>
-                    <font id='fname' color='red'></font>
-                    
-                    <TextField
-                        floatingLabelText='Last name'
-                        value={this.state.lastName || ""}
-                        onChange={(event) => {this.setState({lastName: event.target.value})}}/>
-                    <font id='lname' color='red'></font>
-                    <TextField
-                        floatingLabelText='Username'
-                        value={this.state.userName || ""}
-                        onChange={(event) => {this.setState({userName: event.target.value})}}/>
-                    <font id='user' color='red'></font>
-                    <TextField
-                        type='password'
-                        floatingLabelText='Password'
-                        value={this.state.password || ""}
-                        onChange={(event) => {this.setState({password: event.target.value})}}/>
-                    <font id='pass' color='red'></font>
-                    <TextField
-                       floatingLabelText='Confirm Password'
-                        type='password'
-                        value={this.state.confirmPass || ""}
-                        onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
-                    <font id='cpass' color='red'></font>
-                    <TextField
-                        floatingLabelText='Email'
-                        value={this.state.email || ""}
-                        onChange={(event) => {this.setState({email: event.target.value})}}/>
-                    <font id='email' color='red'></font>
-                    <TextField
-                        floatingLabelText='Confirm Email'
-                        value={this.state.confirmEmail || ""}
-                        onChange={(event) => {this.setState({confirmEmail: event.target.value})}}/>
-                    <font id='cemail' color='red'></font>
-                    <TextField
-                        type='date'
-                        floatingLabelText='Birthday'
-                        value={this.state.birthday||''}
-                        onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
-                    
-
-                    <div style={styles.buttons_container}>
-                        <RaisedButton
-                            label="Create Account" primary={true}
-                            onClick={this._checkValid.bind(this)}/>
-                        <RaisedButton
-                            label="Back" primary={false} style={{marginLeft: 60}}
-                            onClick={this._backToLogin.bind(this)}/>
+            
+        <div id="loginContainer" className="row align-center align-middle">
+            <div className="medium-6 large-6 column">
+            <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
+                <div className="required">
+                    <input required type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                </div>
+                <div className="textInputGroup">
+                    <div className="required">
+                        <input required type="text" id="firstName" placeholder="First Name" />
+                    </div>
+                    <div className="required">
+                        <input required type="text" id="lastName" placeholder="Last Name" />
                     </div>
                 </div>
-            </MuiThemeProvider>
+                <div className="required">
+                    <input required type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                </div>
+                <div className="required">
+                    <input required type="password" id="confirmPasssword" placeholder="Confirm Password" />
+                </div>
+                <div className="required">
+                    <input required type="email" id="email" placeholder="Email" />
+                </div>
+                <div className="required">
+                    <input required type="email" id="confirmEmail" placeholder="Confirm Email" />
+                </div>
+                <div className="required">
+                    <input required type="date" id="birthday"/>
+                </div>
+                <hr/>
+                <button className="button">Sign Up</button>
+            </div>
+        </div>
+
+            
         );
     }
 
@@ -328,33 +294,6 @@ class SignUpWindow extends React.Component {
     }
 }
 
-const styles = {
-    root: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    icon: {
-        width: 100,
-        height: 100,
-        marginBottom: 40
-    },
-    buttons_container: {
-        paddingTop: 30,
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-};
 
 
 let mainWndComponent = ReactDOM.render(
