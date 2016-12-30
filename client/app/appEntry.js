@@ -134,33 +134,42 @@ class SignUpWindow extends React.Component {
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="required">
-                    <input required type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                    <input required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
+                        onChange={(event) => {this.setState({userName: event.target.value})}}/>
                 </div>
                 <div className="textInputGroup">
                     <div className="required">
-                        <input required type="text" id="firstName" placeholder="First Name" />
+                        <input required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
+                        onChange={(event) => {this.setState({firstName: event.target.value})}}/>
                     </div>
                     <div className="required">
-                        <input required type="text" id="lastName" placeholder="Last Name" />
+                        <input required type="text" id="lastName" placeholder="Last Name" value={this.state.lastName || ""}
+                        onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     </div>
                 </div>
                 <div className="required">
-                    <input required type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                    <input required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
+                        onChange={(event) => {this.setState({password: event.target.value})}}/>
                 </div>
                 <div className="required">
-                    <input required type="password" id="confirmPasssword" placeholder="Confirm Password" />
+                    <input required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
+                        onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                 </div>
                 <div className="required">
-                    <input required type="email" id="email" placeholder="Email" />
+                    <input required type="email" id="email" placeholder="Email" value={this.state.email || ""}
+                        onChange={(event) => {this.setState({email: event.target.value})}}/>
                 </div>
                 <div className="required">
-                    <input required type="email" id="confirmEmail" placeholder="Confirm Email" />
+                    <input required type="email" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
+                        onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
                 </div>
                 <div className="required">
-                    <input required type="date" id="birthday"/>
+                    <input required type="date" id="birthday" value={this.state.birthday||''}
+                        onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
                 </div>
                 <hr/>
-                <button className="button">Sign Up</button>
+                <button className="button" onClick={this._checkValid.bind(this)}>Sign Up</button>
+                <button className="button" onClick={this._backToLogin.bind(this)}>Back to login</button>
             </div>
         </div>
 
