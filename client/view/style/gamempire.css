@@ -17,6 +17,20 @@ hr {
 
 #loginContainer {
     background-color: #12181e;
+    animation-name: dropFade;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+#titleBar {
+    -webkit-app-region: drag;
+    height: 24px;
+    background: #1d2428;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
 }
 
 .sidenav {
@@ -56,7 +70,7 @@ hr {
 
 @keyframes dropFade {
     from {
-        transform: translateY(-10px);
+        transform: translateY(-7px);
         opacity: 0;
     }
     to {

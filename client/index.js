@@ -22,8 +22,11 @@ var mainWnd = null;
 
 function openMainWnd(uri) {
     mainWnd = new BrowserWindow({
-        width: 800,
-        height: 600,
+        minHeight: 675,
+        minWidth: 400,
+        width: 400,
+        height: 675,
+        titleBarStyle: 'hidden'
 
     });
 
