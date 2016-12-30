@@ -39,6 +39,7 @@ class MainWindow extends React.Component {
         {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
         return (
             
+
         <div id="loginContainer" className="row align-center align-middle">
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
@@ -128,6 +129,7 @@ class SignUpWindow extends React.Component {
     render() {
         return (
             
+
         <div id="loginContainer" className="row align-center align-middle">
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
@@ -161,6 +163,7 @@ class SignUpWindow extends React.Component {
                 <button className="button">Sign Up</button>
             </div>
         </div>
+
 
             
         );
