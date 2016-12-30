@@ -39,19 +39,22 @@ class MainWindow extends React.Component {
         {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
         return (
             
-                <div>
-                    
-                
-                <input type="text" id="username" placeholder="Enter your username" value={this.state.userName||''}
-                        onChange={(event) => {this.setState({userName: event.target.value})}}/>
-                
-                <input type="password" id="passsword" placeholder="Enter your password" value={this.state.password||''}
-                        onChange={(event) => {this.setState({password: event.target.value})}}/>
-                
-                <button className="button" onClick={this._handleLogin.bind(this)} >Login</button>
-                
-                <button className="button secondary" onClick={this._handleRegistry.bind(this)} >Sign up</button>
+
+        <div id="loginContainer" className="row align-center align-middle">
+            <div className="medium-6 large-6 column">
+            <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
+                <div className="required">
+                    <input type="text" id="username" placeholder="Enter your username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
                 </div>
+                <div className="required">
+                    <input type="password" id="passsword" placeholder="Enter your password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                </div>
+                <hr/>
+                <button className="button" onClick={this._handleLogin.bind(this)}>Login</button>
+                <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
+            </div>
+        </div>
+
            
         );
     }
@@ -126,9 +129,42 @@ class SignUpWindow extends React.Component {
     render() {
         return (
             
-                <div >
-                     something has to be done here 
+
+        <div id="loginContainer" className="row align-center align-middle">
+            <div className="medium-6 large-6 column">
+            <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
+                <div className="required">
+                    <input required type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
                 </div>
+                <div className="textInputGroup">
+                    <div className="required">
+                        <input required type="text" id="firstName" placeholder="First Name" />
+                    </div>
+                    <div className="required">
+                        <input required type="text" id="lastName" placeholder="Last Name" />
+                    </div>
+                </div>
+                <div className="required">
+                    <input required type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                </div>
+                <div className="required">
+                    <input required type="password" id="confirmPasssword" placeholder="Confirm Password" />
+                </div>
+                <div className="required">
+                    <input required type="email" id="email" placeholder="Email" />
+                </div>
+                <div className="required">
+                    <input required type="email" id="confirmEmail" placeholder="Confirm Email" />
+                </div>
+                <div className="required">
+                    <input required type="date" id="birthday"/>
+                </div>
+                <hr/>
+                <button className="button">Sign Up</button>
+            </div>
+        </div>
+
+
             
         );
     }
