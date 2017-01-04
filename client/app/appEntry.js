@@ -137,6 +137,7 @@ class SignUpWindow extends React.Component {
                     <input required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
                 </div>
+                <font id='user' color='red'></font>
                 <div className="textInputGroup">
                     <div className="required">
                         <input required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
@@ -147,22 +148,28 @@ class SignUpWindow extends React.Component {
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     </div>
                 </div>
+                <font id='fname' color='red'></font>
+                <font id='lname' color='red'></font>
                 <div className="required">
                     <input required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
                 </div>
+                <font id='pass' color='red'></font>
                 <div className="required">
                     <input required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                 </div>
+                <font id='cpass' color='red'></font>
                 <div className="required">
                     <input required type="email" id="email" placeholder="Email" value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                 </div>
+                <font id='emailmsg' color='red'></font>
                 <div className="required">
                     <input required type="email" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
                 </div>
+                <font id='cemailmsg' color='red'></font>
                 <div className="required">
                     <input required type="date" id="birthday" value={this.state.birthday||''}
                         onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
@@ -188,13 +195,13 @@ class SignUpWindow extends React.Component {
         var user = document.getElementById('user');
         var pass = document.getElementById('pass');
         var cpass = document.getElementById('cpass');
-        var email = document.getElementById('email');
-        var cemail = document.getElementById('cemail');
+        var email = document.getElementById('emailmsg');
+        var cemail = document.getElementById('cemailmsg');
 
         if (this.state.firstName == null) {
-            fname.innerHTML = "The field is empty.";
+            fname.innerHTML = "The field is empty. ";
         } else if (!namePattern.test(this.state.firstName)) {
-            fname.innerHTML = "Names can only contain alphabets.";
+            fname.innerHTML = "Names can only contain alphabets. ";
         } else {
             fname.innerHTML = "";
         }
