@@ -138,6 +138,7 @@ class SignUpWindow extends React.Component {
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
                         <span ></span>
                 </div>
+                <font id='user' color='red'></font>
                 <div className="textInputGroup">
                     <div className="required">
                         <input required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
@@ -148,22 +149,28 @@ class SignUpWindow extends React.Component {
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                     </div>
                 </div>
+                <font id='fname' color='red'></font>
+                <font id='lname' color='red'></font>
                 <div className="required">
                     <input required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
                 </div>
+                <font id='pass' color='red'></font>
                 <div className="required">
                     <input required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                 </div>
+                <font id='cpass' color='red'></font>
                 <div className="required">
                     <input required type="email" id="email" placeholder="Email" value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                 </div>
+                <font id='emailmsg' color='red'></font>
                 <div className="required">
                     <input required type="email" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
                 </div>
+                <font id='cemailmsg' color='red'></font>
                 <div className="required">
                     <input required type="date" id="birthday" value={this.state.birthday||''}
                         onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
@@ -184,9 +191,77 @@ class SignUpWindow extends React.Component {
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
         var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
-       
-        //this._register();
-    
+
+        var fname = document.getElementById('fname');
+        var lname = document.getElementById('lname');
+        var user = document.getElementById('user');
+        var pass = document.getElementById('pass');
+        var cpass = document.getElementById('cpass');
+        var email = document.getElementById('emailmsg');
+        var cemail = document.getElementById('cemailmsg');
+
+        if (this.state.firstName == null) {
+            fname.innerHTML = "The field is empty. ";
+        } else if (!namePattern.test(this.state.firstName)) {
+            fname.innerHTML = "Names can only contain alphabets. ";
+        } else {
+            fname.innerHTML = "";
+        }
+
+        if (this.state.lastName == null) {
+            lname.innerHTML = "The field is empty.";
+        } else if (!namePattern.test(this.state.lastName)) {
+            lname.innerHTML = "Names can only contain alphabets.";
+        } else {
+            lname.innerHTML = "";
+        }
+
+        if (this.state.userName == null) {
+            user.innerHTML = "The field is empty.";
+        } else if (!userPattern.test(this.state.userName)) {
+            user.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
+        } else {
+            user.innerHTML = "";
+        }
+
+        if (this.state.password == null) {
+            pass.innerHTML = "The field is empty.";
+        } else if (!passPattern.test(this.state.password)) {
+            pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
+        } else {
+            pass.innerHTML = "";
+        }
+
+        if (this.state.confirmPass == null) {
+            cpass.innerHTML = "The field is empty.";
+        } else if (this.state.password != this.state.confirmPass) {
+            cpass.innerHTML = "Passwords do not match.";
+        } else {
+            cpass.innerHTML = "";
+        }
+
+        if (this.state.email == null) {
+            email.innerHTML = "The field is empty.";
+        } else if (!emailPattern.test(this.state.email)) {
+            email.innerHTML = "Invalid email.";
+        } else {
+            email.innerHTML = "";
+        }
+
+        if (this.state.confirmEmail == null) {
+            cemail.innerHTML = "The field is empty.";
+        } else if (this.state.email != this.state.confirmEmail) {
+            cemail.innerHTML = "Emails do not match."
+        } else {
+            cemail.innerHTML = "";
+        }
+
+        if (fname.innerHTML == "" && lname.innerHTML == "" && user.innerHTML == "" 
+            && pass.innerHTML == "" && cpass.innerHTML == "" 
+            && email.innerHTML == "" && cemail.innerHTML == "") {
+            
+            this._register();
+        }
 
     }
 
