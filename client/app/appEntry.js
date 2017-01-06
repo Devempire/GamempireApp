@@ -130,12 +130,13 @@ class SignUpWindow extends React.Component {
         return (
             
 
-        <div id="loginContainer" className="row align-center align-middle">
+        <form id="loginContainer" className="row align-center align-middle" name="signup" data-toggle="validator"> 
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="required">
                     <input required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
+                        <span ></span>
                 </div>
                 <div className="textInputGroup">
                     <div className="required">
@@ -168,10 +169,10 @@ class SignUpWindow extends React.Component {
                         onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
                 </div>
                 <hr/>
-                <button className="button" onClick={this._checkValid.bind(this)}>Sign Up</button>
-                <button className="button" onClick={this._backToLogin.bind(this)}>Back to login</button>
+                <button className="button" type="submit" onClick={this._checkValid.bind(this)}>Sign Up</button>
+                <button className="button secondary" onClick={this._backToLogin.bind(this)}>Back to login</button>
             </div>
-        </div>
+        </form>
 
 
             
@@ -183,76 +184,9 @@ class SignUpWindow extends React.Component {
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
         var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
-        var fname = document.getElementById('fname');
-        var lname = document.getElementById('lname');
-        var user = document.getElementById('user');
-        var pass = document.getElementById('pass');
-        var cpass = document.getElementById('cpass');
-        var email = document.getElementById('email');
-        var cemail = document.getElementById('cemail');
-
-        if (this.state.firstName == null) {
-            fname.innerHTML = "The field is empty.";
-        } else if (!namePattern.test(this.state.firstName)) {
-            fname.innerHTML = "Names can only contain alphabets.";
-        } else {
-            fname.innerHTML = "";
-        }
-
-        if (this.state.lastName == null) {
-            lname.innerHTML = "The field is empty.";
-        } else if (!namePattern.test(this.state.lastName)) {
-            lname.innerHTML = "Names can only contain alphabets.";
-        } else {
-            lname.innerHTML = "";
-        }
-
-        if (this.state.userName == null) {
-            user.innerHTML = "The field is empty.";
-        } else if (!userPattern.test(this.state.userName)) {
-            user.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
-        } else {
-            user.innerHTML = "";
-        }
-
-        if (this.state.password == null) {
-            pass.innerHTML = "The field is empty.";
-        } else if (!passPattern.test(this.state.password)) {
-            pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
-        } else {
-            pass.innerHTML = "";
-        }
-
-        if (this.state.confirmPass == null) {
-            cpass.innerHTML = "The field is empty.";
-        } else if (this.state.password != this.state.confirmPass) {
-            cpass.innerHTML = "Passwords do not match.";
-        } else {
-            cpass.innerHTML = "";
-        }
-
-        if (this.state.email == null) {
-            email.innerHTML = "The field is empty.";
-        } else if (!emailPattern.test(this.state.email)) {
-            email.innerHTML = "Invalid email.";
-        } else {
-            email.innerHTML = "";
-        }
-
-        if (this.state.confirmEmail == null) {
-            cemail.innerHTML = "The field is empty.";
-        } else if (this.state.email != this.state.confirmEmail) {
-            cemail.innerHTML = "Emails do not match."
-        } else {
-            cemail.innerHTML = "";
-        }
-
-        if (fname.innerHTML == "" && lname.innerHTML == "" && user.innerHTML == "" 
-            && pass.innerHTML == "" && cpass.innerHTML == "" 
-            && email.innerHTML == "" && cemail.innerHTML == "") {
-            
-            this._register();
-        }
+       
+        //this._register();
+    
 
     }
 
