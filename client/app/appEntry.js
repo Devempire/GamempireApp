@@ -136,7 +136,6 @@ class SignUpWindow extends React.Component {
                 <div className="required">
                     <input required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
-                        
                 </div>
                 <font id='user' color='red'></font>
                 <div className="textInputGroup">

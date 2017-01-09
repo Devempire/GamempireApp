@@ -42,14 +42,15 @@ var Profile = React.createClass({
     return {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
       profile:{i:"profile",x: 0, y: 0, w: 10, h: 24, static: true},
+      addgame:{i:"add",x: 10, y:24 , w: 4, h: 4},
       games:[],
       response:undefined,
       username:null,
       lastname:null,
       firstname:null,
-      selectgame:'',
       newCounter: 0,
       selectinterest:null,
+      selectgame:'',
       img:null
     };
   },
@@ -108,6 +109,62 @@ var Profile = React.createClass({
     
   },
 
+  handleChange(event) {
+      this.setState({selectgame: event.target.value});
+    },
+ 
+    handleChange2(event) {
+     var options = event.target.options;
+     var values = [];
+     for (var i = 0, l = options.length; i < l; i++) {
+       if (options[i].selected) {
+         values.push(options[i].value);
+       }
+     };
+     
+     this.setState({selectinterest:values});
+     
+   },
+ 
+    handleSubmit(event) {
+      alert('Your favorite Game is: ' + this.state.selectgame);
+      event.preventDefault();
+      var token = electron.remote.getGlobal('sharedObject').token;
+      $.post( "http://localhost:8080/user/load",
+               {
+                   'token' :token
+                }).done((d)=> {
+                   $.ajax({
+                           url:"http://localhost:8080/user/profile/updategames",   
+                           type:"PUT",
+                           contentType: 'application/json; charset=utf-8',
+                           data:JSON.stringify({    
+                               _id:d._id,
+                               game:this.state.selectgame,
+                               useringame:$("#gameusername").val(),
+                               interest:this.state.selectinterest
+                           })
+                       }).done((res)=>{
+                          this.setState({
+                                games: this.state.games.concat({
+                                  i: this.state.selectgame,
+                                  x: 4,
+                                  y: 20,
+                                  w: 2,
+                                  h: 6,
+                                  int:this.state.selectinterest,
+                                  useringame:$("#gameusername").val(),  
+                                })
+                              });
+                       }).fail((err)=>{
+                                   alert("opps!");
+                               });
+                           });
+
+ 
+     },
+ 
+
   
   onProfile(el){
     var i = el.i;
@@ -121,6 +178,38 @@ var Profile = React.createClass({
     <img id='profilepic' src={'./img/user.jpg'}/>
     <br></br>
     <button onClick={this.goToEdit}>Edit Profile</button>
+    
+    </div>
+    );
+  },
+
+  onadd(el){
+    var i = el.i;
+    return (
+    <div key={i} data-grid={el}>
+    <form onSubmit={this.handleSubmit}><h5>Add Games:</h5>
+    <select value={this.state.selectgame} onChange={this.handleChange}>
+    <option value="" disabled>Select your option</option>
+      <option value="Hearthstone">Hearthstone</option>
+      <option value="Overwatch">Overwatch</option>
+      <option value="Dota2">Dota2</option>
+      <option value="League of lengends">League of lengends</option>
+      </select>
+    <br/>
+      Username in game: <br></br>
+      <input id="gameusername" type="text"/>
+ 
+     <h5>Interest of Games: </h5>
+     <select multiple  onChange={this.handleChange2}>
+     <option value="A">A</option>
+     <option value="B">B</option>
+     <option value="C">C</option>
+     <option value="D">D</option> 
+     </select> 
+     
+     <input type="submit" value="Submit"/>
+
+    </form>
     
     </div>
     );
@@ -157,6 +246,7 @@ var Profile = React.createClass({
           <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
               onBreakpointChange={this.onBreakpointChange} {...this.props}>
               {this.onProfile(this.state.profile)}
+              {this.onadd(this.state.addgame)}
               {_.map(this.state.games, this.onGame)}
           </ResponsiveReactGridLayout>
         </div>
