@@ -228,7 +228,7 @@ var Profile = React.createClass({
     );
   },
 
-  editgame(el){
+  editgame(){
     //
   },
 

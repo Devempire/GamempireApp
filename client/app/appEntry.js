@@ -87,7 +87,7 @@ class MainWindow extends React.Component {
             .done((res) =>{
                 dialog.showMessageBox(options);
                 electron.remote.getGlobal('sharedObject').token = res;
-                window.location.href="./view/add.html";
+                window.location.href="./view/main.html";
                
             })
             .fail((res)=>{
