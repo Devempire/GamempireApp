@@ -39,7 +39,7 @@
         <thead>
         <tr>
           <th>Player </th><input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/>
-          <th>Position </th><select id="pos" onclick="pos()"><option value="all">all</option><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option></select>
+          <th>Position </th><select id="pos" onclick="pos()"><option value="all">All</option><option value="top">Top</option><option value="jungle">Jungler</option><option value="mid">Mid</option><option value="ad carry">AD Carry</option><option value="support">Support</option><option value="flex">Flex</option></select>
           <th>Team</th><input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/>
           <th>Total Points</th>
           <th>Kills(+2)</th>
@@ -140,26 +140,32 @@
       </table>
       </div>
     <div id="myteam">
-    <h3>select your fantasy team</h3>
-    <label>top</label>
+    <h3>Create Your Fantasy Team</h3>
+    <label>Team</label>
+    <input type="text" id="team"/>
+    <label>Top</label>
     <input type="text" id="top"/>
-    <label>jg</label>
+    <label>Jungler</label>
     <input type="text" id="jg"/>
-    <label>mid</label>
+    <label>Mid</label>
     <input type="text" id="mid"/>
-    <label>adc</label>
+    <label>AD Carry</label>
     <input type="text" id="adc"/>
-    <label>sup</label>
+    <label>Support</label>
     <input type="text" id="sup"/>
+    <label>Flex</label>
+    <input type="text" id="flex"/>
     <button class="button" onclick="getmyteam()">Submit</button>
     </div>
     <div id="myteamshow" style="display: none">
-      <h3>My fantasy team</h3>
-      <label id="top1">top lane:</label>
-      <label id="jg2">jungle:</label>
-      <label id="mid3">mid lane:</label>
-      <label id="adc4">ad carry:</label>
-      <label id="sup5">support:</label>
+      <h3>My Fantasy Team</h3>
+      <label id="team0">Team:</label>
+      <label id="top1">Top:</label>
+      <label id="jg2">Jungler:</label>
+      <label id="mid3">Mid:</label>
+      <label id="adc4">AD Carry:</label>
+      <label id="sup5">Support:</label>
+      <label id="flex6">Flex:</label>
     </div>
     </div>
   </body>
@@ -275,16 +281,20 @@
     team.style.display="none";
     var teamshow =document.getElementById("myteamshow");
     teamshow.style.display="";
-    var mid =$("#mid").val();
-    var top =$("#top").val();
-    var jg =$("#jg").val();
-    var adc =$("#adc").val();
-    var sup =$("#sup").val();
+    var team = $("#team").val();
+    var mid = $("#mid").val();
+    var top = $("#top").val();
+    var jg = $("#jg").val();
+    var adc = $("#adc").val();
+    var sup = $("#sup").val();
+    var flex = $("#flex").val();
+    $("#team0").append(team);
     $("#top1").append(top);
     $("#jg2").append(jg);
     $("#mid3").append(mid);
     $("#adc4").append(adc);
     $("#sup5").append(sup);
+    $("#flex6").append(flex);
 
   }
 
