@@ -26,34 +26,82 @@
   <a id="8" onclick="addtab()">+</a>
   <div class="toggleNav" onclick="toggleNav()"></div>
   </div>
-  <div id="main_content"></div>
- </body>
- <script type="text/javascript">
-function toggleNav() {
-    $("#mySidenav").toggleClass("navOpen");
-}
+  <div id="main_content">
+    <div id="db">
+        <ul>
+         <label>Player </label>
+          <li>Rain </li>
+          <li>Max</li>
+          <li>Ben</li>
+          <li>Nath</li>
+        </ul>
+        <ul>
+         <label>Points </label>
+          <li>12309</li>
+          <li>21384</li>
+          <li>43512</li>
+          <li>12375</li>
+        </ul>
+        <ul>
+        <label>Position </label>
+          <li>top</li>
+          <li>mid</li>
+          <li>adc</li>
+          <li>jg</li>
+        </ul>
+        <ul>
+        <label>Team </label>
+          <li>Liquid</li>
+          <li>TSM</li>
+          <li>C9</li>
+          <li>APEX</li>
+        </ul>
+    </div>
+    <div>
+    <h3>select your fantasy team</h3>
+    <label>top</label>
+    <input type="text" name="top"/>
+    <label>jg</label>
+    <input type="text" name="jg"/>
+    <label>mid</label>
+    <input type="text" name="mid"/>
+    <label>adc</label>
+    <input type="text" name="adc"/>
+    <label>sup</label>
+    <input type="text" name="sup"/>
+    <button type="submit">Submit</button>
+    </div>
 
-function openNav() {
+  </div>
+
+
+  </body>
+  <script type="text/javascript">
+  function toggleNav() {
+    $("#mySidenav").toggleClass("navOpen");
+  }
+
+  function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main_content").style.marginLeft = "250px";
 
-}
+  }
 
 
-function closeNav() {
+  function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main_content").style.marginLeft = "0";
-}
+  }
 
-function addtab() {
+  function addtab() {
 
     var div = document.createElement("div");
     div.setAttribute("id", "add");
     div.innerHTML = '<div class="dropFade"><input type="text" maxlength="15" id="hi"></input> <button class="button" onclick="create()">Ok</button></div>';
     document.getElementById("mySidenav").appendChild(div);
-}
+  }
 
-function create() {
+  function create() {
 
     var v = $("#hi").val();
     var as = document.createElement("a");
@@ -63,8 +111,8 @@ function create() {
     var p = document.getElementById("mySidenav");
     p.insertBefore(as, child);
     document.getElementById("add").remove();
-}
-</script>
+  }
+  </script>
 
     
  </html>
