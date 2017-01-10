@@ -8,6 +8,8 @@
     <title>Gamempire</title>
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/gamempire.css">
+    <script type="text/javascript" src="./js/jquery-latest.js"></script>
+    <script type="text/javascript" src="./js/jquery.tablesorter.js"></script>
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
@@ -31,7 +33,6 @@
     </style>
 
   </head>
-
   <body>
     <div id="mySidenav" class="sidenav">
       <a href="main.html" id="1">Profile</a>
@@ -47,17 +48,25 @@
     <div id="main_content">
     <div>
     
+
       <table id="db" class="tablesorter">
         List of All Players
         <thead>
         <tr>
           <th>Player <input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/></th>
-          <th>Position <select id="pos" onclick="pos()"><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option><option value="all">all</option></select></th>
+          <th>Position <select id="pos" onclick="pos()"><option value="all">all</option><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option></select></th>
           <th>Team<input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/></th>
           <th>Points</th>
         </tr>
+
         </thead> 
         <tbody> 
+        <tr>
+          <td>Jensen</td>
+          <td>Mid</td>
+          <td>Cloud9</td>
+          <td>6000</td>
+        </tr>
           <tr>
             <td>Max</td>
             <td>Top</td>
@@ -175,26 +184,35 @@
         </tbody>
       </table>
       </div>
-    <div>
+    <div id="myteam">
     <h3>select your fantasy team</h3>
     <label>top</label>
-    <input type="text" name="top"/>
+    <input type="text" id="top"/>
     <label>jg</label>
-    <input type="text" name="jg"/>
+    <input type="text" id="jg"/>
     <label>mid</label>
-    <input type="text" name="mid"/>
+    <input type="text" id="mid"/>
     <label>adc</label>
-    <input type="text" name="adc"/>
+    <input type="text" id="adc"/>
     <label>sup</label>
-    <input type="text" name="sup"/>
-    <button type="submit">Submit</button>
+    <input type="text" id="sup"/>
+    <button onclick="getmyteam()">Submit</button>
+    </div>
+    <div id="myteamshow" style="display: none">
+      <h3>My fantasy team</h3>
+      <label id="top1">top lane:</label>
+      <label id="jg2">jungle:</label>
+      <label id="mid3">mid lane:</label>
+      <label id="adc4">ad carry:</label>
+      <label id="sup5">support:</label>
     </div>
     </div>
   </body>
   <script type="text/javascript">
+
     $(document).ready(function() 
       { 
-          $("#db").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+          $("#db").tablesorter(); 
       } 
     ); 
     function toggleNav() {
@@ -290,8 +308,26 @@
       }
     } 
   }
+}
 
+  function getmyteam(){
+    var team = document.getElementById("myteam");
+    team.style.display="none";
+    var teamshow =document.getElementById("myteamshow");
+    teamshow.style.display="";
+    var mid =$("#mid").val();
+    var top =$("#top").val();
+    var jg =$("#jg").val();
+    var adc =$("#adc").val();
+    var sup =$("#sup").val();
+    $("#top1").append(top);
+    $("#jg2").append(jg);
+    $("#mid3").append(mid);
+    $("#adc4").append(adc);
+    $("#sup5").append(sup);
 
   }
+
+  
   </script>
 </html>
