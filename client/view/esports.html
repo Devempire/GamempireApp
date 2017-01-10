@@ -53,15 +53,15 @@
         List of All Players
         <thead>
         <tr>
-          <th>Player <input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/></th>
-          <th>Position <select id="pos" onclick="pos()"><option value="all">all</option><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option></select></th>
-          <th>Team<input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/></th>
+          <th>Player </th><input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/>
+          <th>Position </th><select id="pos" onclick="pos()"><option value="all">all</option><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option></select>
+          <th>Team</th><input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/>
           <th>Total Points</th>
-          <th>K(+2)</th>
-          <th>D(-0.5)</th>
-          <th>A(+1.5)</th>
+          <th>Kills(+2)</th>
+          <th>Death(-0.5)</th>
+          <th>Assit(+1.5)</th>
           <th>Cs(+0.01)</th>
-          <th>10+ K/A (+2)</th>
+          <th>10+ Kill/Assit (+2)</th>
           <th>3K/4K/5K(+2/+5/+10)</th>
         </tr>
 
@@ -182,7 +182,12 @@
 
     $(document).ready(function() 
       { 
-          $("#db").tablesorter(); 
+          $("#db").tablesorter({
+            headers: { 
+              0:{sorter:false},
+              1:{sorter:false},
+              2:{sorter:false}
+          }}); 
       } 
     ); 
     function toggleNav() {
