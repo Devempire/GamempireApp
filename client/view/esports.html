@@ -13,6 +13,8 @@
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
+    <script type="text/javascript" src="./js/jquery-latest.js"></script> 
+    <script type="text/javascript" src="./js/jquery.tablesorter.js"></script> 
 
     <style>
     table {
@@ -46,60 +48,63 @@
     <div id="main_content">
     <div>
     
-      <table id="db" cellspacing="1" class="tablesorter">
-      <thead>
+
+      <table id="db" class="tablesorter">
+        <thead>
         <tr>
           <th>Player <input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/></th>
           <th>Position <select id="pos" onclick="pos()"><option value="all">all</option><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option></select></th>
           <th>Team<input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/></th>
           <th>Points</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Max</td>
-          <td>Top</td>
-          <td>Gamempire</td>
-          <td>1200</td>
-        </tr>
-        <tr>
-          <td>Rain</td>
-          <td>Jungler</td>
-          <td>Gamempire</td>
-          <td>1354</td>
-        </tr>
-        <tr>
-          <td>Benjamin</td>
-          <td>Mid</td>
-          <td>Gamempire</td>
-          <td>900</td>
-        </tr>
-        <tr>
-          <td>Thomas</td>
-          <td>AD Carry</td>
-          <td>Gamempire</td>
-          <td>860</td>
-        </tr>
-        <tr>
-          <td>Borys</td>
-          <td>Support</td>
-          <td>Gamempire</td>
-          <td>2012</td>
-        </tr>
-        <tr>
-          <td>Nathan</td>
-          <td>Flex</td>
-          <td>Gamempire</td>
-          <td>3490</td>
-        </tr>
+
+        </thead> 
+        <tbody> 
         <tr>
           <td>Jensen</td>
           <td>Mid</td>
           <td>Cloud9</td>
           <td>6000</td>
         </tr>
+          <tr>
+            <td>Max</td>
+            <td>Top</td>
+            <td>Gamempire</td>
+            <td>1200</td>
+          </tr>
+          <tr>
+            <td>Rain</td>
+            <td>Jungler</td>
+            <td>Gamempire</td>
+            <td>1354</td>
+          </tr>
+          <tr>
+            <td>Benjamin</td>
+            <td>Mid</td>
+            <td>Gamempire</td>
+            <td>900</td>
+          </tr>
+          <tr>
+            <td>Thomas</td>
+            <td>AD Carry</td>
+            <td>Gamempire</td>
+            <td>860</td>
+          </tr>
+          <tr>
+            <td>Borys</td>
+            <td>Support</td>
+            <td>Gamempire</td>
+            <td>2012</td>
+          </tr>
+          <tr>
+            <td>Nathan</td>
+            <td>Flex</td>
+            <td>Gamempire</td>
+            <td>3490</td>
+          </tr>
         </tbody>
       </table>
+      
       </div>
     <div id="myteam">
     <h3>select your fantasy team</h3>
@@ -127,13 +132,11 @@
   </body>
   <script type="text/javascript">
 
-  $(document).ready(function() 
-    { 
-       $("table").tablesorter({ 
-        sortList: [[0,0],[2,0]] 
-    }); 
-    }
-    );  
+    $(document).ready(function() 
+      { 
+          $("#db").tablesorter(); 
+      } 
+    ); 
     function toggleNav() {
         $("#mySidenav").toggleClass("navOpen");
     }
