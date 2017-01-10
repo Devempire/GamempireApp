@@ -43,44 +43,54 @@
       <div class="toggleNav" onclick="toggleNav()"></div>
     </div>
     <div id="main_content">
-      <table>
+    <div>
+    
+      <table id="db">
         <tr>
-          <th>Player</th>
-          <th>Role</th>
-          <th>Team</th>
+          <th>Player <input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/></th>
+          <th>Position <select id="pos" onclick="pos()"><option value="top">top</option><option value="jungle">jungle</option><option value="mid">mid</option><option value="ad carry">ad carry</option><option value="support">support</option><option value="flex">flex</option><option value="all">all</option></select></th>
+          <th>Team<input type="text" id="teamname" onkeyup="team()" placeholder="Search for team names.."/></th>
+          <th>Points</th>
         </tr>
         <tr>
           <td>Max</td>
           <td>Top</td>
           <td>Gamempire</td>
+          <td>1200</td>
         </tr>
         <tr>
           <td>Rain</td>
           <td>Jungler</td>
           <td>Gamempire</td>
+          <td>1354</td>
         </tr>
         <tr>
           <td>Benjamin</td>
           <td>Mid</td>
           <td>Gamempire</td>
+          <td>900</td>
         </tr>
         <tr>
           <td>Thomas</td>
           <td>AD Carry</td>
           <td>Gamempire</td>
+          <td>860</td>
         </tr>
         <tr>
           <td>Borys</td>
           <td>Support</td>
           <td>Gamempire</td>
+          <td>2012</td>
         </tr>
         <tr>
           <td>Nathan</td>
           <td>Flex</td>
           <td>Gamempire</td>
+          <td>3490</td>
         </tr>
       </table>
-      <div>
+      </div>
+    <div>
     <h3>select your fantasy team</h3>
     <label>top</label>
     <input type="text" name="top"/>
@@ -124,5 +134,74 @@
         p.insertBefore(as, child);
         document.getElementById("add").remove();
     }
+
+    function findname() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("names");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("db");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  }
+  function team() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("teamname");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("db");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  }
+
+  function pos() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  var e = document.getElementById("pos");
+  input = e.options[e.selectedIndex].value;
+  filter = input.toUpperCase();
+
+  table = document.getElementById("db");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (filter =="ALL") {
+        tr[i].style.display="";
+      }
+      else if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+
+
+  }
   </script>
 </html>
