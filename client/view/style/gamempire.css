@@ -1,7 +1,22 @@
 html,
 body {
-    background-color: #1d2428;
+    background-color: #0e1519;
     font-weight: 300;
+    color: #818181
+}
+
+body {
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 300;
+    color: #fff;
 }
 
 html,
@@ -11,15 +26,77 @@ body,
     height: 100%;
 }
 
+#content {
+    transition: 0.5s;
+}
+
+#main_content {
+    padding: 50px;
+}
+
 hr {
     border-bottom: 1px solid #1d2428;
 }
 
+#dialog {
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
 #loginContainer {
-    background-color: #12181e;
+    background-color: #0e1519;
     animation-name: dropFade;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
+}
+
+.react-grid-item {
+    background: #0e1519;
+    color: #818181;
+    overflow: hidden;
+    transition: outline ease-in-out 0.25s, text ease-in-out 0.25s!important;
+    padding: 25px;
+    padding-top: 0px;
+    outline: 1px solid #1d2428;
+}
+
+.react-grid-item:hover {
+    outline: 1px solid #ff4e4e;
+}
+
+.react-grid-item h2 {
+    color: #818181;
+    text-align: center;
+    background: #0e1519;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.react-grid-item:hover h2 {
+    color: #ff4e4e;
+}
+
+.react-grid-item .menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 22px;
+}
+
+.react-grid-item .menu a {
+    width: 53px;
+    transition: fill ease-in-out 0.25s!important;
+    fill: #818181;
+}
+
+.react-grid-item .menu a:hover {
+    fill: #f1f1f1;
 }
 
 #titleBar {
@@ -31,21 +108,32 @@ hr {
     left: 0;
     width: 100%;
     z-index: 10;
+    border-bottom: 1px solid #0e1519;
 }
 
 .sidenav {
-    background-color: #12181e;
+    background-color: #1d2428;
     width: 214px;
     padding: 18px 33px 18px;
     transform: translateX(-265px);
     overflow-x: inherit;
+    box-sizing: content-box;
 }
 
 .sidenav .active {
     color: #ff4e4e;
 }
 
+.gameImage {
+    background-size: contain!important;
+    background-repeat: no-repeat!important;
+    min-height: 245px!important;
+    background-color: #9c1717!important;
+    background-position: 50%!important;
+}
+
 .sidenav a {
+    box-sizing: content-box;
     padding: 8px 0 8px 0;
     animation-name: leftFade;
     animation-duration: 1s;
@@ -90,8 +178,12 @@ hr {
     }
 }
 
-.navOpen {
+.sidenav.navOpen {
     transform: translateX(0px);
+}
+
+#content.navOpen {
+    transform: translateX(265px);
 }
 
 .toggleNav {
@@ -224,4 +316,55 @@ textarea:focus {
     color: #fefefe;
     outline: none;
     width: 100%;
+}
+
+table tbody,
+table tfoot,
+table thead {
+    border: 1px solid #818181;
+    background-color: #0e1519;
+    color: #818181;
+}
+
+table tbody tr:nth-child(even) {
+    border-bottom: 0;
+    background-color: #1d2428;
+}
+
+table thead {
+    background: #1d2428;
+    color: #fff;
+}
+
+label {
+    color: #818181;
+}
+
+.header:after {
+    width: 17px;
+    height: 17px;
+    content: "";
+    display: inline-block;
+}
+
+.headerSortDown:after {
+    width: 17px;
+    height: 17px;
+    content: "";
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E');
+    display: inline-block;
+}
+
+.headerSortUp:after {
+    width: 17px;
+    height: 17px;
+    content: "";
+        background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%2014l5-5%205%205z%22%2F%3E%3C%2Fsvg%3E');
+    display: inline-block;
+}
+
+.react-grid-layout {
+    max-width: 62.5rem;
+    margin-right: auto;
+    margin-left: auto;
 }

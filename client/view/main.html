@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Gamempire</title>
+    <link rel="stylesheet" href="./style/foundation.min.css">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/gamempire.css">
     <script>
@@ -21,6 +22,7 @@
 </head>
 
 <body>
+    <div id="titleBar"></div>
     <div>
         <div id="mySidenav" class="sidenav">
             <a class="active" href="main.html" id="1">Profile</a>
@@ -29,17 +31,21 @@
             <a href="" id="4">Tips&Tricks</a>
             <a href="" id="5">Guides</a>
             <a href="esports.html" id="6">Esports</a>
-            <a href="chat.html" id ="7">Chat </a>
+            <a href="chat.html" id="7">Chat </a>
             <a id="8" onclick="addtab()">+</a>
             <div class="toggleNav" onclick="toggleNav()"></div>
         </div>
-        <div id="main_content"></div>
-        <script src="js/bundle2.js"></script>
-    </div>
+        <div id="content">
+            <div id="main_content"></div>
+            <script src="js/bundle2.js"></script>
+            <script src="js/foundation.min.js"></script>
+        </div>
 </body>
 <script type="text/javascript">
+var dialog = document.getElementById('dialog');
+
 function toggleNav() {
-    $("#mySidenav").toggleClass("navOpen");
+    $("#mySidenav, #content").toggleClass("navOpen");
 }
 
 function openNav() {
@@ -73,6 +79,11 @@ function create() {
     p.insertBefore(as, child);
     document.getElementById("add").remove();
 }
+
+var dialog = document.getElementById('dialog');
+document.getElementById('show').onclick = function() {
+    dialog.show();
+};
 </script>
 
 </html>

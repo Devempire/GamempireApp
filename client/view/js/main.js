@@ -30,7 +30,7 @@ var Profile = React.createClass({
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 28, md: 26, sm: 24, xs: 22, xxs: 20},
+      cols: {lg: 12, md: 12, sm: 12, xs: 4, xxs: 4},
       rowHeight: 20,
       verticalCompact: false
     };
@@ -41,8 +41,8 @@ var Profile = React.createClass({
     
     return {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
-      profile:{i:"profile",x: 0, y: 0, w: 10, h: 24, static: true},
-      addgame:{i:"add",x: 10, y:24 , w: 4, h: 4},
+      profile:{i:"profile",x: 100, y: 100, w: 0, h: 0, static: true},
+      addgame:{i:"add",x: 100, y:100 , w: 0, h: 0, static: false},
       games:[],
       response:undefined,
       username:null,
@@ -69,13 +69,22 @@ var Profile = React.createClass({
                                 firstname:res.firstname,
                                 lastname:res.lastname});
                 for (var i = 0; i < g; i++) {
+                    if (i < 3) {
+                          var width = 4;
+                          var height = 13;
+                          var row = 0;
+                        } else {
+                          var width = 12;
+                          var height = 2;
+                          var row = 14;
+                        }
                       this.setState({
                                 games: this.state.games.concat({
                                   i: res.gameinventory[i].game,
-                                  x: 4,
-                                  y: 0+i*6,
-                                  w: 2,
-                                  h: 6,
+                                  x: 0+i*4,
+                                  y: row,
+                                  w: width,
+                                  h: height,
                                   int:res.gameinventory[i].interest,
                                   useringame:res.gameinventory[i].useringame,  
                                 })
@@ -148,9 +157,9 @@ var Profile = React.createClass({
                           this.setState({
                                 games: this.state.games.concat({
                                   i: this.state.selectgame,
-                                  x: 4,
-                                  y: 20,
-                                  w: 2,
+                                  x: 0,
+                                  y: 0,
+                                  w: 4,
                                   h: 6,
                                   int:this.state.selectinterest,
                                   useringame:$("#gameusername").val(),  
@@ -165,53 +174,11 @@ var Profile = React.createClass({
      },
  
 
-  
-  onProfile(el){
-    var i = el.i;
-    return (
-    <div key={i} data-grid={el}>
-    <h3> Profile </h3>
-    Username: {this.state.username}
-    <br></br>
-    Name: {this.state.firstname + ' ' + this.state.lastname}
-    <hr/>
-    <img id='profilepic' src={'./img/user.jpg'}/>
-    <br></br>
-    <button onClick={this.goToEdit}>Edit Profile</button>
-    
-    </div>
-    );
-  },
-
   onadd(el){
     var i = el.i;
     return (
-    <div key={i} data-grid={el}>
-    <form onSubmit={this.handleSubmit}><h5>Add Games:</h5>
-    <select value={this.state.selectgame} onChange={this.handleChange}>
-    <option value="" disabled>Select your option</option>
-      <option value="Hearthstone">Hearthstone</option>
-      <option value="Overwatch">Overwatch</option>
-      <option value="Dota2">Dota2</option>
-      <option value="League of lengends">League of lengends</option>
-      </select>
-    <br/>
-      Username in game: <br></br>
-      <input id="gameusername" type="text"/>
- 
-     <h5>Interest of Games: </h5>
-     <select multiple  onChange={this.handleChange2}>
-     <option value="A">A</option>
-     <option value="B">B</option>
-     <option value="C">C</option>
-     <option value="D">D</option> 
-     </select> 
-     
-     <input type="submit" value="Submit"/>
-
-    </form>
-    
-    </div>
+      <div>
+        </div>
     );
   },
 
@@ -219,11 +186,29 @@ var Profile = React.createClass({
     var i = el.i;
     return (
     <div key={i} data-grid={el}>
-    <h5>{el.i} </h5>
-    <h6>interest:</h6>
+    <h2>{el.i} </h2>
+    <div className="gameImage" style={{background: 'url(./img/dota2_logo.jpg)'}}>
+    <div className="row">
+    {/*<p>interest:</p>
     <p>{el.int}</p>
-    <h7>username in game : {el.useringame} </h7>
-    <button  onClick={this.editgame(el)}>Edit</button>
+    <p>username in game : {el.useringame} </p>
+    <button className="button" onClick={this.editgame(el)}>Edit</button>*/}
+    </div>
+    </div>
+    <ul className="menu horizontal">
+      <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+    <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+</svg>
+</a></li>
+      <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</svg>
+</a></li>
+      <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+</svg>
+</a></li>
+    </ul>
     </div>
     );
   },
@@ -242,13 +227,42 @@ var Profile = React.createClass({
     if (this.state.response) {
       return (
         <div>
-        <button onClick={this.resetLayout}>Reset Layout</button>
+        <div className="row">
+        <div className="column small-8"><h3>Profile</h3></div>
+        <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
+        </div>
+        <dialog ref="dialog" id="dialog" className="reveal">
+            <form onSubmit={this.handleSubmit}>
+                <h5>Add Games:</h5>
+                <select value={this.state.selectgame} onChange={this.handleChange}>
+                    <option value="" disabled>Select your option</option>
+                    <option value="Hearthstone">Hearthstone</option>
+                    <option value="Overwatch">Overwatch</option>
+                    <option value="Dota2">Dota2</option>
+                    <option value="League of lengends">League of lengends</option>
+                </select>
+                <br/> Username in game:
+                <br></br>
+                <input id="gameusername" type="text" />
+                <h5>Interest of Games: </h5>
+                <select multiple onChange={this.handleChange2}>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <input type="submit" value="Submit" />
+            </form>
+        </dialog>
           <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
               onBreakpointChange={this.onBreakpointChange} {...this.props}>
-              {this.onProfile(this.state.profile)}
               {this.onadd(this.state.addgame)}
               {_.map(this.state.games, this.onGame)}
           </ResponsiveReactGridLayout>
+
+          <div className="row">
+          <button className="button" id="show" onClick={dialog.show}>Add Game</button>
+          </div>
         </div>
       );
     } else {
@@ -266,7 +280,7 @@ var Edit = React.createClass({
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 28, md: 26, sm: 24, xs: 22, xxs: 20},
+      cols: {lg: 12, md: 12, sm: 12, xs: 4, xxs: 4},
       rowHeight: 20,
       verticalCompact: false
     };

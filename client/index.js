@@ -24,7 +24,7 @@ function openMainWnd(uri) {
     mainWnd = new BrowserWindow({
         minHeight: 675,
         minWidth: 400,
-        width: 400,
+        width: 1295,
         height: 675,
         titleBarStyle: 'hidden'
 

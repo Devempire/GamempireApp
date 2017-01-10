@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Gamempire</title>
+    <link rel="stylesheet" href="./style/foundation.min.css">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/gamempire.css">
     <script type="text/javascript" src="./js/jquery-latest.js"></script>
@@ -15,22 +16,6 @@
     <script>if (window.module) module = window.module;</script>
     <script type="text/javascript" src="./js/jquery-latest.js"></script> 
     <script type="text/javascript" src="./js/jquery.tablesorter.js"></script> 
-
-    <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr {
-        background-color: white;
-    }
-    </style>
 
   </head>
   <body>
@@ -166,7 +151,7 @@
     <input type="text" id="adc"/>
     <label>sup</label>
     <input type="text" id="sup"/>
-    <button onclick="getmyteam()">Submit</button>
+    <button class="button" onclick="getmyteam()">Submit</button>
     </div>
     <div id="myteamshow" style="display: none">
       <h3>My fantasy team</h3>
