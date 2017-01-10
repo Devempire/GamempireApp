@@ -12,52 +12,75 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>if (window.module) module = window.module;</script>
 
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    tr {
+        background-color: white;
+    }
+    </style>
+
   </head>
 
   <body>
-  <div id="mySidenav" class="sidenav">
-  <a href="main.html" id="1">Profile</a>
-  <a href="gametool.html" id="2">Gaming Tools</a>
-  <a href="video.html" id="3">Video Streams</a>
-  <a href="" id="4">Tips&Tricks</a>
-  <a href="" id="5">Guides</a>
-  <a class="active" href="esports.html" id="6">Esports</a>
-  <a href="chat.html" id ="7">Chat </a>
-  <a id="8" onclick="addtab()">+</a>
-  <div class="toggleNav" onclick="toggleNav()"></div>
-  </div>
-  <div id="main_content">
-    <div id="db">
-        <ul>
-         <label>Player </label>
-          <li>Rain </li>
-          <li>Max</li>
-          <li>Ben</li>
-          <li>Nath</li>
-        </ul>
-        <ul>
-         <label>Points </label>
-          <li>12309</li>
-          <li>21384</li>
-          <li>43512</li>
-          <li>12375</li>
-        </ul>
-        <ul>
-        <label>Position </label>
-          <li>top</li>
-          <li>mid</li>
-          <li>adc</li>
-          <li>jg</li>
-        </ul>
-        <ul>
-        <label>Team </label>
-          <li>Liquid</li>
-          <li>TSM</li>
-          <li>C9</li>
-          <li>APEX</li>
-        </ul>
+    <div id="mySidenav" class="sidenav">
+      <a href="main.html" id="1">Profile</a>
+      <a href="gametool.html" id="2">Gaming Tools</a>
+      <a href="video.html" id="3">Video Streams</a>
+      <a href="" id="4">Tips&Tricks</a>
+      <a href="" id="5">Guides</a>
+      <a class="active" href="esports.html" id="6">Esports</a>
+      <a href="chat.html" id ="7">Chat </a>
+      <a id="8" onclick="addtab()">+</a>
+      <div class="toggleNav" onclick="toggleNav()"></div>
     </div>
-    <div>
+    <div id="main_content">
+      <table>
+        <tr>
+          <th>Player</th>
+          <th>Role</th>
+          <th>Team</th>
+        </tr>
+        <tr>
+          <td>Max</td>
+          <td>Top</td>
+          <td>Gamempire</td>
+        </tr>
+        <tr>
+          <td>Rain</td>
+          <td>Jungler</td>
+          <td>Gamempire</td>
+        </tr>
+        <tr>
+          <td>Benjamin</td>
+          <td>Mid</td>
+          <td>Gamempire</td>
+        </tr>
+        <tr>
+          <td>Thomas</td>
+          <td>AD Carry</td>
+          <td>Gamempire</td>
+        </tr>
+        <tr>
+          <td>Borys</td>
+          <td>Support</td>
+          <td>Gamempire</td>
+        </tr>
+        <tr>
+          <td>Nathan</td>
+          <td>Flex</td>
+          <td>Gamempire</td>
+        </tr>
+      </table>
+      <div>
     <h3>select your fantasy team</h3>
     <label>top</label>
     <input type="text" name="top"/>
@@ -71,48 +94,35 @@
     <input type="text" name="sup"/>
     <button type="submit">Submit</button>
     </div>
-
-  </div>
-
-
+    </div>
   </body>
   <script type="text/javascript">
-  function toggleNav() {
-    $("#mySidenav").toggleClass("navOpen");
-  }
-
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main_content").style.marginLeft = "250px";
-
-  }
-
-
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main_content").style.marginLeft = "0";
-  }
-
-  function addtab() {
-
-    var div = document.createElement("div");
-    div.setAttribute("id", "add");
-    div.innerHTML = '<div class="dropFade"><input type="text" maxlength="15" id="hi"></input> <button class="button" onclick="create()">Ok</button></div>';
-    document.getElementById("mySidenav").appendChild(div);
-  }
-
-  function create() {
-
-    var v = $("#hi").val();
-    var as = document.createElement("a");
-    as.setAttribute("id", v + "-" + Date.now());
-    as.innerHTML = v;
-    var child = document.getElementById("8");
-    var p = document.getElementById("mySidenav");
-    p.insertBefore(as, child);
-    document.getElementById("add").remove();
-  }
+    function toggleNav() {
+        $("#mySidenav").toggleClass("navOpen");
+    }
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main_content").style.marginLeft = "250px";
+    }
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main_content").style.marginLeft = "0";
+    }
+    function addtab() {
+        var div = document.createElement("div");
+        div.setAttribute("id", "add");
+        div.innerHTML = '<div class="dropFade"><input type="text" maxlength="15" id="hi"></input> <button class="button" onclick="create()">Ok</button></div>';
+        document.getElementById("mySidenav").appendChild(div);
+    }
+    function create() {
+        var v = $("#hi").val();
+        var as = document.createElement("a");
+        as.setAttribute("id", v + "-" + Date.now());
+        as.innerHTML = v;
+        var child = document.getElementById("8");
+        var p = document.getElementById("mySidenav");
+        p.insertBefore(as, child);
+        document.getElementById("add").remove();
+    }
   </script>
-
-    
- </html>
+</html>
