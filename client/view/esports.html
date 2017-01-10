@@ -141,6 +141,7 @@
       </div>
     <div id="myteam">
     <h3>select your fantasy team</h3>
+    <input type="text" id="fantasy"  value="my fantasy team">
     <label>top</label>
     <input type="text" id="top"/>
     <label>jg</label>
@@ -154,7 +155,7 @@
     <button class="button" onclick="getmyteam()">Submit</button>
     </div>
     <div id="myteamshow" style="display: none">
-      <h3>My fantasy team</h3>
+      <h3 id="yourteam">My fantasy team</h3>
       <label id="top1">top lane:</label>
       <label id="jg2">jungle:</label>
       <label id="mid3">mid lane:</label>
@@ -280,12 +281,13 @@
     var jg =$("#jg").val();
     var adc =$("#adc").val();
     var sup =$("#sup").val();
+    var team=$("#fantasy").val();
     $("#top1").append(top);
     $("#jg2").append(jg);
     $("#mid3").append(mid);
     $("#adc4").append(adc);
     $("#sup5").append(sup);
-
+    $("#yourteam").text(team);
   }
 
   
