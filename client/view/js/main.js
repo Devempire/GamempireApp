@@ -247,11 +247,11 @@ var Profile = React.createClass({
                     <option value="Dota2">Dota2</option>
                     <option value="League of lengends">League of lengends</option>
                 </select>
-                <br/> Username (Battletag):
+                <br/> User:
                 <br></br>
                 <input id="gameusername" type="text" />
                 <input type="submit" value="Submit" />
-                <
+                
             </form></div>
           <button className="button" id="show" onClick={this.show}>Add Game</button>
           </div>
