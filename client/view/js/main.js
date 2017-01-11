@@ -49,7 +49,7 @@ var Profile = React.createClass({
       lastname:null,
       firstname:null,
       newCounter: 0,
-      selectinterest:null,
+      selectinterest:[],
       selectgame:'',
       showStore:false,
       img:null
@@ -122,22 +122,12 @@ var Profile = React.createClass({
   handleChange(event) {
       this.setState({selectgame: event.target.value});
     },
+
   show() {
       this.setState({showStore: true});
     },
  
-    handleChange2(event) {
-     var options = event.target.options;
-     var values = [];
-     for (var i = 0, l = options.length; i < l; i++) {
-       if (options[i].selected) {
-         values.push(options[i].value);
-       }
-     };
-     
-     this.setState({selectinterest:values});
-     
-   },
+    
  
     handleSubmit(event) {
       alert('Your favorite Game is: ' + this.state.selectgame);
@@ -158,17 +148,31 @@ var Profile = React.createClass({
                                interest:this.state.selectinterest
                            })
                        }).done((res)=>{
+                        var i=this.state.games.length;
+                          
+                            if (i < 3) {
+                              var width = 4;
+                              var height = 13;
+                              var row = 0;
+                          } else {
+                            var width = 12;
+                            var height = 2;
+                            var row = 14;
+                          }
+
                           this.setState({
                                 games: this.state.games.concat({
                                   i: this.state.selectgame,
-                                  x: 0,
-                                  y: 0,
-                                  w: 4,
-                                  h: 6,
+                                  x: 0+i*4,
+                                  y: row,
+                                  w: width,
+                                  h: height,
                                   int:this.state.selectinterest,
-                                  useringame:$("#gameusername").val(),  
+                                  useringame:$("#gameusername").val(), 
+                                  
                                 })
                               });
+                          
                        }).fail((err)=>{
                                    alert("opps!");
                                });
@@ -247,13 +251,13 @@ var Profile = React.createClass({
                     <option value="Dota2">Dota2</option>
                     <option value="League of lengends">League of lengends</option>
                 </select>
-                <br/> User:
+                <br/> Username with battletags:
                 <br></br>
+
                 <input id="gameusername" type="text" placeholder="YourTag#0000"/>
-                <input type="submit" value="Submit" />
-                
+                <button className="button" type="submit" value="Submit" >submit</button>                
             </form></div>
-          <button className="button" id="show" onClick={this.show}>Add Game</button>
+          <button style={{display: this.state.showStore ?  'none':'block' }} className="button" id="show" onClick={this.show}>Add Game</button>
           </div>
         </div>
       );
