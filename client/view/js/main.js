@@ -249,7 +249,7 @@ var Profile = React.createClass({
                 </select>
                 <br/> User:
                 <br></br>
-                <input id="gameusername" type="text" />
+                <input id="gameusername" type="text" placeholder="YourTag#0000"/>
                 <input type="submit" value="Submit" />
                 
             </form></div>
