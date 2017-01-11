@@ -51,6 +51,7 @@ var Profile = React.createClass({
       newCounter: 0,
       selectinterest:null,
       selectgame:'',
+      showStore:false,
       img:null
     };
   },
@@ -121,6 +122,9 @@ var Profile = React.createClass({
   handleChange(event) {
       this.setState({selectgame: event.target.value});
     },
+  show() {
+      this.setState({showStore: true});
+    },
  
     handleChange2(event) {
      var options = event.target.options;
@@ -174,13 +178,7 @@ var Profile = React.createClass({
      },
  
 
-  onadd(el){
-    var i = el.i;
-    return (
-      <div>
-        </div>
-    );
-  },
+  
 
   onGame(el){
     var i = el.i;
@@ -231,8 +229,16 @@ var Profile = React.createClass({
         <div className="column small-8"><h3>Profile</h3></div>
         <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
         </div>
-        <dialog ref="dialog" id="dialog" className="reveal">
-            <form onSubmit={this.handleSubmit}>
+        
+          <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
+              onBreakpointChange={this.onBreakpointChange} {...this.props}>
+              
+              {_.map(this.state.games, this.onGame)}
+          </ResponsiveReactGridLayout>
+
+          <div className="row">
+          <div style={{display: this.state.showStore ? 'block' : 'none'}}>
+                <form onSubmit={this.handleSubmit}>
                 <h5>Add Games:</h5>
                 <select value={this.state.selectgame} onChange={this.handleChange}>
                     <option value="" disabled>Select your option</option>
@@ -241,27 +247,13 @@ var Profile = React.createClass({
                     <option value="Dota2">Dota2</option>
                     <option value="League of lengends">League of lengends</option>
                 </select>
-                <br/> Username in game:
+                <br/> Username (Battletag):
                 <br></br>
                 <input id="gameusername" type="text" />
-                <h5>Interest of Games: </h5>
-                <select multiple onChange={this.handleChange2}>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
                 <input type="submit" value="Submit" />
-            </form>
-        </dialog>
-          <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
-              onBreakpointChange={this.onBreakpointChange} {...this.props}>
-              {this.onadd(this.state.addgame)}
-              {_.map(this.state.games, this.onGame)}
-          </ResponsiveReactGridLayout>
-
-          <div className="row">
-          <button className="button" id="show" onClick={dialog.show}>Add Game</button>
+                <
+            </form></div>
+          <button className="button" id="show" onClick={this.show}>Add Game</button>
           </div>
         </div>
       );
