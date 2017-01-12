@@ -52,7 +52,9 @@ var Profile = React.createClass({
       selectinterest:[],
       selectgame:'',
       showStore:false,
-      img:null
+      img:null,
+      level:null,
+      avatar:null
     };
   },
 
@@ -89,12 +91,23 @@ var Profile = React.createClass({
                                   int:res.gameinventory[i].interest,
                                   useringame:res.gameinventory[i].useringame,  
                                 })
-                });
-                
+                    });
+                    if(res.gameinventory[i].game =="Overwatch"){
+                      var names =res.gameinventory[i].useringame;
+                      var list =names.split("#");
+                      $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/profile").done((res)=>{
+                         this.setState({
+                          level:res.data.level,
+                          avatar:res.data.avatar,
+                      });
+                      });
+                    }
                 }
                 
         });
-    });
+    }); 
+        
+        
   },
 
   componentWillMount: function(){
@@ -208,9 +221,9 @@ var Profile = React.createClass({
     <div className="row">
     <div className="overlay">
     <h5>{el.useringame}</h5>
-    <p>Field 1: Example</p>
-    <p>Field 2: Example</p>
-    <p>Field 3: Example</p>
+    <p>level:{this.state.level}</p>
+    <img src={this.state.avatar}/>
+    <p></p>
     </div>
     {/*<p>interest:</p>
     <p>{el.int}</p>
