@@ -54,7 +54,16 @@ var Profile = React.createClass({
       showStore:false,
       img:null,
       level:null,
-      avatar:null
+      avatar:null,
+      hero:null,
+      image:null,
+      time:null,
+      hero1:null,
+      image1:null,
+      time1:null,
+      hero2:null,
+      image2:null,
+      time2:null,
     };
   },
 
@@ -103,6 +112,22 @@ var Profile = React.createClass({
                          this.setState({
                           level:res.data.level,
                           avatar:res.data.avatar,
+                        });
+                      });
+                      $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/competitive/heroes").done((res)=>{
+                         var H =JSON.parse(res);
+                        
+                         this.setState({
+                          hero:H[0].name,
+                          image:H[0].image,
+                          time:H[0].playtime,
+                          hero1:H[1].name,
+                          image1:H[1].image,
+                          time1:H[1].playtime,
+                          hero2:H[2].name,
+                          image2:H[2].image,
+                          time2:H[2].playtime,
+
                       });
                       });
                     }
@@ -225,9 +250,13 @@ var Profile = React.createClass({
     <div className="row">
     <div className="overlay">
     <h5>{el.useringame}</h5>
-    <p>level:{this.state.level}</p>
-    <img src={this.state.avatar}/>
-    <p></p>
+    { el.i =="Overwatch" ?  ( <div> <p>level:{this.state.level} 
+                          <img src={this.state.avatar} /></p>
+      <p>{this.state.hero} <img src={this.state.image} />  {this.state.time} 
+      {this.state.hero1} <img src={this.state.image1} /> {this.state.time1}  
+      {this.state.hero2} <img src={this.state.image2} /> {this.state.time2} </p>
+     </div>
+     ):(<p>example</p>) }
     </div>
     {/*<p>interest:</p>
     <p>{el.int}</p>
