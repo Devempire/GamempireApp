@@ -34,10 +34,14 @@ var Profile = React.createClass({
       rowHeight: 20,
       verticalCompact: true
     };
+    this.handleChildUnmount = this.handleChildUnmount.bind(this);
   },
 
+   handleChildUnmount() {
+        this.setState({renderChild: false});
+    },
+
   getInitialState() {
-    //var layout = this.generateLayout();
     
     return {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
@@ -221,6 +225,30 @@ var Profile = React.createClass({
                                   
                                 })
                               });
+                          var list =$("#gameusername").val().split("#");
+
+                          $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/profile").done((res)=>{
+                         this.setState({
+                          level:res.data.level,
+                          avatar:res.data.avatar,
+                        });
+                      });
+                      $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/competitive/heroes").done((res)=>{
+                         var H =JSON.parse(res);
+                        
+                         this.setState({
+                          hero:H[0].name,
+                          image:H[0].image,
+                          time:H[0].playtime,
+                          hero1:H[1].name,
+                          image1:H[1].image,
+                          time1:H[1].playtime,
+                          hero2:H[2].name,
+                          image2:H[2].image,
+                          time2:H[2].playtime,
+
+                      });
+                      });
                           
                        }).fail((err)=>{
                                    alert("opps!");
@@ -250,7 +278,7 @@ var Profile = React.createClass({
     <div className="row">
     <div className="overlay">
     <h5>{el.useringame}</h5>
-    { el.i =="Overwatch" ?  ( <div> <p>level:{this.state.level} 
+    { el.i =="Overwatch" ?  ( <div> <p>level:{this.state.level}
                           <img src={this.state.avatar} /></p>
       <p>{this.state.hero} <img src={this.state.image} />  {this.state.time} 
       {this.state.hero1} <img src={this.state.image1} /> {this.state.time1}  
@@ -282,9 +310,7 @@ var Profile = React.createClass({
     );
   },
 
-  editgame(){
-    //
-  },
+  
 
   goToEdit() {
     let edit = ReactDOM.render(
@@ -293,11 +319,13 @@ var Profile = React.createClass({
   },
 
   render() {
+    {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
     if (this.state.response) {
       return (
         <div>
         <div className="row">
-        <div className="column small-8"><h3>Profile</h3></div>
+        <div className="column small-8"><h3>{this.state.username}
+          <img height="60" width="60" src="./img/user.jpg" /> </h3><p> talk something to me </p><button className="button" onClick={this.goToEdit} >edit your profile here</button></div>
         <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
         </div>
         
@@ -355,7 +383,7 @@ var Edit = React.createClass({
     return {
 
       layout: layout,
-      items:{i:"edit",x:0,y:0,w:10,h:21,static: true},
+      items:{i:"edit",x:0,y:0,w:10,h:30,static: true},
       pw:[],
       email:[],
       response:undefined,
