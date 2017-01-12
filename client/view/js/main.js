@@ -253,9 +253,9 @@ var Profile = React.createClass({
                 </select>
                 <br/> Username with battletags:
                 <br></br>
-                <input id="gameusername" type="text" />
-                <button className="button" type="submit" value="Submit" >submit</button>
-                
+
+                <input id="gameusername" type="text" placeholder="YourTag#0000"/>
+                <button className="button" type="submit" value="Submit" >submit</button>                
             </form></div>
           <button style={{display: this.state.showStore ?  'none':'block' }} className="button" id="show" onClick={this.show}>Add Game</button>
           </div>
