@@ -33,9 +33,9 @@
     <div id="main_content">
     <div>
     
-
+    <button class="button" onclick="adduser()">Add User</button>
       <table id="db" class="tablesorter">
-        List of All Players
+        <h3>My fantasy team league</h3> List of All Players
         <thead>
         <tr>
           <th>Player </th><input type="text" id="names" onkeyup="findname()" placeholder="Search for names.."/>
@@ -298,6 +298,10 @@
     $("#yourteam").text(team);
     $("#flex6").append(flex);
 
+  }
+
+  function adduser(){
+    $('#db tr:last').after('<tr><td>Doublelift</td><td>AD Carry</td><td>TSM</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>20</td></tr>');
   }
 
   

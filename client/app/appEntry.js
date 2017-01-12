@@ -60,14 +60,7 @@ class MainWindow extends React.Component {
     }
 
     _handleLogin() {
-        let options = {
-            type: 'info',
-            buttons: ['Yes'],
-            title: 'Login',
-            message: this.state.userName +" logging",
-            defaultId: 0,
-            cancelId: 0
-        };
+        
 
         let options2 = {
             type: 'info',
@@ -85,7 +78,6 @@ class MainWindow extends React.Component {
             password:this.state.password
         })
             .done((res) =>{
-                dialog.showMessageBox(options);
                 electron.remote.getGlobal('sharedObject').token = res;
                 window.location.href="./view/main.html";
                

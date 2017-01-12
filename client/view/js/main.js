@@ -70,7 +70,7 @@ var Profile = React.createClass({
                                 firstname:res.firstname,
                                 lastname:res.lastname});
                 for (var i = 0; i < g; i++) {
-                    if (i == 1) {
+                    if (i == 0) {
                           var width = 12;
                           var height = 13;
                           var row = 0;
@@ -82,7 +82,7 @@ var Profile = React.createClass({
                       this.setState({
                                 games: this.state.games.concat({
                                   i: res.gameinventory[i].game,
-                                  x: 0+i*4,
+                                  x: 0 +4*(i-1),
                                   y: row,
                                   w: width,
                                   h: height,
@@ -150,11 +150,14 @@ var Profile = React.createClass({
                        }).done((res)=>{
                         var i=this.state.games.length;
                           
-                          if (i == 1) {
+                          if (i == 0) {
+                            var x=0;
+
                           var width = 12;
                           var height = 13;
                           var row = 0;
                         } else {
+
                           var width = 4;
                           var height = 13;
                           var row = 14;
@@ -163,7 +166,7 @@ var Profile = React.createClass({
                           this.setState({
                                 games: this.state.games.concat({
                                   i: this.state.selectgame,
-                                  x: 0+i*4,
+                                  x: 0+(i-1)*4,
                                   y: row,
                                   w: width,
                                   h: height,
