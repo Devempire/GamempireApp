@@ -130,7 +130,7 @@ class SignUpWindow extends React.Component {
         return (
             
 
-        <form id="loginContainer" className="row align-center align-middle" name="signup" data-toggle="validator"> 
+        <form id="loginContainer" className="row align-center align-middle"> 
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="required">
@@ -161,12 +161,12 @@ class SignUpWindow extends React.Component {
                 </div>
                 <font id='cpass' color='red'></font>
                 <div className="required">
-                    <input required type="email" id="email" placeholder="Email" value={this.state.email || ""}
+                    <input required type="text" id="email" placeholder="Email" value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                 </div>
                 <font id='emailmsg' color='red'></font>
                 <div className="required">
-                    <input required type="email" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
+                    <input required type="text" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
                 </div>
                 <font id='cemailmsg' color='red'></font>
@@ -185,7 +185,8 @@ class SignUpWindow extends React.Component {
         );
     }
 
-    _checkValid() {
+    _checkValid(e) {
+        e.preventDefault();
         var namePattern = new RegExp('^[a-zA-Z]{1,}$');
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
         var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
@@ -260,6 +261,7 @@ class SignUpWindow extends React.Component {
             && email.innerHTML == "" && cemail.innerHTML == "") {
             
             this._register();
+           
         }
 
     }
@@ -293,16 +295,24 @@ class SignUpWindow extends React.Component {
                     firstname:this.state.firstName,
                     lastname:this.state.lastName,
                     birthday:this.state.birthday,
-                    img:'../client/view/img/user.jpg'
+                    
 
                 }
         )
             .done((res) =>{
-                dialog.showMessageBox(options);
+                dialog.showMessageBox(options, (response) => {
+                    if (response == 0) {
+                        console.log('OK pressed!');
+                        }
+                    });
                 this._backToLogin();
             })
             .fail((res)=>{
-                dialog.showMessageBox(options2);
+                dialog.showMessageBox(options2, (response) => {
+                    if (response == 0) {
+                        console.log('OK pressed!');
+                        }
+                    });
             });
 
     }
