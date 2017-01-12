@@ -32,7 +32,7 @@ var Profile = React.createClass({
       className: "layout",
       cols: {lg: 12, md: 12, sm: 12, xs: 4, xxs: 4},
       rowHeight: 20,
-      verticalCompact: false
+      verticalCompact: true
     };
   },
 
@@ -70,13 +70,13 @@ var Profile = React.createClass({
                                 firstname:res.firstname,
                                 lastname:res.lastname});
                 for (var i = 0; i < g; i++) {
-                    if (i < 3) {
-                          var width = 4;
+                    if (i == 1) {
+                          var width = 12;
                           var height = 13;
                           var row = 0;
                         } else {
-                          var width = 12;
-                          var height = 2;
+                          var width = 4;
+                          var height = 13;
                           var row = 14;
                         }
                       this.setState({
@@ -150,15 +150,15 @@ var Profile = React.createClass({
                        }).done((res)=>{
                         var i=this.state.games.length;
                           
-                            if (i < 3) {
-                              var width = 4;
-                              var height = 13;
-                              var row = 0;
-                          } else {
-                            var width = 12;
-                            var height = 2;
-                            var row = 14;
-                          }
+                          if (i == 1) {
+                          var width = 12;
+                          var height = 13;
+                          var row = 0;
+                        } else {
+                          var width = 4;
+                          var height = 13;
+                          var row = 14;
+                        }
 
                           this.setState({
                                 games: this.state.games.concat({
@@ -186,11 +186,25 @@ var Profile = React.createClass({
 
   onGame(el){
     var i = el.i;
+    var gameImage;
+    switch(i) {
+    case "League of Legends":
+        gameImage = "lol";
+        break;
+    default:
+        gameImage = i;
+    }
     return (
     <div key={i} data-grid={el}>
     <h2>{el.i} </h2>
-    <div className="gameImage" style={{background: 'url(./img/dota2_logo.jpg)'}}>
+    <div className="gameImage" style={{background: 'url(./img/'+gameImage+'.png)'}}>
     <div className="row">
+    <div className="overlay">
+    <h5>{el.useringame}</h5>
+    <p>Field 1: Example</p>
+    <p>Field 2: Example</p>
+    <p>Field 3: Example</p>
+    </div>
     {/*<p>interest:</p>
     <p>{el.int}</p>
     <p>username in game : {el.useringame} </p>
@@ -240,16 +254,15 @@ var Profile = React.createClass({
               {_.map(this.state.games, this.onGame)}
           </ResponsiveReactGridLayout>
 
-          <div className="row">
-          <div style={{display: this.state.showStore ? 'block' : 'none'}}>
+          <div className="row dropFade" style={{display: this.state.showStore ? 'block' : 'none'}}>
                 <form onSubmit={this.handleSubmit}>
                 <h5>Add Games:</h5>
                 <select value={this.state.selectgame} onChange={this.handleChange}>
-                    <option value="" disabled>Select your option</option>
+                    <option className="disabled" value="" disabled>Select a game</option>
                     <option value="Hearthstone">Hearthstone</option>
                     <option value="Overwatch">Overwatch</option>
                     <option value="Dota2">Dota2</option>
-                    <option value="League of lengends">League of lengends</option>
+                    <option value="League of Legends">League of Legends</option>
                 </select>
                 <br/> Username with battletags:
                 <br></br>
@@ -257,7 +270,8 @@ var Profile = React.createClass({
                 <input id="gameusername" type="text" placeholder="YourTag#0000"/>
                 <button className="button" type="submit" value="Submit" >submit</button>                
             </form></div>
-          <button style={{display: this.state.showStore ?  'none':'block' }} className="button" id="show" onClick={this.show}>Add Game</button>
+            <div className="row">
+          <button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
           </div>
         </div>
       );
@@ -278,7 +292,7 @@ var Edit = React.createClass({
       className: "layout",
       cols: {lg: 12, md: 12, sm: 12, xs: 4, xxs: 4},
       rowHeight: 20,
-      verticalCompact: false
+      verticalCompact: true
     };
   },
 
