@@ -167,6 +167,10 @@ var Profile = React.createClass({
                                   y: row,
                                   w: width,
                                   h: height,
+                                  minH: 13,
+                                  maxH: 13,
+                                  minW: 4,
+                                  maxW: 12,
                                   int:this.state.selectinterest,
                                   useringame:$("#gameusername").val(), 
                                   
