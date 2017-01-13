@@ -15,6 +15,7 @@ h3,
 h4,
 h5,
 h6 {
+    transition: color 0.3s ease-in-out;
     font-weight: 300;
     color: #fff;
 }
@@ -76,6 +77,7 @@ hr {
     font-size: 25px;
     font-weight: 300;
     padding: 10px;
+    white-space: nowrap;
 }
 
 .react-grid-item:hover h2 {
@@ -133,6 +135,25 @@ hr {
     position: relative;
 }
 
+.react-grid-item > .react-resizable-handle {
+    transition: background-color 0.3s ease-in-out;
+    background-color: #1d2428;
+}
+
+.react-grid-item > .react-resizable-handle:hover {
+    background-color: #ff4e4e;
+}
+
+.react-grid-placeholder {
+    background-color: rgba(29, 36, 40, 0.3)!important;
+    border: 1px dashed #ff4e4e;
+    opacity: 1!important;
+}
+
+.profileHeader {
+    margin-bottom: 4rem;
+}
+
 .overlay {
     z-index: 10;
     background: #0e1519;
@@ -147,8 +168,63 @@ hr {
     text-align: center;
 }
 
+.user {
+    display: -webkit-inline-box;
+    text-align: left;
+    cursor: pointer;
+}
+
+.user:hover h3,
+.user:hover h5 {
+    color: #ff4e4e;
+}
+
+.overlay .user {
+    transform: translateX(-21px);
+}
+
+.user h5,
+.user p,
+.user h3 {
+    margin: 0;
+}
+
+.heroes .column img {
+    width: 100px;
+    pointer-events: none;
+}
+
+.heroes h5 {
+    margin: 0;
+}
+
+.avatar {
+    pointer-events: none;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    display: inline;
+    margin-right: 10px;
+}
+
+.overlay .avatar {
+    pointer-events: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline;
+    margin-right: 10px;
+    padding: 2px;
+    border: 1px solid #1d2428;
+}
+
 .react-grid-item:hover .overlay {
-    opacity: 0.9;
+    opacity: 1;
+}
+
+.resizing .overlay,
+.react-draggable-dragging .overlay {
+    opacity: 0!important;
 }
 
 .sidenav a {
@@ -253,7 +329,7 @@ select {
     margin: 0 0 1rem;
     font-family: inherit;
     font-size: 1rem;
-    transition: box-shadow .5s, border-color .25s ease-in-out;
+    transition: box-shadow .5s, border-color .3s ease-in-out;
     -webkit-appearance: none;
     -moz-appearance: none;
     outline: none;

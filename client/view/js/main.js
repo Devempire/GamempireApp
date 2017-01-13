@@ -277,12 +277,14 @@ var Profile = React.createClass({
     <div className="gameImage" style={{background: 'url(./img/'+gameImage+'.png)'}}>
     <div className="row">
     <div className="overlay">
-    <h5>{el.useringame}</h5>
-    { el.i =="Overwatch" ?  ( <div> <p>level:{this.state.level}
-                          <img src={this.state.avatar} /></p>
-      <p>{this.state.hero} <img src={this.state.image} />  {this.state.time} 
-      {this.state.hero1} <img src={this.state.image1} /> {this.state.time1}  
-      {this.state.hero2} <img src={this.state.image2} /> {this.state.time2} </p>
+    { el.i =="Overwatch" ?  ( <div>  <div className="row user"><img className="avatar" src={this.state.avatar} /><div><h5>{el.useringame}</h5><p>level:{this.state.level}
+                         </p></div></div>
+                         <hr />
+      <div className="row heroes">
+      <div className="column small-4"><img src={this.state.image} />  <h6>{this.state.hero}</h6><p>{this.state.time}</p></div>
+      <div className="column small-4"><img src={this.state.image1} /> <h6>{this.state.hero1}</h6><p>{this.state.time1} </p></div>
+      <div className="column small-4"><img src={this.state.image2} /> <h6>{this.state.hero2}</h6> <p>{this.state.time2}</p> </div>
+      </div>
      </div>
      ):(<p>example</p>) }
     </div>
@@ -323,9 +325,9 @@ var Profile = React.createClass({
     if (this.state.response) {
       return (
         <div>
-        <div className="row">
-        <div className="column small-8"><h3>{this.state.username}
-          <img height="60" width="60" src="./img/user.jpg" /> </h3><p> talk something to me </p><button className="button" onClick={this.goToEdit} >edit your profile here</button></div>
+        <div className="row profileHeader">
+        <div onClick={this.goToEdit} className="column small-8 user">
+          <img className="avatar" height="60" width="60" src="./img/GamEmpireLogo.png" /><div><h3>{this.state.username} </h3><p> talk something to me </p></div></div>
         <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
         </div>
         
@@ -445,7 +447,7 @@ var Edit = React.createClass({
       <div key={i} data-grid={el}>
         <h3> Edit Your personal Info</h3>
         <hr/>
-        <input className='profilepic' id='profilepic' type='image' onClick={this.openFileExp} src={'./img/user.jpg'} draggable="false"/>
+        <input className='profilepic' id='profilepic' type='image' onClick={this.openFileExp} src={'./img/GamEmpireLogo.png'} draggable="false"/>
         <input className='uploadedpic' onChange={this.uploadPic} id='uploadedpic' type='file' accept="image/*"/>
         <br></br>
         <font id='uploadmsg' color='red'></font>
@@ -467,11 +469,12 @@ var Edit = React.createClass({
             <input type="date" id="birthday" value={this.state.birthday} onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
             <br></br>
         </form>
-
-        <button onClick={this.checkValid}> Submit </button>
-        <button onClick={this.onAddchangepw}>Change Password</button>
-        <button onClick={this.onAddchangeEmail}>Change Email</button>
-        <button onClick={this.backToProfile}>Back</button>
+        <div className="row expanded button-group">
+        <button className="button" onClick={this.checkValid}> Submit </button>
+        <button className="button" onClick={this.onAddchangepw}>Change Password</button>
+        <button className="button" onClick={this.onAddchangeEmail}>Change Email</button>
+        <button className="button secondary" onClick={this.backToProfile}>Back</button>
+        </div>
 
       </div>
     );
