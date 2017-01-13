@@ -72,19 +72,23 @@ function create() {
 }
 </script>
 
-  <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
-  <div id="{PLAYER_DIV_ID}"></div>
-  <script type="text/javascript">
-    var options = {
-      width: 854,
-      height: 480,
-      channel: "{gamempiretv}",
-      //video: "{VIDEO_ID}"
-    };
-    var player = new Twitch.Player("{PLAYER_DIV_ID}", options);
-    player.setVolume(0.5);
-  </script>
-  <script>
+  <div style="position:fixed; right:30px; top:50px">
+    <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+    <div id="{PLAYER_DIV_ID}"></div>
+    <script type="text/javascript">
+      var options = {
+        width: 600,
+        height: 480,
+        channel: "{gamempiretv}",
+        //video: "{VIDEO_ID}"
+      };
+      var player = new Twitch.Player("{PLAYER_DIV_ID}", options);
+      player.setVolume(0.5);
+    </script>
+  </div>
+
+  <div style="position:fixed;">
+    <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -97,8 +101,8 @@ function create() {
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player2', {
-          height: '390',
-          width: '640',
+          height: '480',
+          width: '600',
           videoId: 'c6pKABSOv7w',
           events: {
             'onReady': onPlayerReady,
@@ -126,5 +130,5 @@ function create() {
         player.stopVideo();
       }
     </script>
-
- </html>
+  </div>
+</html>
