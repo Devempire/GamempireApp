@@ -43,11 +43,13 @@ class MainWindow extends React.Component {
         <div id="loginContainer" className="row align-center align-middle">
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
-                <div className="required">
-                    <input type="text" id="username" placeholder="Enter your username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                <div className="input-group required">
+                    <input className="input-group-field" type="text" id="username" placeholder="Enter your username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
-                <div className="required">
-                    <input type="password" id="passsword" placeholder="Enter your password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                <div className="input-group required">
+                    <input className="input-group-field" type="password" id="passsword" placeholder="Enter your password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
                 <hr/>
                 <button className="button" onClick={this._handleLogin.bind(this)}>Login</button>
@@ -122,49 +124,53 @@ class SignUpWindow extends React.Component {
         return (
             
 
-        <form id="loginContainer" className="row align-center align-middle"> 
+        <form style={{height: "auto"}} id="loginContainer" className="row align-center align-middle"> 
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
-                <div className="required">
-                    <input required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
+            <div id='user' className="validationError dropFade" style={{display: "none"}}></div>
+                <div className="input-group required">
+                    <input className="input-group-field" required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
+                        <span className="input-group-label">*</span>
                 </div>
-                <font id='user' color='red'></font>
-                <div className="textInputGroup">
-                    <div className="required">
-                        <input required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
+                <div id='fname' className="validationError dropFade" style={{display: "none"}}></div>
+                <div id='lname' className="validationError dropFade" style={{display: "none"}}></div>
+                    <div className="input-group required">
+                        <input className="input-group-field" required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
-                    </div>
-                    <div className="required">
-                        <input required type="text" id="lastName" placeholder="Last Name" value={this.state.lastName || ""}
+                        <span className="input-group-label">*</span>
+                        <input className="input-group-field" required type="text" id="lastName" placeholder="Last Name" value={this.state.lastName || ""}
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
+                        <span className="input-group-label">*</span>
                     </div>
-                </div>
-                <font id='fname' color='red'></font>
-                <font id='lname' color='red'></font>
-                <div className="required">
-                    <input required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
+                <div id='pass' className="validationError dropFade" style={{display: "none"}}></div>
+                <div className="input-group required">
+                    <input className="input-group-field" required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
-                <font id='pass' color='red'></font>
-                <div className="required">
-                    <input required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
+                <div id='cpass' className="validationError dropFade" style={{display: "none"}}></div>
+                <div className="input-group required">
+                    <input className="input-group-field" required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
-                <font id='cpass' color='red'></font>
-                <div className="required">
-                    <input required type="text" id="email" placeholder="Email" value={this.state.email || ""}
+                <div id='emailmsg' className="validationError dropFade" style={{display: "none"}}></div>
+                <div className="input-group required">
+                    <input className="input-group-field" required type="text" id="email" placeholder="Email" value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
-                <font id='emailmsg' color='red'></font>
-                <div className="required">
-                    <input required type="text" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
+                <div id='cemailmsg' className="validationError dropFade" style={{display: "none"}}></div>
+                <div className="input-group required">
+                    <input className="input-group-field" required type="text" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
+                    <span className="input-group-label">*</span>
                 </div>
-                <font id='cemailmsg' color='red'></font>
-                <div className="required">
-                    <input required type="date" id="birthday" value={this.state.birthday||''}
+                <div className="input-group required">
+                    <input className="input-group-field" required type="date" id="birthday" value={this.state.birthday||''}
                         onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
+                    <span className="input-group-label">*</span>
                 </div>
                 <hr/>
                 <button className="button" type="submit" onClick={this._checkValid.bind(this)}>Sign Up</button>
@@ -193,56 +199,70 @@ class SignUpWindow extends React.Component {
         var cemail = document.getElementById('cemailmsg');
 
         if (this.state.firstName == null) {
+             $("#fname").show();
             fname.innerHTML = "The field is empty. ";
         } else if (!namePattern.test(this.state.firstName)) {
+             $("#fname").show();
             fname.innerHTML = "Names can only contain alphabets. ";
         } else {
             fname.innerHTML = "";
         }
 
         if (this.state.lastName == null) {
+            $("#lname").show();
             lname.innerHTML = "The field is empty.";
         } else if (!namePattern.test(this.state.lastName)) {
+            $("#lname").show();
             lname.innerHTML = "Names can only contain alphabets.";
         } else {
             lname.innerHTML = "";
         }
 
         if (this.state.userName == null) {
+            $("#user").show();
             user.innerHTML = "The field is empty.";
         } else if (!userPattern.test(this.state.userName)) {
+            $("#user").show();
             user.innerHTML = "Usernames must be at least 3 characters long and can only contain alphabets or digits.";
         } else {
             user.innerHTML = "";
         }
 
         if (this.state.password == null) {
+            $("#pass").show();
             pass.innerHTML = "The field is empty.";
         } else if (!passPattern.test(this.state.password)) {
+            $("#pass").show();
             pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
         } else {
             pass.innerHTML = "";
         }
 
         if (this.state.confirmPass == null) {
+            $("#cpass").show();
             cpass.innerHTML = "The field is empty.";
         } else if (this.state.password != this.state.confirmPass) {
+            $("#cpass").show();
             cpass.innerHTML = "Passwords do not match.";
         } else {
             cpass.innerHTML = "";
         }
 
         if (this.state.email == null) {
+            $("#emailmsg").show();
             email.innerHTML = "The field is empty.";
         } else if (!emailPattern.test(this.state.email)) {
+            $("#emailmsg").show();
             email.innerHTML = "Invalid email.";
         } else {
             email.innerHTML = "";
         }
 
         if (this.state.confirmEmail == null) {
+            $("#cemailmsg").show();
             cemail.innerHTML = "The field is empty.";
         } else if (this.state.email != this.state.confirmEmail) {
+            $("#cemailmsg").show();
             cemail.innerHTML = "Emails do not match."
         } else {
             cemail.innerHTML = "";

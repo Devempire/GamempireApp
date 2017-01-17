@@ -29,6 +29,7 @@ body,
 
 #content {
     transition: 0.5s;
+    padding-top: 2rem;
 }
 
 #main_content {
@@ -364,12 +365,48 @@ select:focus {
 }
 
 .required:after {
-    content: '*';
+    content: '';
     position: absolute;
     top: 10px;
     right: 10px;
     color: #ff4e4e;
     font-weight: 900;
+}
+
+.required .input-group-label {
+    height: 2.4375rem;
+    background: #45494a;
+    border: none;
+    color: #818181;
+    border-left: 1px solid #0e1519;
+    border-radius: 0px 1px 1px 0px;
+    line-height: 2.9375rem;
+    display: inline-block;
+    font-size: 1.25rem;
+}
+
+.validationError {
+    height: auto;
+    background: #ff4e4e;
+    width: 100%;
+    display: inline-block;
+    color: #fefefe;
+    text-align: center;
+    line-height: 2.3rem;
+    border-radius: 1px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.validationError:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #ff4e4e;
+    position: absolute;
+    top: 24px;
+    left: calc(50% - 8.5px);
+    transform: rotate(45deg);
 }
 
 .textInputGroup > div {
