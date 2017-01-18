@@ -8,7 +8,7 @@
     "watch": "watchify app/appEntry.js -t babelify -o view/js/bundle.js --debug --verbose",
     "watch2": "watchify view/js/main.js -t babelify -o view/js/bundle2.js --debug --verbose",
     "watch3": "watchify view/js/gametool.js -t babelify -o view/js/bundle3.js --debug --verbose",
-    "package" :"electron-packager ./ GamempireApp --platform=win32 --arch=all --version=electronVersion --icon==./view/img/icon.icns --out=../demo"
+    "package" :"electron-packager ./ GamempireApp --platform=win32 --version=electronVersion --arch=all --asar --icon==./view/img/logo.ico"
   },
   "author": "Rain",
   "license": "MIT",
