@@ -5,14 +5,15 @@ const {app, BrowserWindow, Menu, ipcMain, ipcRenderer} = electron;
 var path = require('path');
 var url = require('url');
 
+//change the value to false when package,true to develope 
+let isDevelopment = false;
+//comment out the if steament to package"
 
-let isDevelopment = true;
-
-if (isDevelopment) {
-    require('electron-reload')(__dirname, {
-        ignored: /node_modules|[\/\\]\./
-    });
-}
+// if (isDevelopment) {
+//     require('electron-reload')(__dirname, {
+//         ignored: /node_modules|[\/\\]\./
+//     });
+// }
 
 global.sharedObject = {
   token: 'empty'
@@ -27,7 +28,6 @@ function openMainWnd(uri) {
         width: 1295,
         height: 675,
         titleBarStyle: 'hidden'
-
     });
 
 
