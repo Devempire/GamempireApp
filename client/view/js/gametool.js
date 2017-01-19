@@ -19,6 +19,7 @@ const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
+var unirest = require('unirest');
 
 const originalLayouts = getFromLS('layouts') || {};
 
@@ -46,7 +47,9 @@ var HSBuilder = React.createClass({
     	layouts: JSON.parse(JSON.stringify(originalLayouts)),
     	selectclass:'',
     	response:undefined,
-    	showStore:false
+    	showStore:false,
+      showDeckBuilder:false,
+      decks:[]
     };
 
   },
@@ -67,12 +70,73 @@ var HSBuilder = React.createClass({
     this.setState({layouts});
   },
 
-  handleChange(event) {
-    this.setState({selectclass: event.target.value});
-  },
-
   show() {
     this.setState({showStore: true});
+  },
+
+  showBuilder(event) {
+    this.setState({selectclass: event.target.value});
+    this.setState({showDeckBuilder: true});
+    unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
+    .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+    .end(function (result) {
+      console.log(result.status, result.headers, result.body);
+    });
+    if (event.target.value == 'Druid') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Druid?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Hunter') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Hunter?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Mage') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Mage?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Paladin') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Paladin?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Priest') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Priest?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Rogue') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Rogue?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Shaman') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Shaman?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Warlock') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warlock?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    } else if (event.target.value == 'Warrior') {
+      unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warrior?collectible=1")
+      .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+      .end(function (result) {
+        console.log(result.status, result.headers, result.body);
+      });
+    }
   },
 
   handleSubmit(event) {
@@ -86,13 +150,12 @@ var HSBuilder = React.createClass({
 	      <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
 	          onBreakpointChange={this.onBreakpointChange} {...this.props}>
 	          
-	          {_.map(this.state.games, this.onGame)}
+	          {_.map(this.state.decks, this.deckBuilder)}
 	      </ResponsiveReactGridLayout>
 
   		  <div className="row dropFade" style={{display: this.state.showStore ? 'block' : 'none'}}>
-	        <form onSubmit={this.handleSubmit}>
 	        <h5>Choose a Class: </h5>
-	        <select value={this.state.selectclass} onChange={this.handleChange}>
+	        <select value={this.state.selectclass} onChange={this.showBuilder}>
 	            <option className="disabled" value="" disabled>Choose a Class</option>
 	            <option value="Druid">Druid</option>
 	            <option value="Hunter">Hunter</option>
@@ -107,16 +170,25 @@ var HSBuilder = React.createClass({
 	        <br/>
 	        <br></br>
 
-	        <button className="button" type="submit" value="Submit" >Submit</button>
-
-	    	</form>
 	      </div>
 
+        <div className="row dropFade" style={{display: this.state.showDeckBuilder ? 'block' : 'none'}}>
+          <form onSubmit={this.handleSubmit}>
+          <h5>Create a Deck: </h5>
+          
+          <br/>
+          <br></br>
+
+          <button className="button" type="submit" value="Submit" >Submit</button>
+
+        </form>
+        </div>
+
 	      <div className="row">
-          	<button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
-          </div>
+        	<button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
+        </div>
       </div>
-	)
+	  )
   } 
 });
 
