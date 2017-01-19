@@ -49,6 +49,7 @@ var HSBuilder = React.createClass({
     	response:undefined,
     	showStore:false,
       showDeckBuilder:false,
+      showPlus:true,
       decks:[]
     };
 
@@ -72,11 +73,13 @@ var HSBuilder = React.createClass({
 
   show() {
     this.setState({showStore: true});
+    this.setState({showPlus: false});
   },
 
   showBuilder(event) {
     this.setState({selectclass: event.target.value});
     this.setState({showDeckBuilder: true});
+    this.setState({showStore: false});
     unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
     .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
     .end(function (result) {
@@ -143,6 +146,10 @@ var HSBuilder = React.createClass({
 
   },
 
+  deckBuilder(el) {
+
+  },
+
   render() {
   	{this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
     return (
@@ -174,18 +181,21 @@ var HSBuilder = React.createClass({
 
         <div className="row dropFade" style={{display: this.state.showDeckBuilder ? 'block' : 'none'}}>
           <form onSubmit={this.handleSubmit}>
-          <h5>Create a Deck: </h5>
-          
-          <br/>
-          <br></br>
+            <h5>Create a Deck: </h5>
+            <h6>Title: </h6>
+            <input type="text" name="title"></input>
+            <h6>Description: </h6>
+            <input type="text" name="description"></input>
+            <br/>
+            <br></br>
 
-          <button className="button" type="submit" value="Submit" >Submit</button>
+            <button className="button" type="submit" value="Submit">Submit</button>
 
-        </form>
+          </form>
         </div>
 
 	      <div className="row">
-        	<button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
+        	<button style={{display: this.state.showPlus ? 'block':'none' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
         </div>
       </div>
 	  )
