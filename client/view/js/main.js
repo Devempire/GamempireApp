@@ -147,7 +147,7 @@ var Profile = React.createClass({
     this.loadProfile();
   },
 
-   resetLayout() {
+  resetLayout() {
     this.setState({layouts: {}});
   },
 
@@ -327,7 +327,8 @@ var Profile = React.createClass({
         <div>
         <div className="row profileHeader">
         <div onClick={this.goToEdit} className="column small-8 user">
-          <img className="avatar" height="60" width="60" src="./img/GamEmpireLogo.png" /><div><h3>{this.state.username} </h3><p> talk something to me </p></div></div>
+          <img className="avatar" height="60" width="60" src="./img/GamEmpireLogo.png" /><div>
+          <h3>{this.state.username} </h3><p> talk something to me </p></div></div>
         <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
         </div>
         
@@ -351,7 +352,7 @@ var Profile = React.createClass({
                 <br></br>
 
                 <input id="gameusername" type="text" placeholder="YourTag#0000"/>
-                <button className="button" type="submit" value="Submit" >submit</button>                
+                <button className="button" type="submit" value="Submit" >submit</button>
             </form></div>
             <div className="row">
           <button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
