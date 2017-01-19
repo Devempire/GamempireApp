@@ -7,7 +7,7 @@
     "start": "electron .",
     "watch": "watchify app/appEntry.js -t babelify -o view/js/bundle.js --debug --verbose",
     "watch2": "watchify view/js/main.js -t babelify -o view/js/bundle2.js --debug --verbose",
-    "package" :"electron-packager ./ GamempireApp --platform=win32 --version=electronVersion --arch=all --asar --icon==./view/img/logo.ico"
+    "package" :"electron-packager ./ Gamempire --overwrite --app-version=1.0.0 --platform=win32 --arch=all --out=../demo --version=electronVersion"
   },
   "author": "Rain",
   "license": "MIT",
@@ -34,4 +34,5 @@
     "react-resizable": "^1.4.5",
     "react-tap-event-plugin": "^2.0.1"
   }
+  
 }
