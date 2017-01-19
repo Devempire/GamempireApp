@@ -49,6 +49,7 @@ var HSBuilder = React.createClass({
     	response:undefined,
     	showStore:false,
       showDeckBuilder:false,
+      showplus:true,
       decks:[]
     };
 
@@ -71,12 +72,14 @@ var HSBuilder = React.createClass({
   },
 
   show() {
-    this.setState({showStore: true});
+    this.setState({showStore: true,
+                  showplus:false});
   },
 
   showBuilder(event) {
     this.setState({selectclass: event.target.value});
     this.setState({showDeckBuilder: true});
+    this.setState({showStore: false});
     unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
     .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
     .end(function (result) {
@@ -185,7 +188,7 @@ var HSBuilder = React.createClass({
         </div>
 
 	      <div className="row">
-        	<button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
+        	<button style={{display: this.state.showplus ?  'block': 'none'}} className="button secondary hollow" id="show" onClick={this.show}>+</button>
         </div>
       </div>
 	  )
