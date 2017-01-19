@@ -9,11 +9,12 @@ var url = require('url');
 let isDevelopment = true;
 //comment out the if steament to package"
 
- if (isDevelopment) {
-     require('electron-reload')(__dirname, {
-         ignored: /node_modules|[\/\\]\./
-     });
- }
+
+if (isDevelopment) {
+    require('electron-reload')(__dirname, {
+        ignored: /node_modules|[\/\\]\./
+    });
+}
 
 global.sharedObject = {
   token: 'empty'
