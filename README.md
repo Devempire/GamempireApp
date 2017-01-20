@@ -1,3 +1,3 @@
 # GamempireApp
 
-Copyright © 2017 [Gaming Hub Inc.]
+Copyright © 2017 Gaming Hub Inc.
