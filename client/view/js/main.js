@@ -845,7 +845,6 @@ var Edit = React.createClass({
             $.post( "http://localhost:8080/login/load",
             //publish
             // $.post(api_server+"/user/load",
-
                 {
                     'token' :token
                 }).done((d) => {
