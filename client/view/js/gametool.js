@@ -73,8 +73,10 @@ var HSBuilder = React.createClass({
   },
 
   show() {
-    this.setState({showStore: true});
-    this.setState({showPlus: false});
+    this.setState({showStore: true,
+                  showPlus:false});
+
+   
   },
 
   showBuilder(event) {
