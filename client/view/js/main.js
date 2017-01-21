@@ -74,10 +74,10 @@ var Profile = React.createClass({
   loadProfile(){
     var token = electron.remote.getGlobal('sharedObject').token;
 
-    $.post( "http://localhost:8080/user/load",{
+    $.post( "http://localhost:8080/login/load",{
         'token': token
         }).done((d)=> {
-            $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
+            $.get('http://localhost:8080/login/profile/'+ d._id + '/info').done((res)=>{
                 var g=res.gameinventory.length;
 
                 this.setState({response: res,
@@ -179,12 +179,12 @@ var Profile = React.createClass({
       alert('Your favorite Game is: ' + this.state.selectgame);
       event.preventDefault();
       var token = electron.remote.getGlobal('sharedObject').token;
-      $.post( "http://localhost:8080/user/load",
+      $.post( "http://localhost:8080/login/load",
                {
                    'token' :token
                 }).done((d)=> {
                    $.ajax({
-                           url:"http://localhost:8080/user/profile/updategames",   
+                           url:"http://localhost:8080/login/profile/updategames",   
                            type:"PUT",
                            contentType: 'application/json; charset=utf-8',
                            data:JSON.stringify({    
@@ -421,10 +421,10 @@ var Edit = React.createClass({
   loadProfile(){
     var token = electron.remote.getGlobal('sharedObject').token;
 
-    $.post( "http://localhost:8080/user/load",{
+    $.post( "http://localhost:8080/login/load",{
         'token': token
         }).done((d)=> {
-            $.get('http://localhost:8080/user/profile/'+ d._id + '/info').done((res)=>{
+            $.get('http://localhost:8080/login/profile/'+ d._id + '/info').done((res)=>{
                 
                 this.setState({response: res,
                                 username:res.username,
@@ -691,12 +691,12 @@ var Edit = React.createClass({
 
       if (errorfname.innerHTML == "" && errorlname.innerHTML == "" && erroruname.innerHTML == "") {
           var token = electron.remote.getGlobal('sharedObject').token;
-           $.post( "http://localhost:8080/user/load",
+           $.post( "http://localhost:8080/login/load",
               {
                   'token' :token
               }).done((d)=> {
                   $.ajax({
-                          url:"http://localhost:8080/user/profile/update",   
+                          url:"http://localhost:8080/login/profile/update",   
                           type:"PUT",
                           data:{    
                               _id:d._id,
@@ -753,17 +753,17 @@ var Edit = React.createClass({
 
         if(errornewpass.innerHTML == "" && errorcnewpass.innerHTML == ""){
              var token = electron.remote.getGlobal('sharedObject').token;
-            $.post( "http://localhost:8080/user/load",
+            $.post( "http://localhost:8080/login/load",
                 {
                     'token' :token
                 }).done((d) => {
-                    $.post("http://localhost:8080/user/profile/checkold", {
+                    $.post("http://localhost:8080/login/profile/checkold", {
                         _id:d._id,
                         "password":oldpw
                     }).done( (res) =>{
                         erroroldpass.innerHTML ="";
                         $.ajax({
-                            url:"http://localhost:8080/user/profile/updatePW",   
+                            url:"http://localhost:8080/login/profile/updatePW",   
                             type:"PUT",
                             data:{    
                                 _id:d._id,
@@ -808,12 +808,12 @@ var Edit = React.createClass({
 
         if(errornewemail.innerHTML == ""){
              var token = electron.remote.getGlobal('sharedObject').token;
-            $.post( "http://localhost:8080/user/load",
+            $.post( "http://localhost:8080/login/load",
                 {
                     'token' :token
                 }).done((d) => {
                     $.ajax({
-                        url:"http://localhost:8080/user/profile/updateEmail",   
+                        url:"http://localhost:8080/login/profile/updateEmail",   
                         type:"PUT",
                         data:{    
                             _id:d._id,

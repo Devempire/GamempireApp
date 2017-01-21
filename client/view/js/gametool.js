@@ -50,7 +50,8 @@ var HSBuilder = React.createClass({
     	showStore:false,
       showDeckBuilder:false,
       showPlus:true,
-      decks:[]
+      decks:[],
+      mage:[]
     };
 
   },
@@ -85,61 +86,68 @@ var HSBuilder = React.createClass({
     unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
     .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
     .end(function (result) {
-      console.log(result.status, result.headers, result.body);
+      //console.log(result.body);
     });
     if (event.target.value == 'Druid') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Druid?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log(result.body);
       });
     } else if (event.target.value == 'Hunter') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Hunter?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log(result.body);
       });
     } else if (event.target.value == 'Mage') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Mage?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
-      });
+        console.log( result.body[0].img);
+         for (var i = 0;i<5; i++) {
+           this.setState({mage: this.state.mage.concat(
+             result.body[i].img)
+           });
+         };
+        console.log(this.state.mage);
+        console.log( "hi" );
+      }.bind(this));
     } else if (event.target.value == 'Paladin') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Paladin?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log(result.body);
       });
     } else if (event.target.value == 'Priest') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Priest?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log(result.body);
       });
     } else if (event.target.value == 'Rogue') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Rogue?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log(result.body);
       });
     } else if (event.target.value == 'Shaman') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Shaman?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log( result.body);
       });
     } else if (event.target.value == 'Warlock') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warlock?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log( result.body);
       });
     } else if (event.target.value == 'Warrior') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warrior?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log(result.status, result.headers, result.body);
+        console.log( result.body);
       });
     }
   },
@@ -195,7 +203,13 @@ var HSBuilder = React.createClass({
 
           </form>
         </div>
+        
+        
+        <div>
+          <img src={this.state.mage[3]} />
+          <img src={this.state.mage[4]} />
 
+        </div>
 	      <div className="row">
         	<button style={{display: this.state.showPlus ? 'block':'none' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
         </div>

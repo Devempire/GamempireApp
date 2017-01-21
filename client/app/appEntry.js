@@ -74,7 +74,7 @@ class MainWindow extends React.Component {
         };
 
 
-        $.post('http://localhost:8080/user/find',
+        $.post('http://gamempire.net/login/find',
         {
             username:this.state.userName,
             password:this.state.password
@@ -298,7 +298,7 @@ class SignUpWindow extends React.Component {
         };
 
         console.log(this.state.birthday);
-        $.post('http://localhost:8080/user/add', 
+        $.post('http://localhost:8080/login/add', 
                 {
                 
                     username:this.state.userName,
