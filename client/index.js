@@ -7,7 +7,7 @@ var url = require('url');
 
 //change the value to false when package,true to develope 
 let isDevelopment = true;
-//comment out the if steament to package"
+
 
 
 if (isDevelopment) {
