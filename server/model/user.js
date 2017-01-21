@@ -7,9 +7,11 @@ var UserSchema = mongoose.Schema({
     username: {type: String, unique:true},
     password: String,
     email: {type: String, unique:true},
-    is_verified: {type: Boolean, default: false }, //default not verrified
+    is_verified: {type: Boolean, default: false}, //default not verrified
+    verification_code: {type: String, unique:true, default: ''}, //email verrification code. default blank.
     dateofbirth: {type: String, default:''},
-    gameinventory:[{ game: String, useringame:String, interest: Array}],
+    gameinventory:[{game: String, useringame: String, interest: Array}],
+    gamertype: {type: String, default: ''},
     friends: {type: Array, default: ''},
     mic: {type: Boolean, default: false } //default no mic
     //img: {data: Buffer, contentType: String}
@@ -18,5 +20,3 @@ var UserSchema = mongoose.Schema({
 var User = mongoose.model('User', UserSchema);
 
 module.exports = User;
-
-    

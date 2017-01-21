@@ -1,0 +1,29 @@
+client/node_modules/
+server/node_modules/
+
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+
+#############
+## Windows detritus
+#############
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac crap
+.DS_Store
+
+Mongod.lnk
+client/view/js/bundle.js
+client/view/js/bundle2.js

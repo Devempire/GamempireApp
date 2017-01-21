@@ -8,8 +8,7 @@
     "watch": "watchify app/appEntry.js -t babelify -o view/js/bundle.js --debug --verbose",
     "watch2": "watchify view/js/main.js -t babelify -o view/js/bundle2.js --debug --verbose",
     "watch3": "watchify view/js/gametool.js -t babelify -o view/js/bundle3.js --debug --verbose",
-    "package" :"electron-packager ./ GamempireApp --platform=win32 --electron-version=1.4.13 --overwrite --arch=all --asar --icon=./view/img/logo.ico --ignore=node_modules"
-
+    "package": "electron-packager ./ GamempireApp --platform=win32 --electron-version=1.4.13 --overwrite --arch=all --asar --icon=./view/img/logo.ico --ignore=node_modules"
   },
   "author": "Rain",
   "license": "MIT",
@@ -34,7 +33,7 @@
     "react-dom": "^15.4.1",
     "react-grid-layout": "^0.13.9",
     "react-resizable": "^1.4.5",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "unirest": "^0.5.1"
   }
-  
 }

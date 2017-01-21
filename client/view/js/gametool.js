@@ -86,7 +86,8 @@ var HSBuilder = React.createClass({
     unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
     .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
     .end(function (result) {
-      //console.log(result.body);
+
+      console.log(result.body);
     });
     if (event.target.value == 'Druid') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Druid?collectible=1")
@@ -104,6 +105,7 @@ var HSBuilder = React.createClass({
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Mage?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
+
         console.log( result.body[0].img);
          for (var i = 0;i<5; i++) {
            this.setState({mage: this.state.mage.concat(
@@ -113,6 +115,7 @@ var HSBuilder = React.createClass({
         console.log(this.state.mage);
         console.log( "hi" );
       }.bind(this));
+
     } else if (event.target.value == 'Paladin') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Paladin?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
