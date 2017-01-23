@@ -28,6 +28,7 @@ function openMainWnd(uri) {
         minWidth: 400,
         width: 1295,
         height: 675,
+        frame: false,
         titleBarStyle: 'hidden'
     });
 
