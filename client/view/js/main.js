@@ -19,7 +19,21 @@ const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
+
+//Production
 var api_server = "https://gamempire.herokuapp.com";
+
+//Developper
+//var api_server = "http://localhost:8080";
+
+/*
+If you would like to make changes to the live production server 
+please push the changes to repositoy Devempire/WebServer and 
+Heroku will detect changes and restart node.js server in under 
+a minutes time.
+*/
+
+
 
 const originalLayouts = getFromLS('layouts') || {};
 
@@ -73,12 +87,10 @@ var Profile = React.createClass({
 
   loadProfile(){
     var token = electron.remote.getGlobal('sharedObject').token;
-     //for developing using local srerver only
-    $.post( "http://localhost:8080/login/load",{
+    $.post(api_server+"/login/load",{
         'token': token
         }).done((d)=> {
-           //for developing using local srerver only
-            $.get('http://localhost:8080/login/profile/'+ d._id + '/info').done((res)=>{
+            $.get(api_server+'/login/profile/'+ d._id + '/info').done((res)=>{
 
                 var g=res.gameinventory.length;
 
@@ -181,20 +193,13 @@ var Profile = React.createClass({
       alert('Your favorite Game is: ' + this.state.selectgame);
       event.preventDefault();
       var token = electron.remote.getGlobal('sharedObject').token;
-      //for developing using local srerver only
-      $.post( "http://localhost:8080/login/load",
-
-      // for publish using this 1 insted of 
-      //$.post(api_server+"/user/load",
+      $.post(api_server+"/user/load",
 
                {
                    'token' :token
                 }).done((d)=> {
                    $.ajax({
-                          //for developing using local srerver only
-                          url:"http://localhost:8080/login/profile/updategames",   
-                          // for publish using this 1 insted of 
-                          //url:api_server+"/user/profile/updategames",   
+                           url:api_server+"/user/profile/updategames",   
                            type:"PUT",
                            contentType: 'application/json; charset=utf-8',
                            data:JSON.stringify({    
@@ -430,16 +435,10 @@ var Edit = React.createClass({
 
   loadProfile(){
     var token = electron.remote.getGlobal('sharedObject').token;
-    //for developing using local srerver only
-    $.post( "http://localhost:8080/login/load",{
+     $.post(api_server+"/user/load",{
         'token': token
-        }).done((d)=> {
-            $.get('http://localhost:8080/login/profile/'+ d._id + '/info').done((res)=>{
-    // for publish using this 1 insted of 
-    // $.post(api_server+"/user/load",{
-    //     'token': token
-    //     }).done((d)=> {
-    //         $.get(api_server+'/user/profile/'+ d._id + '/info').done((res)=>{
+         }).done((d)=> {
+             $.get(api_server+'/user/profile/'+ d._id + '/info').done((res)=>{
 
                 
                 this.setState({response: res,
@@ -706,20 +705,14 @@ var Edit = React.createClass({
       }
 
       if (errorfname.innerHTML == "" && errorlname.innerHTML == "" && erroruname.innerHTML == "") {
-          var token = electron.remote.getGlobal('sharedObject').token;
-            //for developing only
-           $.post( "http://localhost:8080/login/load",  
-          //for publish 
-          //$.post(api_server+"/user/load",
+          var token = electron.remote.getGlobal('sharedObject').token; 
+          $.post(api_server+"/user/load",
 
               {
                   'token' :token
               }).done((d)=> {
                   $.ajax({
-                          //developing
-                          url:"http://localhost:8080/login/profile/update",     
-                          //publish
-                          //url:api_server+"/user/profile/update",   
+                          url:api_server+"/user/profile/update",   
                           type:"PUT",
                           data:{    
                               _id:d._id,
@@ -776,27 +769,18 @@ var Edit = React.createClass({
 
         if(errornewpass.innerHTML == "" && errorcnewpass.innerHTML == ""){
              var token = electron.remote.getGlobal('sharedObject').token;
-            //developing
-            $.post( "http://localhost:8080/login/load",
-                {
-                    'token' :token
-                }).done((d) => {
-                    $.post("http://localhost:8080/login/profile/checkold", {
-              //publish
-            // $.post(api_server+"/user/load",
-            //     {
-            //         'token' :token
-            //     }).done((d) => {
-            //         $.post(api_server+"/user/profile/checkold", {
+             $.post(api_server+"/user/load",
+                 {
+                     'token' :token
+                 }).done((d) => {
+                     $.post(api_server+"/user/profile/checkold", {
                         _id:d._id,
                         "password":oldpw
                     }).done( (res) =>{
                         erroroldpass.innerHTML ="";
                         $.ajax({
-                            //developing
-                            url:"http://localhost:8080/login/profile/updatePW",   
-                            // publish
-                            // url:api_server+"/user/profile/updatePW",   
+
+                            url:api_server+"/user/profile/updatePW",   
                             type:"PUT",
                             data:{    
                                 _id:d._id,
@@ -841,18 +825,13 @@ var Edit = React.createClass({
 
         if(errornewemail.innerHTML == ""){
              var token = electron.remote.getGlobal('sharedObject').token;
-            //developing
-            $.post( "http://localhost:8080/login/load",
-            //publish
-            // $.post(api_server+"/user/load",
+
+            $.post(api_server+"/user/load",
                 {
                     'token' :token
                 }).done((d) => {
                     $.ajax({
-                        //developing
-                        url:"http://localhost:8080/login/profile/updateEmail",   
-                        //publish
-                        //url:api_server+"/user/profile/updateEmail",   
+                       url:api_server+"/user/profile/updateEmail",   
 
                         type:"PUT",
                         data:{    

@@ -12,7 +12,13 @@ const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var moment = require('moment');
+
+//Production
 var api_server = "https://gamempire.herokuapp.com";
+
+//Developper
+//var api_server = "http://localhost:8080";
+
 
 
 
@@ -75,10 +81,7 @@ class MainWindow extends React.Component {
         };
 
 
-        //develope
-        $.post('http://localhost:8080/login/find',
-        //publish
-        //$.post(api_server+'/user/find',
+        $.post(api_server+'/user/find',
 
         {
             username:this.state.userName,
@@ -303,10 +306,7 @@ class SignUpWindow extends React.Component {
         };
 
         console.log(this.state.birthday);
-        //develope
-        $.post('http://localhost:8080/login/add', 
-        //publish
-        //$.post(api_server+'/user/add', 
+        $.post(api_server+'/user/add', 
 
                 {
                 
