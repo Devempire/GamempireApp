@@ -562,4 +562,5 @@ background-size: 25px 60%;
 	margin-top: 1px;
 	position: fixed;
 	text-align: center;
+	z-index:-9;
 }
