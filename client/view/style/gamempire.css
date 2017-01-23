@@ -510,7 +510,7 @@ label {
 }
 
 #title-bar-btns button {
-	height: 22px;
+	height: 24px;
 	width: 38px;
 	background-color: transparent;
 	border: none;
@@ -541,21 +541,18 @@ label {
 #min-btn {
 background:url(../img/minimize.png) no-repeat;
 background-position: center; 
-margin-top: 2px;
 background-size: 25px 60%;
 }
 
 #max-btn {
 background:url(../img/maximize.png) no-repeat;
 background-position: center; 
-margin-top: 2px;
 background-size: 25px 60%;
 }
 
 #close-btn {
 background:url(../img/close.png) no-repeat;
 background-position: center; 
-margin-top: 2px;
 background-size: 25px 60%;
 }
 
