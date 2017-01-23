@@ -501,3 +501,27 @@ label {
     margin-right: auto;
     margin-left: auto;
 }
+
+#title-bar-btns {
+	-webkit-app-region: no-drag;
+	position: fixed;
+	top: -1px;
+	right: 0px;	
+}
+
+#title-bar-btns button {
+	height: 22px;
+	width: 32px;
+	background-color: transparent;
+	border: none;
+	color: #F1F1F1;
+	font-size: 16px;
+	outline:none;
+}
+#title-bar-btns button::-moz-focus-inners {
+   border: 0;
+}
+
+#title-bar-btns button:hover {
+	background-color: #3F3F41;
+}
