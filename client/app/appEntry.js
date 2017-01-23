@@ -51,15 +51,15 @@ class MainWindow extends React.Component {
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="input-group required">
-                    <input className="input-group-field" type="text" id="username" placeholder="Enter your username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                    <input className="input-group-field" type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <div className="input-group required">
-                    <input className="input-group-field" type="password" id="passsword" placeholder="Enter your password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                    <input className="input-group-field" type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <hr/>
-                <button className="button" onClick={this._handleLogin.bind(this)}>Login</button>
+                <button className="button" id="login" onClick={this._handleLogin.bind(this)}>Login</button>
                 <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
             </div>
         </div>
