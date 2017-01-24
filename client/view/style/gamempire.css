@@ -539,19 +539,19 @@ label {
 #min-btn {
     background:url(../img/minimize.png) no-repeat;
     background-position: center; 
-    background-size: 60%;
+    background-size: 40%;
 }
 
 #max-btn {
     background:url(../img/maximize.png) no-repeat;
     background-position: center; 
-    background-size: 60%;
+    background-size: 40%;
 }
 
 #close-btn {
     background:url(../img/close.png) no-repeat;
     background-position: center; 
-    background-size: 60%;
+    background-size: 40%;
 }
 
 #title{
