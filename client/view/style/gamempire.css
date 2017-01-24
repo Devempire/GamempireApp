@@ -575,9 +575,14 @@ display: none;
     margin-top:-19px;
     display: inline-block;
     float:right;
-    padding:8px;
+    padding:6px;
     background:red;
     z-index:999;
     cursor: pointer;
     color:white;
+    border-radius:15px;
+}
+
+#close:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
 }

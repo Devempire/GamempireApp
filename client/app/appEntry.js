@@ -75,7 +75,7 @@ class MainWindow extends React.Component {
     var pwrd = this.state.password;
     if (user_id==null || user_id=="" || pwrd==null || pwrd=="")
       {
-        $("#loginmsg").html("<center>All fields must be filled in</center><span id='close' onclick='$(this).parent().hide();' >X</span>");
+        $("#loginmsg").html("<center>All fields must be filled in</center><span id='close' onclick='$(this).parent().hide();' >x</span>");
         $("#loginmsg").addClass('label warning');
         $("#loginmsg").effect( "shake", { direction: "up", times: 2, distance: 30}, 500 );
       return false;
