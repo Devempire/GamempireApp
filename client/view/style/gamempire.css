@@ -554,6 +554,10 @@ label {
     background-size: 40%;
 }
 
+#close-btn:hover {
+    background-color: #c00000 !important;
+}
+
 #title{
     width: 100%;
 	max-height: 21px;
