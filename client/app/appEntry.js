@@ -13,8 +13,8 @@ const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var moment = require('moment');
 
-//Production
-var api_server = "https://gamempire.herokuapp.com";
+//Production (borys dev)
+var api_server = "http://gamempire.net";
 
 //Developper
 //var api_server = "http://localhost:8080";
@@ -58,28 +58,28 @@ class MainWindow extends React.Component {
                     <input className="input-group-field" type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
+                <center><div id="loginmsg"></div></center>
                 <hr/>
                 <button className="button" id="login" onClick={this._handleLogin.bind(this)}>Login</button>
                 <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
             </div>
-        </div>
+        </div> 
 
            
         );
     }
 
     _handleLogin() {
-        
 
-        let options2 = {
-            type: 'info',
-            buttons: ['OK'],
-            title: 'Login',
-            message: "Wrong username or password",
-            defaultId: 0,
-            cancelId: 0
-        };
-
+    var user_id = this.state.userName;
+    var pwrd = this.state.password;
+    if (user_id==null || user_id=="" || pwrd==null || pwrd=="")
+      {
+        $("#loginmsg").html("<center>All fields must be filled in</center><span id='close' onclick='$(this).parent().hide();' >X</span>");
+        $("#loginmsg").addClass('label warning');
+        $("#loginmsg").effect( "shake", { direction: "up", times: 2, distance: 30}, 500 );
+      return false;
+      }
 
         $.post(api_server+'/user/find',
 
@@ -93,7 +93,9 @@ class MainWindow extends React.Component {
                
             })
             .fail((res)=>{
-                dialog.showMessageBox(options2);
+            $("#loginmsg").html("<center>Username or password incorrect</center><span id='close' onclick='$(this).parent().hide();' >X</span>");
+            $("#loginmsg").addClass('label warning');
+            $("#loginmsg").effect( "shake", { direction: "up", times: 2, distance: 30}, 500 );
             });
             
         

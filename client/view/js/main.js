@@ -20,8 +20,8 @@ const {dialog} = electron.remote;
 var session = electron.remote;
 var moment = require('moment');
 
-//Production
-var api_server = "https://gamempire.herokuapp.com";
+//Production (borys dev)
+var api_server = "http://gamempire.net";
 
 //Developper
 //var api_server = "http://localhost:8080";

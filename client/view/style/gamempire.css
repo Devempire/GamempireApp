@@ -564,3 +564,20 @@ background-size: 25px 60%;
 	text-align: center;
 	z-index:-9;
 }
+
+
+#loginmsg {
+padding:15px;
+display: none;
+}
+
+#close {
+    margin-top:-19px;
+    display: inline-block;
+    float:right;
+    padding:8px;
+    background:red;
+    z-index:999;
+    cursor: pointer;
+    color:white;
+}
