@@ -5,6 +5,11 @@
      $('#login').click();
   });
 
+  $("#username").keypress(function (e) {
+  if(e.keyCode=='13') //Keycode for "Return"
+     $('#login').click();
+  });
+
   const remote = require('electron').remote;
   
   function init() {
