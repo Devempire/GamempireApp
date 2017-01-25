@@ -48,6 +48,7 @@ class MainWindow extends React.Component {
             
 
         <div id="loginContainer" className="row align-center align-middle">
+        <div className="content-loading"></div>
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="input-group required">
@@ -58,7 +59,7 @@ class MainWindow extends React.Component {
                     <input className="input-group-field" type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
-                <center><div id="loginmsg"></div></center>
+                <center><div className="input-group-field" id="loginmsg"></div></center>
                 <hr/>
                 <button className="button" id="login" onClick={this._handleLogin.bind(this)}>Login</button>
                 <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
@@ -68,34 +69,37 @@ class MainWindow extends React.Component {
            
         );
     }
-
     _handleLogin() {
 
     var user_id = this.state.userName;
     var pwrd = this.state.password;
     if (user_id==null || user_id=="" || pwrd==null || pwrd=="")
       {
-        $("#loginmsg").html("<center>All fields must be filled in</center><span id='close' onclick='$(this).parent().hide();' >x</span>");
-        $("#loginmsg").addClass('label warning');
-        $("#loginmsg").effect( "shake", { direction: "up", times: 2, distance: 30}, 500 );
-      return false;
+        $("#loginmsg").html("All fields must be filled in.<button id='close' onclick='$(this).parent().hide();' ></button>");
+        $("#loginmsg").addClass('label warning input-group-field');
+        $("#loginmsg").effect( "shake", { direction: "up", times: 3, distance: 10}, 500 );
+        return false;
       }
+      $( ".content-loading" ).css("display:block;");
+        $( ".content-loading" ).show();
 
         $.post(api_server+'/user/find',
-
         {
             username:this.state.userName,
             password:this.state.password
         })
+
             .done((res) =>{
+                $( ".content-loading" ).hide();
                 electron.remote.getGlobal('sharedObject').token = res;
                 window.location.href="./view/main.html";
                
             })
             .fail((res)=>{
-            $("#loginmsg").html("<center>Username or password incorrect</center><span id='close' onclick='$(this).parent().hide();' >X</span>");
+            $( ".content-loading" ).hide();
+            $("#loginmsg").html("Wrong Username or Password<button id='close' onclick='$(this).parent().hide();' >");
             $("#loginmsg").addClass('label warning');
-            $("#loginmsg").effect( "shake", { direction: "up", times: 2, distance: 30}, 500 );
+            $("#loginmsg").effect( "shake", { direction: "up", times: 3, distance: 10}, 500 );
             });
             
         
