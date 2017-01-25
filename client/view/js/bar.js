@@ -1,5 +1,5 @@
 (function () {
-  
+
   $("#passsword").keypress(function (e) {
   if(e.keyCode=='13') //Keycode for "Return"
      $('#login').click();
@@ -48,6 +48,7 @@
     
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
+        $( ".content-loading" ).fadeOut( "slow" );
         init();
       }
     };

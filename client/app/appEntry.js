@@ -7,11 +7,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 const events = window.require('events');
 const path = window.require('path');
 const fs = window.require('fs');
-
 const electron = window.require('electron');
 const {ipcRenderer, shell} = electron;
 const {dialog} = electron.remote;
 var moment = require('moment');
+var remote = electron.remote;
 
 //Production (borys dev)
 var api_server = "http://gamempire.net";
@@ -90,11 +90,13 @@ class MainWindow extends React.Component {
         })
 
             .done((res) =>{
-                $( ".content-loading" ).hide();
+                $( "#loginContainer" ).hide();
+                electron.remote.getGlobal('mainWnd').setContentSize(1152, 648);
+                electron.remote.getGlobal('mainWnd').center();
                 electron.remote.getGlobal('sharedObject').token = res;
-                window.location.href="./view/main.html";
-               
+                window.location.href="./view/main.html";            
             })
+
             .fail((res)=>{
             $( ".content-loading" ).hide();
             $("#loginmsg").html("Wrong Username or Password<button id='close' onclick='$(this).parent().hide();' >");
@@ -135,6 +137,8 @@ class SignUpWindow extends React.Component {
     }
 
     render() {
+
+        
         return (
             
 
