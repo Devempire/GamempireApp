@@ -30,7 +30,7 @@ var HSBuilder = React.createClass({
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 12, md: 12, sm: 12, xs: 4, xxs: 4},
+      cols: {lg: 2, md: 2, sm: 2, xs: 1, xxs: 1},
       rowHeight: 20,
       verticalCompact: true
     };
@@ -49,9 +49,10 @@ var HSBuilder = React.createClass({
     	response:undefined,
     	showStore:false,
       showDeckBuilder:false,
-      showPlus:true,
+      showAddDeck:true,
       decks:[],
-      mage:[]
+      neutral:[],
+      classCards:[]
     };
 
   },
@@ -74,9 +75,7 @@ var HSBuilder = React.createClass({
 
   show() {
     this.setState({showStore: true,
-                  showPlus:false});
-
-   
+                  showAddDeck: false});
   },
 
   showBuilder(event) {
@@ -86,73 +85,108 @@ var HSBuilder = React.createClass({
     unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
     .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
     .end(function (result) {
-
       console.log(result.body);
-    });
+      var i = 0;
+      while (i < result.body.length) {
+        this.setState({neutral: this.state.neutral.concat(result.body[i].name)});
+        i++;
+      };
+      console.log(this.state.neutral);
+    }.bind(this));
     if (event.target.value == 'Druid') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Druid?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
-      });
+        var i = 1;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Hunter') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Hunter?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
-      });
+        var i = 2;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Mage') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Mage?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-
-        console.log( result.body[0].img);
-         for (var i = 0;i<5; i++) {
-           this.setState({mage: this.state.mage.concat(
-             result.body[i].img)
-           });
-         };
-        console.log(this.state.mage);
-        console.log( "hi" );
+        console.log(result.body);
+        var i = 3;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
       }.bind(this));
-
     } else if (event.target.value == 'Paladin') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Paladin?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
-      });
+        var i = 2;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Priest') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Priest?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
-      });
+        var i = 2;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Rogue') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Rogue?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
-      });
+        var i = 1;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Shaman') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Shaman?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log( result.body);
-      });
+        console.log(result.body);
+        var i = 2;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Warlock') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warlock?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log( result.body);
-      });
+        console.log(result.body);
+        var i = 1;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     } else if (event.target.value == 'Warrior') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Warrior?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
-        console.log( result.body);
-      });
+        console.log(result.body);
+        var i = 2;
+        this.putClassCards(i, result.body);
+        console.log(this.state.classCards);
+      }.bind(this));
     }
+  },
+
+  //helper function for putting in class card names only into a list
+  putClassCards(i, deck) {
+    while (i < deck.length) {
+      this.setState({classCards: this.state.classCards.concat(deck[i].name)});
+      i++;
+    };
+  },
+
+  showClassCards() {
+    alert('hi');
   },
 
   handleSubmit(event) {
@@ -169,7 +203,6 @@ var HSBuilder = React.createClass({
       <div>
 	      <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
 	          onBreakpointChange={this.onBreakpointChange} {...this.props}>
-	          
 	          {_.map(this.state.decks, this.deckBuilder)}
 	      </ResponsiveReactGridLayout>
 
@@ -189,32 +222,39 @@ var HSBuilder = React.createClass({
 	        </select>
 	        <br/>
 	        <br></br>
-
 	      </div>
 
         <div className="row dropFade" style={{display: this.state.showDeckBuilder ? 'block' : 'none'}}>
+          <h5>Create a Deck: </h5>
+          <h6>Title: </h6>
+          <input type="text" name="title"></input>
+          <h6>Description: </h6>
+          <input className="deck_desc" type="text" name="description"></input>
+
+          <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
+              onBreakpointChange={this.onBreakpointChange} {...this.props} rowHeight={50}>
+              <div key="1" data-grid={{x: 0, y: 0, w: 1, h: 8, static: true}}>
+                <h4>Cards</h4>
+                <button className="button" onClick={this.showClassCards}>{this.state.selectclass}</button>
+                <button className="button" onClick={this.showClassCards}>Neutral</button>
+                <h6>Search a Card: </h6>
+                <input type="text" name="search"></input>
+                {this.state.classCards}
+              </div>
+              <div key="2" data-grid={{x: 2, y: 0, w: 1, h: 8, static: true}}>
+                <span className="text">2</span>
+              </div>
+          </ResponsiveReactGridLayout>
+
+          <br/>
+          <br></br>
+
           <form onSubmit={this.handleSubmit}>
-            <h5>Create a Deck: </h5>
-            <h6>Title: </h6>
-            <input type="text" name="title"></input>
-            <h6>Description: </h6>
-            <input type="text" name="description"></input>
-            <br/>
-            <br></br>
-
             <button className="button" type="submit" value="Submit">Submit</button>
-
           </form>
         </div>
-        
-        
-        <div>
-          <img src={this.state.mage[3]} />
-          <img src={this.state.mage[4]} />
-
-        </div>
 	      <div className="row">
-        	<button style={{display: this.state.showPlus ? 'block':'none' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
+        	<button style={{display: this.state.showAddDeck ? 'block':'none' }} className="button secondary hollow" id="show" onClick={this.show}>Add Hearthstone Deck</button>
         </div>
       </div>
 	  )

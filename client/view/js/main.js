@@ -33,8 +33,6 @@ Heroku will detect changes and restart node.js server in under
 a minutes time.
 */
 
-
-
 const originalLayouts = getFromLS('layouts') || {};
 
 //Profile page
@@ -51,9 +49,9 @@ var Profile = React.createClass({
     this.handleChildUnmount = this.handleChildUnmount.bind(this);
   },
 
-   handleChildUnmount() {
-        this.setState({renderChild: false});
-    },
+  handleChildUnmount() {
+    this.setState({renderChild: false});
+  },
 
   getInitialState() {
     
@@ -149,12 +147,9 @@ var Profile = React.createClass({
                       });
                       });
                     }
-                }
-                
+                } 
         });
-    }); 
-        
-        
+    });   
   },
 
   componentWillMount: function(){
@@ -164,7 +159,6 @@ var Profile = React.createClass({
   resetLayout() {
     this.setState({layouts: {}});
   },
-
 
   onBreakpointChange(breakpoint, cols) {
     this.setState({
@@ -176,106 +170,96 @@ var Profile = React.createClass({
   onLayoutChange(layout, layouts) {
     saveToLS('layouts', layouts);
     this.setState({layouts});
-    
   },
 
   handleChange(event) {
-      this.setState({selectgame: event.target.value});
-    },
+    this.setState({selectgame: event.target.value});
+  },
 
   show() {
-      this.setState({showStore: true});
-    },
+    this.setState({showStore: true});
+  },
  
-    
- 
-    handleSubmit(event) {
-      alert('Your favorite Game is: ' + this.state.selectgame);
-      event.preventDefault();
-      var token = electron.remote.getGlobal('sharedObject').token;
-      $.post(api_server+"/user/load",
+  handleSubmit(event) {
+    alert('Your favorite Game is: ' + this.state.selectgame);
+    event.preventDefault();
+    var token = electron.remote.getGlobal('sharedObject').token;
+    $.post(api_server+"/user/load",
 
-               {
-                   'token' :token
-                }).done((d)=> {
-                   $.ajax({
-                           url:api_server+"/user/profile/updategames",   
-                           type:"PUT",
-                           contentType: 'application/json; charset=utf-8',
-                           data:JSON.stringify({    
-                               _id:d._id,
-                               game:this.state.selectgame,
-                               useringame:$("#gameusername").val(),
-                               interest:this.state.selectinterest
-                           })
-                       }).done((res)=>{
-                        var i=this.state.games.length;
-                          
-                          if (i == 0) {
-                            var x=0;
-
+              {
+                 'token' :token
+              }).done((d)=> {
+                 $.ajax({
+                         url:api_server+"/user/profile/updategames",   
+                         type:"PUT",
+                         contentType: 'application/json; charset=utf-8',
+                         data:JSON.stringify({    
+                             _id:d._id,
+                             game:this.state.selectgame,
+                             useringame:$("#gameusername").val(),
+                             interest:this.state.selectinterest
+                         })
+                     }).done((res)=>{
+                      var i=this.state.games.length;
+                        
+                        if (i == 0) {
+                          var x=0;
                           var width = 12;
                           var height = 13;
                           var row = 0;
                         } else {
-
                           var width = 4;
                           var height = 13;
                           var row = 14;
                         }
 
-                          this.setState({
-                                games: this.state.games.concat({
-                                  i: this.state.selectgame,
-                                  x: 0+(i-1)*4,
-                                  y: row,
-                                  w: width,
-                                  h: height,
-                                  minH: 13,
-                                  maxH: 13,
-                                  minW: 4,
-                                  maxW: 12,
-                                  int:this.state.selectinterest,
-                                  useringame:$("#gameusername").val(), 
-                                  
-                                })
-                              });
-                          var list =$("#gameusername").val().split("#");
+                        this.setState({
+                              games: this.state.games.concat({
+                                i: this.state.selectgame,
+                                x: 0+(i-1)*4,
+                                y: row,
+                                w: width,
+                                h: height,
+                                minH: 13,
+                                maxH: 13,
+                                minW: 4,
+                                maxW: 12,
+                                int:this.state.selectinterest,
+                                useringame:$("#gameusername").val(), 
+                                
+                              })
+                            });
+                        var list =$("#gameusername").val().split("#");
 
-                          $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/profile").done((res)=>{
-                         this.setState({
-                          level:res.data.level,
-                          avatar:res.data.avatar,
-                        });
+                        $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/profile").done((res)=>{
+                       this.setState({
+                        level:res.data.level,
+                        avatar:res.data.avatar,
                       });
-                      $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/competitive/heroes").done((res)=>{
-                         var H =JSON.parse(res);
+                    });
+                    $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/competitive/heroes").done((res)=>{
+                       var H =JSON.parse(res);
+                      
+                       this.setState({
+                        hero:H[0].name,
+                        image:H[0].image,
+                        time:H[0].playtime,
+                        hero1:H[1].name,
+                        image1:H[1].image,
+                        time1:H[1].playtime,
+                        hero2:H[2].name,
+                        image2:H[2].image,
+                        time2:H[2].playtime,
+
+                    });
+                    });
                         
-                         this.setState({
-                          hero:H[0].name,
-                          image:H[0].image,
-                          time:H[0].playtime,
-                          hero1:H[1].name,
-                          image1:H[1].image,
-                          time1:H[1].playtime,
-                          hero2:H[2].name,
-                          image2:H[2].image,
-                          time2:H[2].playtime,
-
-                      });
-                      });
-                          
-                       }).fail((err)=>{
-                                   alert("opps!");
-                               });
-                           });
-
+                     }).fail((err)=>{
+                             alert("opps!");
+                         });
+                     });
+  },
  
-     },
- 
-
-  
-
   onGame(el){
     var i = el.i;
     var gameImage;
@@ -327,8 +311,6 @@ var Profile = React.createClass({
     );
   },
 
-  
-
   goToEdit() {
     let edit = ReactDOM.render(
         <Edit />,
@@ -354,23 +336,25 @@ var Profile = React.createClass({
           </ResponsiveReactGridLayout>
 
           <div className="row dropFade" style={{display: this.state.showStore ? 'block' : 'none'}}>
-                <form onSubmit={this.handleSubmit}>
-                <h5>Add Games:</h5>
-                <select value={this.state.selectgame} onChange={this.handleChange}>
-                    <option className="disabled" value="" disabled>Select a game</option>
-                    <option value="Hearthstone">Hearthstone</option>
-                    <option value="Overwatch">Overwatch</option>
-                    <option value="Dota2">Dota2</option>
-                    <option value="League of Legends">League of Legends</option>
-                </select>
-                <br/> Username with battletags:
-                <br></br>
+            <form onSubmit={this.handleSubmit}>
+              <h5>Add Games:</h5>
+              <select value={this.state.selectgame} onChange={this.handleChange}>
+                  <option className="disabled" value="" disabled>Select a game</option>
+                  <option value="Hearthstone">Hearthstone</option>
+                  <option value="Overwatch">Overwatch</option>
+                  <option value="Dota2">Dota2</option>
+                  <option value="League of Legends">League of Legends</option>
+              </select>
+              <br/> Username with battletags:
+              <br></br>
 
-                <input id="gameusername" type="text" placeholder="YourTag#0000"/>
-                <button className="button" type="submit" value="Submit" >submit</button>
-            </form></div>
-            <div className="row">
-          <button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
+              <input id="gameusername" type="text" placeholder="YourTag#0000"/>
+              <button className="button" type="submit" value="Submit" >Submit</button>
+            </form>
+          </div>
+          
+          <div className="row">
+            <button style={{display: this.state.showStore ?  'none':'block' }} className="button secondary hollow" id="show" onClick={this.show}>+</button>
           </div>
         </div>
       );
@@ -485,13 +469,13 @@ var Edit = React.createClass({
             <input type="date" id="birthday" value={this.state.birthday} onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
             <br></br>
         </form>
-        <div className="row expanded button-group">
-        <button className="button" onClick={this.checkValid}> Submit </button>
-        <button className="button" onClick={this.onAddchangepw}>Change Password</button>
-        <button className="button" onClick={this.onAddchangeEmail}>Change Email</button>
-        <button className="button secondary" onClick={this.backToProfile}>Back</button>
-        </div>
 
+        <div className="row expanded button-group">
+          <button className="button" onClick={this.checkValid}> Submit </button>
+          <button className="button" onClick={this.onAddchangepw}>Change Password</button>
+          <button className="button" onClick={this.onAddchangeEmail}>Change Email</button>
+          <button className="button secondary" onClick={this.backToProfile}>Back</button>
+        </div>
       </div>
     );
   },
@@ -643,18 +627,17 @@ var Edit = React.createClass({
   },
 
   render() {
-     if(this.state.response){
-    return (
-      <div>
-        
-        <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
-            {...this.props}>
-            { this.createProfile(this.state.items)}
-            {_.map(this.state.pw, this.changePW)}
-            {_.map(this.state.email, this.changeEmail)}
-        </ResponsiveReactGridLayout>
-      </div>
-    );
+    if(this.state.response){
+      return (
+        <div>
+          <ResponsiveReactGridLayout onLayoutChange={this.onLayoutChange} onBreakpointChange={this.onBreakpointChange}
+              {...this.props}>
+              { this.createProfile(this.state.items)}
+              {_.map(this.state.pw, this.changePW)}
+              {_.map(this.state.email, this.changeEmail)}
+          </ResponsiveReactGridLayout>
+        </div>
+      );
     }else{
         return (<div> Loading</div>);
     }
@@ -855,8 +838,6 @@ var Edit = React.createClass({
 
     }
 });
-
-
 
 let profilewidget = ReactDOM.render(
         <Profile />,
