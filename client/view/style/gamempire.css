@@ -442,7 +442,7 @@ select:focus {
     text-align: center;
     line-height: 1;
     -webkit-appearance: none;
-    transition: background-color .25s ease-out, color .25s ease-out;
+    transition: background-colo	r .25s ease-out, color .25s ease-out;
     vertical-align: middle;
     border: 1px solid transparent;
     border-radius: 1px;
@@ -453,6 +453,7 @@ select:focus {
     color: #fefefe;
     outline: none;
     width: 100%;
+    cursor: default;
 }
 
 table tbody,
@@ -588,7 +589,6 @@ label {
     float:right;
     padding: 10px;
     z-index: 999;
-    cursor: pointer;
     font-color: white !important;
     border-radius: 15px;
     background:url(../img/close.png) no-repeat;
@@ -601,7 +601,7 @@ label {
 
 #close:hover {
     box-shadow: 0 10px 18px 0 rgba(0,0,0,0.2), 0 8px 22px 0 rgba(0,0,0,0.19);
-    outline-color: red;
+    outline-color: #8B0000;
 }
 
 #close:active {
@@ -633,6 +633,29 @@ label {
                                   supported by Chrome and Opera */
 }
 
+.input-group-label {
+	cursor: default;
+}
+
+.clearable {
+    display:hidden	;
+    background: url(../img/close.png) no-repeat;
+    background-position: right+10px center;
+    background-size: 5%;
+  	transition: background 0.4s;
+}
+
+.clearable:hover {
+     
+    background:url(../img/close.png) no-repeat;
+    background-position: right+10px center;
+    background-size: 5%;
+  	transition: background 0.4s;
+}
+
+.clearable.x  { background-position: right+10px center; } /* (jQ) Show icon */
+.clearable.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
+.clearable::-ms-clear {display: none; width:0; height:0;} /* Remove IE default X */
 
 @media (max-width:400px) { 
 

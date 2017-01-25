@@ -203,7 +203,7 @@ class SignUpWindow extends React.Component {
 
     _checkValid(e) {
         e.preventDefault();
-        var namePattern = new RegExp('^[a-zA-Z]{1,}$');
+        var namePattern = new RegExp('^[a-zA-Z ]{1,}$');
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
         //var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
