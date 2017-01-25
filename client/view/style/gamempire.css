@@ -2,7 +2,7 @@ html,
 body {
     background-color: #0e1519;
     font-weight: 300;
-    color: #818181
+    color: #818181;
 }
 
 body {
@@ -34,6 +34,7 @@ body,
 
 #main_content {
     padding: 50px;
+
 }
 
 hr {
@@ -104,6 +105,7 @@ hr {
 
 #titleBar {
     -webkit-app-region: drag;
+    -webkit-user-select: none;
     height: 24px;
     background: #1d2428;
     position: fixed;
@@ -245,6 +247,7 @@ hr {
     width: 100px;
     margin-left: calc(50% - 50px);
     margin-bottom: 1rem;
+    pointer-events: none;
 }
 
 .dropFade {
@@ -618,6 +621,17 @@ label {
     //background: rgba(104,104,104,0.2) url('http://mupit.icm.jhu.edu/MuPIT_Interactive/images/load.gif') center center no-repeat; 
     background-size: 50px 50px;
 }
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 
 @media (max-width:400px) { 
 
