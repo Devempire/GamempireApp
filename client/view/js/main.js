@@ -321,12 +321,12 @@ var Profile = React.createClass({
     {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
     if (this.state.response) {
       return (
-        <div>
+        <div className="noselect">
         <div className="row profileHeader">
-        <div onClick={this.goToEdit} className="column small-8 user">
+        <div onClick={this.goToEdit} className="column small-8 user noselect">
           <img className="avatar" height="60" width="60" src="./img/GamEmpireLogo.png" /><div>
           <h3>{this.state.username} </h3><p> talk something to me </p></div></div>
-        <div className="column small-4"><button className="button" onClick={this.resetLayout}>Reset Layout</button></div>
+        <div className="column small-4"><button className="button noselect" onClick={this.resetLayout}>Reset Layout</button></div>
         </div>
         
           <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
@@ -360,7 +360,7 @@ var Profile = React.createClass({
       );
     } else {
       return (
-        <div>Loading</div>
+        <div className="noselect">Loading</div>
         );
     }
   }
@@ -444,7 +444,7 @@ var Edit = React.createClass({
     
     var i = el.i;
     return (
-      <div key={i} data-grid={el}>
+      <div key={i} data-grid={el} className="noselect">
         <h3> Edit Your personal Info</h3>
         <hr/>
         <input className='profilepic' id='profilepic' type='image' onClick={this.openFileExp} src={'./img/GamEmpireLogo.png'} draggable="false"/>
@@ -654,7 +654,7 @@ var Edit = React.createClass({
           cancelId: 0
       };
 
-      var namePattern = new RegExp('^[a-zA-Z]{1,}$');
+      var namePattern = new RegExp('^[a-zA-Z ]{1,}$');
       var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
       var fname = $('#firstName').val();
       var errorfname = document.getElementById('fname');

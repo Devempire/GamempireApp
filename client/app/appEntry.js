@@ -47,16 +47,16 @@ class MainWindow extends React.Component {
         return (
             
 
-        <div id="loginContainer" className="row align-center align-middle">
+        <div id="loginContainer" className="row align-center align-middle noselect">
         <div className="content-loading"></div>
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
                 <div className="input-group required">
-                    <input className="input-group-field" type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
+                    <input className="input-group-field noselect" type="text" id="username" placeholder="Username" value={this.state.userName|| ''} onChange={(event)=> {this.setState({userName: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <div className="input-group required">
-                    <input className="input-group-field" type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
+                    <input className="input-group-field noselect" type="password" id="passsword" placeholder="Password" value={this.state.password|| ''} onChange={(event)=> {this.setState({password: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <center><div className="input-group-field" id="loginmsg"></div></center>
@@ -138,51 +138,51 @@ class SignUpWindow extends React.Component {
         return (
             
 
-        <form style={{height: "auto"}} id="loginContainer" className="row align-center align-middle"> 
+        <form style={{height: "auto"}} id="loginContainer" className="row align-center align-middle noselect"> 
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
             <div id='user' className="validationError dropFade" style={{display: "none"}}></div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
+                    <input className="input-group-field noselect" required type="text" id="username" placeholder="Username" value={this.state.userName || ""}
                         onChange={(event) => {this.setState({userName: event.target.value})}}/>
                         <span className="input-group-label">*</span>
                 </div>
                 <div id='fname' className="validationError dropFade" style={{display: "none"}}></div>
                 <div id='lname' className="validationError dropFade" style={{display: "none"}}></div>
                     <div className="input-group required">
-                        <input className="input-group-field" required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
+                        <input className="input-group-field noselect" required type="text" id="firstName" placeholder="First Name" value={this.state.firstName || ""}
                         onChange={(event) => {this.setState({firstName: event.target.value})}}/>
                         <span className="input-group-label">*</span>
-                        <input className="input-group-field" required type="text" id="lastName" placeholder="Last Name" value={this.state.lastName || ""}
+                        <input className="input-group-field noselect" required type="text" id="lastName" placeholder="Last Name" value={this.state.lastName || ""}
                         onChange={(event) => {this.setState({lastName: event.target.value})}}/>
                         <span className="input-group-label">*</span>
                     </div>
                 <div id='pass' className="validationError dropFade" style={{display: "none"}}></div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
+                    <input className="input-group-field noselect" required type="password" id="passsword" placeholder="Password"  value={this.state.password || ""}
                         onChange={(event) => {this.setState({password: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <div id='cpass' className="validationError dropFade" style={{display: "none"}}></div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
+                    <input className="input-group-field noselect" required type="password" id="confirmPasssword" placeholder="Confirm Password" value={this.state.confirmPass || ""}
                         onChange={(event) => {this.setState({confirmPass: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <div id='emailmsg' className="validationError dropFade" style={{display: "none"}}></div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="text" id="email" placeholder="Email" value={this.state.email || ""}
+                    <input className="input-group-field noselect" required type="text" id="email" placeholder="Email" value={this.state.email || ""}
                         onChange={(event) => {this.setState({email: event.target.value})}}/>
                     <span className="input-group-label">*</span>
                 </div>
                 <div id='cemailmsg' className="validationError dropFade" style={{display: "none"}}></div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="text" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
+                    <input className="input-group-field noselect" required type="text" id="confirmEmail" placeholder="Confirm Email" value={this.state.confirmEmail || ""}
                         onChange={(event) => {this.setState({confirmEmail: event.target.value})}} />
                     <span className="input-group-label">*</span>
                 </div>
                 <div className="input-group required">
-                    <input className="input-group-field" required type="date" id="birthday" value={this.state.birthday||''}
+                    <input className="input-group-field noselect" required type="date" id="birthday" value={this.state.birthday||''}
                         onChange={(event) => {this.setState({birthday: moment(event.target.value).format('YYYY-MM-DD')})}}/>
                     <span className="input-group-label">*</span>
                 </div>
