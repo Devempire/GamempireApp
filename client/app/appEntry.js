@@ -197,7 +197,7 @@ class SignUpWindow extends React.Component {
         e.preventDefault();
         var namePattern = new RegExp('^[a-zA-Z]{1,}$');
         var userPattern = new RegExp('^[a-zA-Z0-9]{3,}$');
-        var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
+        //var passPattern = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$');
         var emailPattern = new RegExp('^[a-zA-Z0-9]{1,}@[a-zA-Z]{1,}[.]{1}[a-zA-Z]{1,}$');
 
         var fname = document.getElementById('fname');
@@ -241,9 +241,9 @@ class SignUpWindow extends React.Component {
         if (this.state.password == null) {
             $("#pass").show();
             pass.innerHTML = "The field is empty.";
-        } else if (!passPattern.test(this.state.password)) {
+        } else if ((this.state.password).length < 6) {
             $("#pass").show();
-            pass.innerHTML = "Passwords must be at least 6 characters long, have at least 1 uppercase letter, l lowercase letter and 1 digit.";
+            pass.innerHTML = "Passwords must be at least 6 characters long.";
         } else {
             pass.innerHTML = "";
         }
