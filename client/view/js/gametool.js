@@ -275,6 +275,12 @@ function getFromLS(key) {
   return ls[key];
 }
 
+let currentWindow = session.getCurrentWindow().removeAllListeners();
+    
+    currentWindow.on('resize', _.debounce(function () {
+      $("body").css({"height":"calc(100% - 35px)"});
+    }, 100));
+
 function saveToLS(key, value) {
   if (global.localStorage) {
     global.localStorage.setItem('rgl-8', JSON.stringify({

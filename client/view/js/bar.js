@@ -9,7 +9,7 @@
   if(e.keyCode=='13') //Keycode for "Return"
      $('#login').click();
   });
-
+  
   function tog(v){return v?'addClass':'removeClass';} 
 $(document).on('input', '.clearable', function(){
     $(this)[tog(this.value)]('x');
@@ -61,6 +61,6 @@ $(document).on('input', '.clearable', function(){
         $( ".content-loading" ).fadeOut( "slow" );
         init();
       }
-    };
-          
+    };          
 })();
+

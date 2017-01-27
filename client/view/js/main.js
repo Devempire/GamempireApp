@@ -436,7 +436,7 @@ var Edit = React.createClass({
   },
 
   componentWillMount: function(){
-    this.loadProfile();
+    this.loadProfile(); 
   },
 
   createProfile(el) {
@@ -866,3 +866,5 @@ function saveToLS(key, value) {
     }));
   }
 }
+
+
