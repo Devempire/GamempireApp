@@ -837,7 +837,7 @@ var Edit = React.createClass({
 
     }
 });
-/
+
 let profilewidget = ReactDOM.render(
         <Profile />,
         document.getElementById('main_content'));
