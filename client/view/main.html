@@ -51,19 +51,14 @@ var dialog = document.getElementById('dialog');
 
 function toggleNav() {
     $("#mySidenav, #content").toggleClass("navOpen");
+    if ( $("#mySidenav").hasClass("navOpen") ) {
+        //do something it does have the protected class!
+        $(".toggleNav").css({"cursor":"url('./img/arrow_in.png'), auto"});
+    }else{
+        $(".toggleNav").css({"cursor":"url('./img/arrow_out.png'), auto"});
+    }
 }
 
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main_content").style.marginLeft = "250px";
-
-}
-
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main_content").style.marginLeft = "0";
-}
 
 function addtab() {
 
