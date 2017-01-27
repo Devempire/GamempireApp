@@ -54,7 +54,6 @@ var Profile = React.createClass({
   },
 
   getInitialState() {
-    
     return {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
       profile:{i:"profile",x: 100, y: 100, w: 0, h: 0, static: true},
@@ -149,7 +148,8 @@ var Profile = React.createClass({
                     }
                 } 
         });
-    });   
+    });  
+
   },
 
   componentWillMount: function(){
@@ -381,7 +381,6 @@ var Edit = React.createClass({
 
   getInitialState() {
     var layout = this.generateLayout();
-
     return {
 
       layout: layout,
@@ -838,10 +837,11 @@ var Edit = React.createClass({
 
     }
 });
-
+/
 let profilewidget = ReactDOM.render(
         <Profile />,
         document.getElementById('main_content'));
+        $("body").css({"height":"calc(100% - 35px)"});
 
 function getFromLS(key) {
   let ls = {};
@@ -852,6 +852,12 @@ function getFromLS(key) {
   }
   return ls[key];
 }
+
+let currentWindow = session.getCurrentWindow().removeAllListeners();
+    
+    currentWindow.on('resize', _.debounce(function () {
+      $("body").css({"height":"calc(100% - 35px)"});
+    }, 100));
 
 function saveToLS(key, value) {
   if (global.localStorage) {

@@ -43,9 +43,10 @@ class MainWindow extends React.Component {
     }
 
     render() {
+
         {this.state.renderChild ? <SignUpWindow unmountMe={this.handleChildUnmount} /> : null}
         return (
-            
+
 
         <div id="loginContainer" className="row align-center align-middle noselect">
         <div className="content-loading"></div>
@@ -64,9 +65,9 @@ class MainWindow extends React.Component {
                 <button className="button" id="login" onClick={this._handleLogin.bind(this)}>Login</button>
                 <button className="button secondary" onClick={this._handleRegistry.bind(this)}>Sign up</button>
             </div>
-        </div> 
+        </div>
 
-           
+
         );
     }
     _handleLogin() {
@@ -90,11 +91,10 @@ class MainWindow extends React.Component {
         })
 
             .done((res) =>{
-                $( "#loginContainer" ).hide();
                 electron.remote.getGlobal('mainWnd').setContentSize(1152, 648);
                 electron.remote.getGlobal('mainWnd').center();
                 electron.remote.getGlobal('sharedObject').token = res;
-                window.location.href="./view/main.html";            
+                window.location.href="./view/main.html";
             })
 
             .fail((res)=>{
@@ -103,8 +103,8 @@ class MainWindow extends React.Component {
             $("#loginmsg").addClass('label warning');
             $("#loginmsg").effect( "shake", { direction: "up", times: 3, distance: 10}, 500 );
             });
-            
-        
+
+
     }
 
     _handleRegistry() {
@@ -138,11 +138,11 @@ class SignUpWindow extends React.Component {
 
     render() {
 
-        
-        return (
-            
 
-        <form style={{height: "auto"}} id="loginContainer" className="row align-center align-middle noselect"> 
+        return (
+
+
+        <form style={{height: "auto"}} id="loginContainer" className="row align-center align-middle noselect">
             <div className="medium-6 large-6 column">
             <img className="gamEmpireLogo" src="view/img/GamEmpireLogo.png" />
             <div id='user' className="validationError dropFade" style={{display: "none"}}></div>
@@ -197,7 +197,7 @@ class SignUpWindow extends React.Component {
         </form>
 
 
-            
+
         );
     }
 
@@ -286,12 +286,12 @@ class SignUpWindow extends React.Component {
             cemail.innerHTML = "";
         }
 
-        if (fname.innerHTML == "" && lname.innerHTML == "" && user.innerHTML == "" 
-            && pass.innerHTML == "" && cpass.innerHTML == "" 
+        if (fname.innerHTML == "" && lname.innerHTML == "" && user.innerHTML == ""
+            && pass.innerHTML == "" && cpass.innerHTML == ""
             && email.innerHTML == "" && cemail.innerHTML == "") {
-            
+
             this._register();
-           
+
         }
 
     }
@@ -316,17 +316,17 @@ class SignUpWindow extends React.Component {
         };
 
         console.log(this.state.birthday);
-        $.post(api_server+'/user/add', 
+        $.post(api_server+'/user/add',
 
                 {
-                
+
                     username:this.state.userName,
                     password:this.state.password,
                     email:this.state.email,
                     firstname:this.state.firstName,
                     lastname:this.state.lastName,
                     birthday:this.state.birthday,
-                    
+
 
                 }
         )
@@ -353,6 +353,7 @@ class SignUpWindow extends React.Component {
         <MainWindow />,
         document.getElementById('content'));
     }
+
 }
 
 
@@ -360,3 +361,4 @@ class SignUpWindow extends React.Component {
 let mainWndComponent = ReactDOM.render(
     <MainWindow />,
     document.getElementById('content'));
+    $("body").css({"height":"calc(100% - 35px)"});

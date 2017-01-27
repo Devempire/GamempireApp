@@ -31,9 +31,9 @@ function openMainWnd(uri) {
         width: 276,
         height: 477,
         frame: false,
+        thickFrame: true,
         titleBarStyle: 'hidden',
-        icon: iconPath,
-        setIgnoreMouseEvents: true
+        icon: iconPath
     });
 
     if (isDevelopment) {

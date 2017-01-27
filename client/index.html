@@ -25,9 +25,21 @@
 		</div>
         <div id="content">
         </div>
-
+		
         <script src="view/js/bundle.js"></script>
 		<script src="view/js/bar.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<script>
+		$( document ).ready(function() {
+			if (navigator.appVersion.indexOf("Mac")!=-1) {
+			  //MAC
+			  $("#title-bar-btns").hide();
+			  $("#titleicon").hide();
+			  
+			} else {
+			  //PC
+			}
+		});
+		</script>
     </body>
 </html>
