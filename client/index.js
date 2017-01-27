@@ -33,6 +33,7 @@ function openMainWnd(uri) {
         frame: false,
         thickFrame: true,
         titleBarStyle: 'hidden',
+        backgroundColor: '#0e1519',
         icon: iconPath
     });
 
