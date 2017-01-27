@@ -30,7 +30,7 @@ var HSBuilder = React.createClass({
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 2, md: 2, sm: 2, xs: 1, xxs: 1},
+      cols: {lg: 3, md: 3, sm: 3, xs: 3, xxs: 1},
       rowHeight: 20,
       verticalCompact: true
     };
@@ -50,6 +50,7 @@ var HSBuilder = React.createClass({
     	showStore:false,
       showDeckBuilder:false,
       showAddDeck:true,
+      myDeck:[],
       decks:[],
       neutral:[],
       classCards:[]
@@ -88,7 +89,8 @@ var HSBuilder = React.createClass({
       console.log(result.body);
       var i = 0;
       while (i < result.body.length) {
-        this.setState({neutral: this.state.neutral.concat(result.body[i].name)});
+        this.setState({neutral: this.state.neutral.concat(<li key={i}><a href="#" 
+          onClick={this.putCardToDeck}>{result.body[i].name}</a></li>)});
         i++;
       };
       console.log(this.state.neutral);
@@ -180,13 +182,53 @@ var HSBuilder = React.createClass({
   //helper function for putting in class card names only into a list
   putClassCards(i, deck) {
     while (i < deck.length) {
-      this.setState({classCards: this.state.classCards.concat(deck[i].name)});
+      this.setState({classCards: this.state.classCards.concat(<li id="card" key={i}>
+        <a href="#" onClick={this.putCardToDeck}>{deck[i].name}</a></li>)});
       i++;
     };
   },
 
-  showClassCards() {
-    alert('hi');
+  searchClassCards() {
+    var card;
+    var input = document.getElementById('class_card');
+    var filter = input.value.toUpperCase();
+    var ul = document.getElementById("class_card_list");
+    var li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (var i = 0; i < li.length; i++) {
+        card = li[i].getElementsByTagName("a")[0];
+        if (card.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+  },
+
+  searchNeutralCards() {
+    var card;
+    var input = document.getElementById('neutral_card');
+    var filter = input.value.toUpperCase();
+    var ul = document.getElementById("neutral_card_list");
+    var li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (var i = 0; i < li.length; i++) {
+        card = li[i].getElementsByTagName("a")[0];
+        if (card.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+  },
+
+  putCardToDeck(event) {
+    var card = document.getElementById('card');
+    console.log(card);
+    var card_name = (card.getElementsByTagName('a'))[0].innerHTML;
+    console.log(card_name);
   },
 
   handleSubmit(event) {
@@ -227,22 +269,31 @@ var HSBuilder = React.createClass({
         <div className="row dropFade" style={{display: this.state.showDeckBuilder ? 'block' : 'none'}}>
           <h5>Create a Deck: </h5>
           <h6>Title: </h6>
-          <input type="text" name="title"></input>
+          <input type="text" name="title" id="deck_title"></input>
           <h6>Description: </h6>
-          <input className="deck_desc" type="text" name="description"></input>
+          <input type="text" name="description" id="deck_desc"></input>
 
           <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
               onBreakpointChange={this.onBreakpointChange} {...this.props} rowHeight={50}>
               <div key="1" data-grid={{x: 0, y: 0, w: 1, h: 8, static: true}}>
-                <h4>Cards</h4>
-                <button className="button" onClick={this.showClassCards}>{this.state.selectclass}</button>
-                <button className="button" onClick={this.showClassCards}>Neutral</button>
-                <h6>Search a Card: </h6>
-                <input type="text" name="search"></input>
-                {this.state.classCards}
+                <h4>{this.state.selectclass} Cards</h4>
+                <input type="text" id="class_card" onKeyUp={this.searchClassCards} placeholder="Search a Card"></input>
+                <ul id="class_card_list">
+                  {this.state.classCards}
+                </ul>
               </div>
-              <div key="2" data-grid={{x: 2, y: 0, w: 1, h: 8, static: true}}>
-                <span className="text">2</span>
+              <div key="2" data-grid={{x: 1, y: 0, w: 1, h: 8, static: true}}>
+                <h4>Neutral Cards</h4>
+                <input type="text" id="neutral_card" onKeyUp={this.searchNeutralCards} placeholder="Search a Card"></input>
+                <ul id="neutral_card_list">
+                  {this.state.neutral}
+                </ul>
+              </div>
+              <div key="3" data-grid={{x: 2, y: 0, w: 1, h: 8, static: true}}>
+                <h4>Deck</h4>
+                <ul id="deck_list">
+                  {this.state.myDeck}
+                </ul>
               </div>
           </ResponsiveReactGridLayout>
 
