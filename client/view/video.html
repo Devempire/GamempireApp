@@ -47,9 +47,11 @@
   	</div>
   </body>
 
-  <script type="text/javascript">
+<script type="text/javascript">
+var dialog = document.getElementById('dialog');
+
 function toggleNav() {
-    $("#mySidenav").toggleClass("navOpen");
+    $("#mySidenav, #content").toggleClass("navOpen");
 }
 
 function openNav() {
@@ -83,6 +85,15 @@ function create() {
     p.insertBefore(as, child);
     document.getElementById("add").remove();
 }
+
+var dialog = document.getElementById('dialog');
+w3IncludeHTML(); //Loads side bar menu items from external file
+
+$("body").css({"height":"calc(100% - 35px)"});
+$( window ).resize(function() {
+      $("body").css({"height":"calc(100% - 35px)"});
+});
+
 </script>
 
   <div style="position:fixed; right:30px; top:50px">

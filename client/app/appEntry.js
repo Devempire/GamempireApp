@@ -361,4 +361,4 @@ class SignUpWindow extends React.Component {
 let mainWndComponent = ReactDOM.render(
     <MainWindow />,
     document.getElementById('content'));
-    $("body").css({"height":"calc(100% - 35px)"});
+
