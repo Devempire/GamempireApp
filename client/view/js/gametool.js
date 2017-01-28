@@ -89,7 +89,8 @@ var HSBuilder = React.createClass({
     //   console.log(result.body);
     //   var i = 0;
     //   while (i < result.body.length) {
-    //     this.setState({neutral: this.state.neutral.concat(<li id="card" key={i}><a href="#" 
+    //     this.setState({neutral: this.state.neutral.concat(<li key={i}>
+    //       <a href="#" name={deck[i].name} value={deck[i].rarity} 
     //       onClick={this.putCardToDeck}>{result.body[i].name}</a></li>)});
     //     i++;
     //   };
@@ -100,6 +101,7 @@ var HSBuilder = React.createClass({
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
       .end(function (result) {
         console.log(result.body);
+        //increment the value if a new hero is added or decrement if a hero is removed
         var i = 1;
         this.putClassCards(i, result.body);
         console.log(this.state.classCards);
@@ -182,8 +184,9 @@ var HSBuilder = React.createClass({
   //helper function for putting in class card names only into a list
   putClassCards(i, deck) {
     while (i < deck.length) {
-      this.setState({classCards: this.state.classCards.concat(<li id="card" key={i}>
-        <a href="#" onClick={this.putCardToDeck}>{deck[i].name}</a></li>)});
+      this.setState({classCards: this.state.classCards.concat(<li key={i}>
+        <a href="#" name={deck[i].name} value={deck[i].rarity} 
+        onClick={this.putCardToDeck}>{deck[i].name}</a></li>)});
       i++;
     };
   },
@@ -225,10 +228,35 @@ var HSBuilder = React.createClass({
   },
 
   putCardToDeck(event) {
-    var card = document.getElementById('card');
-    console.log(card);
-    var card_name = (card.getElementsByTagName('a'))[0].innerHTML;
-    console.log(card_name);
+    console.log(event.target.getAttribute('name'));
+    var card_name = event.target.getAttribute('name');
+    var i = this.state.myDeck.length;
+    if (i < 30) {
+      this.setState({myDeck: this.state.myDeck.concat(<li>
+          <a href="#" value={card_name} onClick={this.removeCard}>{card_name}</a></li>)});
+    }
+  },
+
+  removeCard(event) {
+    var deck_list = [];
+    var card_name = event.target.getAttribute('name');
+
+    //First, put all card names in the deck list into a list
+    for (var i = 0; i < this.state.myDeck.length; i++) {
+      deck_list.push(this.state.myDeck[i].props.children.props.children);
+    }
+
+    //Second, find the index of the card to be removed
+    for (var j = 0; j < deck_list.length; j++) {
+      if (deck_list[j] == card_name) {
+        var index = j;
+        break;
+      }
+    }
+
+    console.log(this.state.myDeck);
+    this.state.myDeck.splice(index, 1);
+    this.setState({myDeck: this.state.myDeck.concat([])});
   },
 
   handleSubmit(event) {
@@ -325,12 +353,6 @@ function getFromLS(key) {
   }
   return ls[key];
 }
-
-let currentWindow = session.getCurrentWindow().removeAllListeners();
-    
-    currentWindow.on('resize', _.debounce(function () {
-      $("body").css({"height":"calc(100% - 35px)"});
-    }, 100));
 
 function saveToLS(key, value) {
   if (global.localStorage) {
