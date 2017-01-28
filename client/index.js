@@ -33,7 +33,9 @@ function openMainWnd(uri) {
         frame: false,
         thickFrame: true,
         titleBarStyle: 'hidden',
-        icon: iconPath
+        backgroundColor: '#0e1519',
+        icon: iconPath,
+        show: false
     });
 
     if (isDevelopment) {
@@ -47,6 +49,11 @@ function openMainWnd(uri) {
     mainWnd.on('closed', () => {
        mainWnd = null;
     });
+
+     mainWnd.once('ready-to-show', () => {
+     mainWnd.show();
+ })
+
 }
 
 

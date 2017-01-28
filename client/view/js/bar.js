@@ -5,11 +5,21 @@
      $('#login').click();
   });
 
-  $("#username").keypress(function (e) {
-  if(e.keyCode=='13') //Keycode for "Return"
-     $('#login').click();
+  $("#username").keypress(function (e) { 
+  if(e.keyCode=='13') {//Keycode for "Return"
+    var psw = $("#passsword").val();
+    var usr = $("#username").val();
+    if (usr == "" || usr == null){
+      $("#username").focus();
+    }
+    else if (psw == "" || psw == null){
+      $("#passsword").focus();
+    }else{
+      $('#login').click();
+    }
+  }
   });
-
+  
   function tog(v){return v?'addClass':'removeClass';} 
 $(document).on('input', '.clearable', function(){
     $(this)[tog(this.value)]('x');
@@ -61,6 +71,6 @@ $(document).on('input', '.clearable', function(){
         $( ".content-loading" ).fadeOut( "slow" );
         init();
       }
-    };
-          
+    };          
 })();
+

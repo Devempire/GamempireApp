@@ -28,3 +28,5 @@ Mongod.lnk
 client/view/js/bundle.js
 client/view/js/bundle2.js
 client/view/js/bundle2.js
+client/view/js/bundle3.js
+client/npm-debug.log

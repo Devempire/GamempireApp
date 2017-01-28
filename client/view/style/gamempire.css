@@ -11,8 +11,9 @@ html {
     overflow: hidden;
 }
 
+
 body {
-    background-color: #0e1519;
+    background-color: #0e1519 ;
     font-weight: 300;
     color: #818181;
     position: absolute;
@@ -343,7 +344,11 @@ hr {
     top: 0;
     padding-right: 10px;
     /* To make the clicable area of a little larger than the visible area so users can easily click it */
-    cursor: col-resize;
+    cursor: url('../img/arrow_out.png'), auto;
+}
+
+.toggleNav:hover {
+    background-color:rgba(62, 67, 70, 0.5);
 }
 
 .toggleNav:after {
@@ -617,7 +622,7 @@ label {
     -webkit-user-select: none;
     width: 100%;
 	max-height: 21px;
-	margin-top: 1px;
+	margin-top: -1px;
 	position: fixed;
 	text-align: center;
 

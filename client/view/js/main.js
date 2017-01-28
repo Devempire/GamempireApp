@@ -436,7 +436,7 @@ var Edit = React.createClass({
   },
 
   componentWillMount: function(){
-    this.loadProfile();
+    this.loadProfile(); 
   },
 
   createProfile(el) {
@@ -841,7 +841,6 @@ var Edit = React.createClass({
 let profilewidget = ReactDOM.render(
         <Profile />,
         document.getElementById('main_content'));
-        $("body").css({"height":"calc(100% - 35px)"});
 
 function getFromLS(key) {
   let ls = {};
@@ -853,12 +852,6 @@ function getFromLS(key) {
   return ls[key];
 }
 
-let currentWindow = session.getCurrentWindow().removeAllListeners();
-    
-    currentWindow.on('resize', _.debounce(function () {
-      $("body").css({"height":"calc(100% - 35px)"});
-    }, 100));
-
 function saveToLS(key, value) {
   if (global.localStorage) {
     global.localStorage.setItem('rgl-8', JSON.stringify({
@@ -866,3 +859,5 @@ function saveToLS(key, value) {
     }));
   }
 }
+
+

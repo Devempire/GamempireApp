@@ -1,7 +1,7 @@
 <!doctype html>
-
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -9,47 +9,57 @@
     <link rel="stylesheet" href="./style/foundation.min.css">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/gamempire.css">
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>if (window.module) module = window.module;</script>
+    <script>
+    if (typeof module === 'object') {
+        window.module = module;
+        module = undefined;
+    }
+    </script>
+    <script src="js/3.1.1-jquery.min.js"></script>
+    <script>
+    if (window.module) module = window.module;
+    </script>
+</head>
 
-  </head>
-
-  <body>
-
-  <div id="mySidenav" class="sidenav">
-  <a href="main.html" id="1">Profile</a>
-  <a href="gametool.html" id="2">Gaming Tools</a>
-  <a class="active"  href="video.html" id="3">Video Streams</a>
-  <a href="" id="4">Tips&Tricks</a>
-  <a href="" id="5">Guides</a>
-  <a href="esports.html" id="6">Esports</a>
-  <a href="chat.html" id ="7">Chat </a>
-  <a id="8" onclick="addtab()">+</a>
-  <div class="toggleNav" onclick="toggleNav()"></div>
-  </div>
-  <div id="main_content">
-      <div id="player"></div>
+<body>
+ <!-- Start Title Bar -->
+    <div id="titleBar">
+    <div id="titleicon" class="titleicon"></div> <!-- icon -->
+    <span id="title" class="title">Gamempire</span> <!-- title of page -->
+        <div id="title-bar-btns"> <!-- close, minimize, maximize buttons -->
+            <button id="min-btn" title="Minimize"></button>
+            <button id="max-btn" title="Maximize"></button>
+            <button id="close-btn" title="Close"></button>
+        </div>
+    </div>
+    <!-- End Title Bar -->
+    <!-- Start Side bar-->
+    <div id="mySidenav" class="sidenav" w3-include-html="_menu.html">
+    </div>
+    <!-- End Side Bar -->
+    <div id="content">
+      <script src="js/bar.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/w3data.js"></script>
+        <div id="main_content">
+       <div id="player"></div>
        <div id="player2"></div>
   	</div>
   </body>
 
-  <script type="text/javascript">
+<script type="text/javascript">
+var dialog = document.getElementById('dialog');
+
 function toggleNav() {
-    $("#mySidenav").toggleClass("navOpen");
+    $("#mySidenav, #content").toggleClass("navOpen");
+    if ( $("#mySidenav").hasClass("navOpen") ) {
+        //do something it does have the protected class!
+        $(".toggleNav").css({"cursor":"url('./img/arrow_in.png'), auto"});
+    }else{
+        $(".toggleNav").css({"cursor":"url('./img/arrow_out.png'), auto"});
+    }
 }
 
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main_content").style.marginLeft = "250px";
-
-}
-
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main_content").style.marginLeft = "0";
-}
 
 function addtab() {
 
@@ -70,6 +80,13 @@ function create() {
     p.insertBefore(as, child);
     document.getElementById("add").remove();
 }
+
+var dialog = document.getElementById('dialog');
+w3IncludeHTML(); //Loads side bar menu items from external file
+$("body").css({"height":"calc(100% - 35px)"});
+$( window ).resize(function() {
+      $("body").css({"height":"calc(100% - 35px)"});
+});
 </script>
 
   <div style="position:fixed; right:30px; top:50px">
@@ -113,7 +130,7 @@ function create() {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-        event.target.playVideo();
+        //event.target.playVideo();
       }
 
       // 5. The API calls this function when the player's state changes.
