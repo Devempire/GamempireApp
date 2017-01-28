@@ -83,18 +83,18 @@ var HSBuilder = React.createClass({
     this.setState({selectclass: event.target.value});
     this.setState({showDeckBuilder: true});
     this.setState({showStore: false});
-    unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
-    .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
-    .end(function (result) {
-      console.log(result.body);
-      var i = 0;
-      while (i < result.body.length) {
-        this.setState({neutral: this.state.neutral.concat(<li key={i}><a href="#" 
-          onClick={this.putCardToDeck}>{result.body[i].name}</a></li>)});
-        i++;
-      };
-      console.log(this.state.neutral);
-    }.bind(this));
+    // unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Neutral?collectible=1")
+    // .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
+    // .end(function (result) {
+    //   console.log(result.body);
+    //   var i = 0;
+    //   while (i < result.body.length) {
+    //     this.setState({neutral: this.state.neutral.concat(<li id="card" key={i}><a href="#" 
+    //       onClick={this.putCardToDeck}>{result.body[i].name}</a></li>)});
+    //     i++;
+    //   };
+    //   console.log(this.state.neutral);
+    // }.bind(this));
     if (event.target.value == 'Druid') {
       unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/Druid?collectible=1")
       .header("X-Mashape-Key", "Y9iQPzINlFmshaXFeSThXj9Pj1ADp1SpHN4jsnHLjKJ1v2rjJ1")
