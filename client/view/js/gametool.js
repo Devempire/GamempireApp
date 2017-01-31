@@ -31,7 +31,7 @@ var HSBuilder = React.createClass({
     return {
       className: "layout",
       cols: {lg: 3, md: 3, sm: 3, xs: 3, xxs: 1},
-      rowHeight: 20,
+      rowHeight: 50,
       verticalCompact: true
     };
     this.handleChildUnmount = this.handleChildUnmount.bind(this);
@@ -51,6 +51,7 @@ var HSBuilder = React.createClass({
       showDeckBuilder:false,
       showAddDeck:true,
       myDeck:[],
+      myDeckFinal:[],
       decks:[],
       neutral:[],
       classCards:[]
@@ -90,7 +91,7 @@ var HSBuilder = React.createClass({
     //   var i = 0;
     //   while (i < result.body.length) {
     //     this.setState({neutral: this.state.neutral.concat(<li key={i}>
-    //       <a href="#" name={deck[i].name} value={deck[i].rarity} 
+    //       <a href="#" name={result.body[i].name} value={result.body[i].rarity} 
     //       onClick={this.putCardToDeck}>{result.body[i].name}</a></li>)});
     //     i++;
     //   };
@@ -228,12 +229,33 @@ var HSBuilder = React.createClass({
   },
 
   putCardToDeck(event) {
-    console.log(event.target.getAttribute('name'));
     var card_name = event.target.getAttribute('name');
+    var card_rarity = event.target.getAttribute('value');
     var i = this.state.myDeck.length;
-    if (i < 30) {
-      this.setState({myDeck: this.state.myDeck.concat(<li>
-          <a href="#" value={card_name} onClick={this.removeCard}>{card_name}</a></li>)});
+    var count = 0;
+
+    for (var j = 0; j < this.state.myDeckFinal.length; j++) {
+      if (this.state.myDeckFinal[j].props.children == card_name) {
+        count++;
+      }
+    }
+
+    //myDeck is for during deck creation, the deck names need to be clickable
+    //to call removeCard function to remove a desired card.
+    //myDeckFinal is for publishing the deck, the deck names are not clikable
+    //and only for display.
+    if (i < 30 && card_rarity != 'Legendary' && count < 2) {
+      this.setState({myDeck: this.state.myDeck.concat(<li key={i}>
+          <a href="#" name={card_name} value={card_rarity} 
+          onClick={this.removeCard}>{card_name}</a></li>)});
+      this.setState({myDeckFinal: this.state.myDeckFinal.concat(<li key={i}>
+          {card_name}</li>)});
+    } else if (i < 30 && card_rarity == 'Legendary' && count < 1) {
+      this.setState({myDeck: this.state.myDeck.concat(<li key={i}>
+          <a href="#" name={card_name} value={card_rarity} 
+          onClick={this.removeCard}>{card_name}</a></li>)});
+      this.setState({myDeckFinal: this.state.myDeckFinal.concat(<li key={i}>
+          {card_name}</li>)});
     }
   },
 
@@ -254,17 +276,51 @@ var HSBuilder = React.createClass({
       }
     }
 
-    console.log(this.state.myDeck);
     this.state.myDeck.splice(index, 1);
     this.setState({myDeck: this.state.myDeck.concat([])});
   },
 
   handleSubmit(event) {
+    event.preventDefault();
+    var i = this.state.decks.length;
+    var width = 1;
+    var height = 14;
+    var row = 14;
 
+    this.setState({
+      decks: this.state.decks.concat({
+        i: i.toString(),
+        x: i,
+        y: row,
+        w: width,
+        h: height,
+        minH: 14,
+        maxH: 14,
+        minW: 1,
+        maxW: 3
+      })
+    });
+
+    // this.setState({showDeckBuilder: false});
+    // this.setState({showAddDeck: true});
   },
 
   deckBuilder(el) {
+    console.log(el);
+    var i = el.i;
+    //console.log(i);
+    var title = document.getElementById('deck_title').value;
+    var description = document.getElementById('deck_desc').value;
 
+    return (
+      <div key={i} data-grid={el}>
+        <h3>{title}</h3>
+        <h6>{description}</h6>
+        <ul>
+          {this.state.myDeckFinal}
+        </ul>
+      </div>
+    );
   },
 
   render() {
@@ -302,7 +358,7 @@ var HSBuilder = React.createClass({
           <input type="text" name="description" id="deck_desc"></input>
 
           <ResponsiveReactGridLayout layouts={this.state.layouts} onLayoutChange={this.onLayoutChange} 
-              onBreakpointChange={this.onBreakpointChange} {...this.props} rowHeight={50}>
+              onBreakpointChange={this.onBreakpointChange} {...this.props}>
               <div key="1" data-grid={{x: 0, y: 0, w: 1, h: 8, static: true}}>
                 <h4>{this.state.selectclass} Cards</h4>
                 <input type="text" id="class_card" onKeyUp={this.searchClassCards} placeholder="Search a Card"></input>
@@ -317,7 +373,7 @@ var HSBuilder = React.createClass({
                   {this.state.neutral}
                 </ul>
               </div>
-              <div key="3" data-grid={{x: 2, y: 0, w: 1, h: 8, static: true}}>
+              <div key="3" data-grid={{x: 2, y: 0, w: 1, h: 14, static: true}}>
                 <h4>Deck</h4>
                 <ul id="deck_list">
                   {this.state.myDeck}

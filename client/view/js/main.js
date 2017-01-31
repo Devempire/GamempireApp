@@ -238,9 +238,9 @@ var Profile = React.createClass({
                       });
                     });
                     $.get("https://api.lootbox.eu/pc/us/"+list[0]+"-"+list[1]+"/competitive/heroes").done((res)=>{
-                       var H =JSON.parse(res);
+                      var H =JSON.parse(res);
                       
-                       this.setState({
+                      this.setState({
                         hero:H[0].name,
                         image:H[0].image,
                         time:H[0].playtime,
@@ -250,8 +250,7 @@ var Profile = React.createClass({
                         hero2:H[2].name,
                         image2:H[2].image,
                         time2:H[2].playtime,
-
-                    });
+                      });
                     });
                         
                      }).fail((err)=>{
